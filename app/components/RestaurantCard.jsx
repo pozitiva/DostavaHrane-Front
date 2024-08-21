@@ -12,11 +12,6 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { jelaMock } from "../../utils/dataMocks";
 
 const RestaurantCard = ({ restoran, onPress }) => {
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: "burgers", title: "Burgeri" },
-    { key: "pasta", title: "Paste" },
-  ]);
   return (
     <TouchableOpacity
       onPress={() => onPress(restoran)}

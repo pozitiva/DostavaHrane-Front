@@ -18,6 +18,7 @@ export const jelaMock = [
     restoranId: 1,
     sourceSlike: images.cards,
     opis: " neki kul opis ovog jela",
+    dodaci: ["Kecap", "Majonez", "Salata"],
   },
   {
     id: 2,
@@ -27,6 +28,7 @@ export const jelaMock = [
     restoranId: 1,
     sourceSlike: images.cards,
     opis: " neki kul opis ovog jela",
+    dodaci: ["Kecap", "Majonez", "Salata"],
   },
   {
     id: 3,
@@ -36,6 +38,7 @@ export const jelaMock = [
     restoranId: 1,
     sourceSlike: images.cards,
     opis: " neki kul opis ovog jela",
+    dodaci: ["Kecap", "Majonez", "Salata"],
   },
 
   {
@@ -46,5 +49,6 @@ export const jelaMock = [
     restoranId: 1,
     sourceSlike: images.cards,
     opis: " neki kul opis ovog jela",
+    dodaci: ["Kecap", "Majonez", "Salata"],
   },
 ];

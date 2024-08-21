@@ -1,33 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, Image, Dimensions } from "react-native";
+import { useNavigation } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Dimensions, FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { jelaMock } from "../../utils/dataMocks";
 import DishCard from "../components/DishCard";
 
 const RestaurantScreen = ({ route }) => {
   const { restoran } = route.params;
-  const [jela, setJela] = useState([]);
+  const [dish, setDish] = useState([]);
   const [index, setIndex] = useState(0);
+  const navigation = useNavigation();
+
   const [routes] = useState([
     { key: "burgers", title: "Burgeri" },
     { key: "pasta", title: "Paste" },
   ]);
 
   useEffect(() => {
-    setJela(jelaMock);
+    setDish(jelaMock);
   }, []);
 
   const filterJela = (tip) => {
-    return jela.filter(
+    return dish.filter(
       (jelo) => jelo.tip === tip && jelo.restoranId === restoran.id
     );
+  };
+
+  const handlePress = (dish) => {
+    navigation.navigate("Jelo", { dish });
   };
 
   const BurgersRoute = () => (
     <FlatList
       data={filterJela("burgeri")}
-      renderItem={({ item }) => <DishCard dish={item} />}
+      renderItem={({ item }) => <DishCard dish={item} onPress={handlePress} />}
+      //renderItem={({ item }) => <DishCard dish={item} />}
       keyExtractor={(item) => item.id.toString()}
     />
   );
@@ -35,7 +43,8 @@ const RestaurantScreen = ({ route }) => {
   const PastaRoute = () => (
     <FlatList
       data={filterJela("paste")}
-      renderItem={({ item }) => <DishCard dish={item} />}
+      //renderItem={({ item }) => <DishCard dish={item} />}
+      renderItem={({ item }) => <DishCard dish={item} onPress={handlePress} />}
       keyExtractor={(item) => item.id.toString()}
     />
   );
