@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Counter from "../components/Counter";
-import CustomButton from "./../components/CustomButton";
+import CustomButton from "../components/CustomButton";
+import useCartStore from "../../store/CartStore";
+import { useNavigation } from "expo-router";
 
 const DishScreen = ({ route }) => {
   const { dish } = route.params;
   const [selectedExtras, setSelectedExtras] = useState([]);
+  const [quantity, setQuantity] = useState(1); // Track quantity
+
+  const navigation = useNavigation();
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const toggleExtra = (extra) => {
     if (selectedExtras.includes(extra)) {
@@ -14,6 +20,19 @@ const DishScreen = ({ route }) => {
     } else {
       setSelectedExtras([...selectedExtras, extra]);
     }
+  };
+
+  const handleAddToCart = () => {
+    const item = {
+      ...dish,
+      selectedExtras,
+      quantity, // Include quantity
+      uniqueId: `${dish.id}-${Date.now()}`,
+    };
+    addToCart(item);
+    console.log(item);
+    setQuantity(1); // Reset quantity after adding to cart
+    setSelectedExtras([]);
   };
 
   return (
@@ -42,15 +61,19 @@ const DishScreen = ({ route }) => {
           ))}
         </View>
 
-        <Counter />
+        <Counter quantity={quantity} setQuantity={setQuantity} />
 
         <View className="flex items-center">
           <CustomButton
             title="Dodaj u porudžbinu"
             containerStyles="w-[335px] h-[48px] rounded-full mt-4"
-            handlePress={() => {
-              /* Handle your button press here */
-            }}
+            handlePress={handleAddToCart}
+          />
+
+          <CustomButton
+            title="Pogledaj korpu"
+            containerStyles="w-[335px] h-[48px] rounded-full mt-4"
+            handlePress={() => navigation.navigate("Korpa")}
           />
         </View>
       </ScrollView>

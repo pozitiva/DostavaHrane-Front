@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, TextInput, Text, View } from "react-native";
 import { restoraniMock } from "../../utils/dataMocks";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantCard from "../components/RestaurantCard";
-import { useNavigation } from "expo-router";
+import { useNavigation } from "@react-navigation/native"; // Make sure to use the correct useNavigation hook
 
 const Search = () => {
   const [restorani, setRestorani] = useState([]);
@@ -18,11 +11,10 @@ const Search = () => {
 
   useEffect(() => {
     setRestorani(restoraniMock);
-    // setRestorani(posaljiZahtevKaBeku())
   }, []);
 
   const handlePress = (restoran) => {
-    //navigation.navigate("Restoran", { restoran });
+    // Ensure the navigation points to the Restoran route in the MainStack
     navigation.navigate("Restoran", { restoran });
   };
 
@@ -33,8 +25,6 @@ const Search = () => {
         <TextInput
           placeholder="Search on foodly"
           className="mt-2 p-3 bg-gray-200 rounded-md"
-          editable={true}
-          style={{ zIndex: 1 }}
         />
       </View>
       <Text className="text-lg font-bold mt-4 mb-2 px-4">Top Restaurants</Text>

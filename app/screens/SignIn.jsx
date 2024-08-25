@@ -42,7 +42,8 @@ const SignIn = () => {
         <CustomButton
           title="Login"
           handlePress={() => {
-            navigation.navigate("Pocetna");
+            //navigation.navigate("Pocetna");
+            navigation.navigate("MainTabs");
           }}
           containerStyles="#22A45D rounded-lg p-4 mb-4"
           //isLoading={isSubmitting}

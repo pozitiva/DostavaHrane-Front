@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const Counter = () => {
-  const [count, setCount] = useState(1);
+const Counter = ({ quantity, setQuantity }) => {
+  //console.log("Counter Props:", { quantity, setQuantity }); // Check if props are received
 
   const increment = () => {
-    setCount(count + 1);
+    setQuantity(quantity + 1);
   };
 
   const decrement = () => {
-    if (count > 1) {
-      setCount(count - 1);
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
     }
   };
 
@@ -22,7 +22,9 @@ const Counter = () => {
       >
         <Text className="text-xl">-</Text>
       </TouchableOpacity>
-      <Text className="mx-4 text-lg">{count.toString().padStart(1, "0")}</Text>
+      <Text className="mx-4 text-lg">
+        {quantity.toString().padStart(1, "0")}
+      </Text>
       <TouchableOpacity
         onPress={increment}
         className="bg-gray-200 rounded-full p-2"
