@@ -5,55 +5,71 @@ import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 import { images } from "../../constants";
 import { useNavigation } from "expo-router";
+import { loginUser } from "../../api/authApi";
 
 const SignIn = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
+  const [musterija, setMusterija] = useState({
+    email: "dunja@dunja.com",
+    sifra: "dunja123",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
   const navigation = useNavigation();
+
+  const handleLogin = async () => {
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      const response = await loginUser(musterija);
+      if (response !== null) {
+        navigation.navigate("MainTabs");
+      }
+    } catch (error) {
+      setError("Neuspešno logovanje");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>
-        <Text className="text-lg text-gray-800 mb-4">Sign In</Text>
-        <Text className="text-3xl font-bold text-gray-900">Welcome</Text>
+        <Text className="text-lg text-gray-800 mb-4">Logovanje</Text>
+        <Text className="text-3xl font-bold text-gray-900">Dobrodošli!</Text>
         <Text className="text-sm text-gray-600 mt-2 mb-6">
           Enter your Phone number or Email address for sign in. Enjoy your food
         </Text>
 
         <FormField
           title="EMAIL"
-          value={form.email}
-          handleChangeText={(e) => setForm({ ...form, email: e })}
+          value={musterija.email}
+          handleChangeText={(e) => setMusterija({ ...musterija, email: e })}
           //otherStyles="mt-7"
           keyboardType="email-address"
-          placeholder="Your email address"
+          placeholder="Tvoj email"
         />
 
         <FormField
           title="PASSWORD"
-          value={form.password}
-          handleChangeText={(e) => setForm({ ...form, password: e })}
+          value={musterija.sifra}
+          handleChangeText={(e) => setMusterija({ ...musterija, sifra: e })}
           //otherStyles="mt-7"
-          placeholder="Your password"
+          placeholder="Tvoja sifra"
         />
 
         <CustomButton
-          title="Login"
-          handlePress={() => {
-            //navigation.navigate("Pocetna");
-            navigation.navigate("MainTabs");
-          }}
+          title="Uloguj se"
+          handlePress={handleLogin}
           containerStyles="#22A45D rounded-lg p-4 mb-4"
           //isLoading={isSubmitting}
         />
+        {error && <Text className="text-red-500">{error}</Text>}
 
         <View className="flex-row justify-center mb-4">
-          <Text className="text-xs text-gray-600">Don't have an account? </Text>
+          <Text className="text-xs text-gray-600">Nemaš nalogt? </Text>
 
           <TouchableOpacity onPress={() => navigation.navigate("Registruj")}>
-            <Text className="text-xs text-orange-500">Create new account.</Text>
+            <Text className="text-xs text-orange-500">Kreiraj novi nalog.</Text>
           </TouchableOpacity>
         </View>
 

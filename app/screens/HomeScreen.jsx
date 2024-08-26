@@ -2,33 +2,31 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { FlatList, View } from "react-native";
-import { restoraniMock } from "../../utils/dataMocks";
+import { FlatList } from "react-native";
 import RestaurantCard from "./../components/RestaurantCard";
+import { vratiSveRestorane } from "../../api/restoranApi";
 
 const Pocetna = () => {
   const [restorani, setRestorani] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
-    setRestorani(restoraniMock);
-    // setRestorani(posaljiZahtevKaBeku())
-  }, []);
+    const handleRestorans = async () => {
+      const odgovor = await vratiSveRestorane();
 
-  const handlePress = (restoran) => {
-    //navigation.navigate("Restoran", { restoran });
-    navigation.navigate("Pretraga");
-  };
+      setRestorani(odgovor);
+    };
+
+    handleRestorans();
+  }, []);
 
   return (
     <SafeAreaView className="flex-1">
       <FlatList
         className="flex-1 mx-4"
         data={restorani}
-        renderItem={({ item }) => (
-          <RestaurantCard restoran={item} onPress={handlePress} />
-        )}
-        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <RestaurantCard restoran={item} />}
+        // keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         contentContainerStyle={{ alignItems: "center" }}
       />

@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { jelaMock } from "../../utils/dataMocks";
+import React from "react";
+import { Image, Text, TouchableOpacity } from "react-native";
+import { images } from "../../constants";
+import { useNavigation } from "expo-router";
 
-const RestaurantCard = ({ restoran, onPress }) => {
+const RestaurantCard = ({ restoran }) => {
+  const navigation = useNavigation();
+  const handlePress = () => {
+    console.log(restoran.id);
+    console.log(restoran);
+    navigation.navigate("Restoran", { restoranId: restoran.id });
+  };
+
   return (
     <TouchableOpacity
-      onPress={() => onPress(restoran)}
+      onPress={() => handlePress()}
       className="w-[45%] mb-4 mx-[2.5%]"
     >
-      <Image source={restoran.sourceSlike} className="h-48 w-full" />
-      <Text className="text-left mt-2">{restoran.imeRestorana}</Text>
+      <Image source={images.cards} className="h-48 w-full" />
+      <Text className="text-left mt-2">{restoran.ime}</Text>
+      <Text className="text-left mt-2">Radno vreme: {restoran.radnoVreme}</Text>
     </TouchableOpacity>
   );
 };

@@ -5,20 +5,40 @@ import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 import { images } from "../../constants";
 import { useNavigation } from "expo-router";
+import { registerUser } from "../../api/authApi";
 
 const SignUp = () => {
-  const [form, setForm] = useState({
-    name: "",
+  const [musterija, setMusterija] = useState({
+    ime: "",
     email: "",
-    password: "",
+    sifra: "",
+    potvrdjenaSifra: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
   const navigation = useNavigation();
+
+  const handleSignUp = async () => {
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      const response = await registerUser(musterija);
+      if (response === "Musterija je uspesno registrovana") {
+        navigation.navigate("Uloguj");
+      }
+    } catch (error) {
+      setError("Neuspešna registracija");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>
-        <Text className="text-lg text-gray-800 mb-4">Sign Up</Text>
-        <Text className="text-3xl font-bold text-gray-900">Create Account</Text>
+        <Text className="text-lg text-gray-800 mb-4">Registracija</Text>
+        <Text className="text-3xl font-bold text-gray-900">Kreiraj nalog</Text>
 
         <View className="text-xs text-gray-600text-sm text-gray-600 mt-2 mb-6">
           <Text>Enter your Name, Email and Password for sign up.</Text>
@@ -28,33 +48,46 @@ const SignUp = () => {
         </View>
 
         <FormField
-          title="FULL NAME"
-          value={form.name}
-          handleChangeText={(e) => setForm({ ...form, name: e })}
-          placeholder="Your name"
+          title="IME"
+          value={musterija.ime}
+          handleChangeText={(e) => setMusterija({ ...musterija, ime: e })}
+          placeholder="Tvoje ime"
         />
         <FormField
           title="EMAIL"
-          value={form.email}
-          handleChangeText={(e) => setForm({ ...form, email: e })}
+          value={musterija.email}
+          handleChangeText={(e) => setMusterija({ ...musterija, email: e })}
           keyboardType="email-address"
-          placeholder="Your email address"
+          placeholder="Tvoja email adresa"
         />
 
         <FormField
-          title="PASSWORD"
-          value={form.password}
-          handleChangeText={(e) => setForm({ ...form, password: e })}
-          placeholder="Your password"
+          title="ŠIFRA"
+          value={musterija.sifra}
+          handleChangeText={(e) => setMusterija({ ...musterija, sifra: e })}
+          placeholder="Tvoja šifra"
+        />
+
+        <FormField
+          title="POTVRĐENA ŠIFRA"
+          value={musterija.potvrdjenaSifra}
+          handleChangeText={(e) =>
+            setMusterija({ ...musterija, potvrdjenaSifra: e })
+          }
+          placeholder="Tvoja potvrđena šifra"
         />
 
         <CustomButton
-          title="Sign up"
-          handlePress={() => {
-            navigation.navigate("Pocetna");
-          }}
+          title="Registruj se"
+          // handlePress={() => {
+          //   navigation.navigate("Pocetna");
+          // }}
+          handlePress={handleSignUp}
           containerStyles="#22A45D rounded-lg p-4 mb-4"
+          isLoading={isSubmitting}
         />
+
+        {error && <Text className="text-red-500">{error}</Text>}
 
         <View className=" flex-1 justify-center items-center">
           <Text className=" text-sm text-gray-600">

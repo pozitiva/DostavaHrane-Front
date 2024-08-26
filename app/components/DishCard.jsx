@@ -1,5 +1,6 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { images } from "../../constants";
 
 const DishCard = ({ dish, onPress }) => {
   return (
@@ -8,7 +9,7 @@ const DishCard = ({ dish, onPress }) => {
       className="flex-row items-center py-4 border-b border-gray-200"
     >
       <Image
-        source={dish.sourceSlike}
+        source={images.cards}
         className="h-20 w-20 rounded-lg"
         resizeMode="cover"
       />
