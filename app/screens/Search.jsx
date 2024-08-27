@@ -14,20 +14,21 @@ const Search = () => {
   }, []);
 
   const handlePress = (restoran) => {
-    // Ensure the navigation points to the Restoran route in the MainStack
     navigation.navigate("Restoran", { restoran });
   };
 
   return (
     <SafeAreaView className="flex-1">
       <View className="p-4">
-        <Text className="text-2xl font-bold">Search</Text>
+        {/* <Text className="text-2xl font-bold">Search</Text> */}
         <TextInput
-          placeholder="Search on foodly"
-          className="mt-2 p-3 bg-gray-200 rounded-md"
+          placeholder="Pretraži restorane"
+          className="p-3 bg-gray-200 rounded-md"
         />
       </View>
-      <Text className="text-lg font-bold mt-4 mb-2 px-4">Top Restaurants</Text>
+      <Text className="text-lg font-bold mt-4 mb-2 px-4">
+        Najbolji restorarani
+      </Text>
       <FlatList
         className="flex-1 mx-4"
         data={restorani}

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://192.168.1.54:5076/api/restoran";
+// const API_BASE_URL = "http://192.168.1.54:5076/api/restoran";
+const API_BASE_URL = "http://192.168.0.13:5076/api/restoran";
 
 export const vratiSveRestorane = async () => {
   try {

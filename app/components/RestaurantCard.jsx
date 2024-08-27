@@ -6,9 +6,10 @@ import { useNavigation } from "expo-router";
 const RestaurantCard = ({ restoran }) => {
   const navigation = useNavigation();
   const handlePress = () => {
-    console.log(restoran.id);
-    console.log(restoran);
-    navigation.navigate("Restoran", { restoranId: restoran.id });
+    // navigation.navigate("Restoran", { restoranId: restoran.id });
+    navigation.navigate("Restoran", {
+      restoranId: restoran.id,
+    });
   };
 
   return (

@@ -1,3 +1,4 @@
+// components/TabIcon.js
 import React from "react";
 import { View, Text, Image } from "react-native";
 
@@ -21,7 +22,6 @@ const TabIcon = ({ icon, color, name, focused }) => {
 };
 
 export const commonTabOptions = (icon, name) => ({
-  headerShown: false,
   tabBarIcon: ({ color, focused }) => (
     <TabIcon icon={icon} color={color} focused={focused} name={name} />
   ),

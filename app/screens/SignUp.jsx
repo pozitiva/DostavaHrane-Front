@@ -37,7 +37,6 @@ const SignUp = () => {
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>
-        <Text className="text-lg text-gray-800 mb-4">Registracija</Text>
         <Text className="text-3xl font-bold text-gray-900">Kreiraj nalog</Text>
 
         <View className="text-xs text-gray-600text-sm text-gray-600 mt-2 mb-6">
