@@ -1,10 +1,7 @@
-// screens/Pocetna.js
-
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, FlatList, View } from "react-native";
-import RestaurantCard from "../components/RestaurantCard";
+import { FlatList, SafeAreaView, View } from "react-native";
 import { vratiSveRestorane } from "../../api/restoranApi";
-import BackButton from "../components/BackButton";
+import RestaurantCard from "../components/RestaurantCard";
 
 const Pocetna = () => {
   const [restorani, setRestorani] = useState([]);

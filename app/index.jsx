@@ -2,10 +2,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { icons } from "../constants";
-import { commonTabOptions } from "./components/TabIcon";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { icons } from "../constants"; // Ensure icons are properly imported
+import TabIcon from "./components/TabIcon";
 import CartScreen from "./screens/CartScreen";
-import DishScreen from "./screens/DishScreen";
 import Pocetna from "./screens/HomeScreen";
 import Profile from "./screens/Profile";
 import RestaurantScreen from "./screens/RestaurantScreen";
@@ -14,6 +14,8 @@ import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import Welcome from "./screens/WelcomeScreen";
 import BackButton from "./components/BackButton";
+import useCartStore from "../store/CartStore";
+import { Image, Text, View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const TabNav = createBottomTabNavigator();
@@ -34,8 +36,8 @@ const HomeStack = () => {
         name="Pocetna"
         component={Pocetna}
         options={{
-          headerShown: true, // Prikazuje header na Pocetna ekranu
-          headerTitle: "Pocetna", // Naslov za Pocetna
+          headerShown: true,
+          headerTitle: "Pocetna",
           ...headerOptions,
         }}
       />
@@ -43,26 +45,8 @@ const HomeStack = () => {
         name="Restoran"
         component={RestaurantScreen}
         options={{
-          headerShown: true, // Prikazuje header na Restoran ekranu
-          headerTitle: "Restoran", // Naslov za Restoran
-          ...headerOptions,
-        }}
-      />
-      <Stack.Screen
-        name="Jelo"
-        component={DishScreen}
-        options={{
-          headerShown: true, // Prikazuje header na Jelo ekranu
-          headerTitle: "Jelo", // Naslov za Jelo
-          ...headerOptions,
-        }}
-      />
-      <Stack.Screen
-        name="Korpa"
-        component={CartScreen}
-        options={{
-          headerShown: true, // Prikazuje header na Korpa ekranu
-          headerTitle: "Korpa", // Naslov za Korpa
+          headerShown: true,
+          headerTitle: "Restoran",
           ...headerOptions,
         }}
       />
@@ -71,64 +55,126 @@ const HomeStack = () => {
 };
 
 const TabScreens = () => {
+  const cartCount = useCartStore((state) => state.cart.length);
+
+  const BadgeIcon = ({ icon, badgeCount }) => (
+    <View style={{ position: "relative", alignItems: "center" }}>
+      <Image
+        source={icon}
+        style={{ width: 24, height: 24, tintColor: "#EF9920" }}
+      />
+      {badgeCount > 0 && (
+        <View
+          style={{
+            position: "absolute",
+            top: -10,
+            right: -10,
+            backgroundColor: "red",
+            borderRadius: 10,
+            width: 20,
+            height: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: "bold" }}>
+            {badgeCount}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+
   return (
     <TabNav.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         ...headerOptions,
-        headerShown: false, // Header je već podešen unutar HomeStack, tako da ne treba dupli header ovde
-      }}
+        headerShown: false,
+        tabBarIcon: ({ focused }) => {
+          const color = focused ? "#EF9920" : "gray";
+          const iconSource = {
+            Pocetna: icons.home,
+            Pretraga: icons.search,
+            Profil: icons.profile,
+            Korpa: icons.cart,
+          }[route.name];
+
+          return route.name === "Korpa" ? (
+            <BadgeIcon icon={iconSource} badgeCount={cartCount} />
+          ) : (
+            <Image
+              source={iconSource}
+              style={{
+                width: 24,
+                height: 24,
+                tintColor: color,
+              }}
+            />
+          );
+        },
+        tabBarLabel: ({ focused }) => {
+          const color = focused ? "#EF9920" : "gray";
+          return (
+            <Text style={{ color, fontSize: 12 }}>
+              {route.name === "Pocetna"
+                ? "Pocetna"
+                : route.name === "Pretraga"
+                ? "Pretraga"
+                : route.name === "Profil"
+                ? "Profil"
+                : route.name === "Korpa"
+                ? "Korpa"
+                : ""}
+            </Text>
+          );
+        },
+        tabBarLabelStyle: {
+          fontSize: 12, // Customize label size if needed
+        },
+      })}
     >
-      <TabNav.Screen
-        name="Pocetna"
-        component={HomeStack} // HomeStack uključuje Pocetna i sve ostale ekrane
-        options={commonTabOptions(icons.home, "Pocetna")}
-      />
-      <TabNav.Screen
-        name="Pretraga"
-        component={Search}
-        options={commonTabOptions(icons.search, "Pretraga")}
-      />
-      <TabNav.Screen
-        name="Profil"
-        component={Profile}
-        options={commonTabOptions(icons.profile, "Profil")}
-      />
+      <TabNav.Screen name="Pocetna" component={HomeStack} />
+      <TabNav.Screen name="Pretraga" component={Search} />
+      <TabNav.Screen name="Profil" component={Profile} />
+      <TabNav.Screen name="Korpa" component={CartScreen} />
     </TabNav.Navigator>
   );
 };
 
 const App = () => {
   return (
-    <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Uloguj"
-          component={SignIn}
-          options={{
-            ...headerOptions,
-            headerTitle: "Logovanje",
-          }}
-        />
-        <Stack.Screen
-          name="Registruj"
-          component={SignUp}
-          options={{
-            ...headerOptions,
-            headerTitle: "Registracija",
-          }}
-        />
-        <Stack.Screen
-          name="MainTabs"
-          component={TabScreens}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView>
+      <NavigationContainer independent={true}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Uloguj"
+            component={SignIn}
+            options={{
+              ...headerOptions,
+              headerTitle: "Logovanje",
+            }}
+          />
+          <Stack.Screen
+            name="Registruj"
+            component={SignUp}
+            options={{
+              ...headerOptions,
+              headerTitle: "Registracija",
+            }}
+          />
+          <Stack.Screen
+            name="MainTabs"
+            component={TabScreens}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 

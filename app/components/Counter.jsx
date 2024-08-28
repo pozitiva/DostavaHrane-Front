@@ -1,19 +1,31 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const Counter = ({ quantity, setQuantity }) => {
+const Counter = ({
+  kolicina,
+  setKolicina,
+  item = () => {},
+  addToCart = () => {},
+  removeFromCart = () => {},
+}) => {
   //console.log("Counter Props:", { quantity, setQuantity }); // Check if props are received
 
   const increment = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const decrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+    setKolicina(kolicina + 1);
+    if (addToCart && item) {
+      addToCart({ ...item, kolicina: kolicina + 1 });
     }
   };
 
+  const decrement = () => {
+    if (kolicina > 1) {
+      setKolicina(kolicina - 1);
+
+      addToCart({ ...item, kolicina: kolicina - 1 });
+    } else if (kolicina === 1) {
+      removeFromCart(item.uniqueId);
+    }
+  };
   return (
     <View className="flex-row items-center justify-center mt-4">
       <TouchableOpacity
@@ -23,7 +35,7 @@ const Counter = ({ quantity, setQuantity }) => {
         <Text className="text-xl">-</Text>
       </TouchableOpacity>
       <Text className="mx-4 text-lg">
-        {quantity.toString().padStart(1, "0")}
+        {kolicina.toString().padStart(1, "0")}
       </Text>
       <TouchableOpacity
         onPress={increment}

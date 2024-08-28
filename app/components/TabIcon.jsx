@@ -1,34 +1,27 @@
-// components/TabIcon.js
 import React from "react";
 import { View, Text, Image } from "react-native";
 
-const TabIcon = ({ icon, color, name, focused }) => {
-  return (
-    <View
-      style={{ alignItems: "center", justifyContent: "center", height: 50 }}
-    >
-      <Image
-        source={icon}
-        resizeMode="contain"
-        style={{ width: 24, height: 24, tintColor: color, marginTop: 15 }}
-      />
-      <Text
-        style={{ color: focused ? color : "black", fontSize: 10, marginTop: 5 }}
+const TabIcon = ({ icon, badgeCount }) => (
+  <View style={{ position: "relative" }}>
+    <Image source={icon} style={{ width: 24, height: 24 }} />
+    {badgeCount > 0 && (
+      <View
+        style={{
+          position: "absolute",
+          top: -10,
+          right: -10,
+          backgroundColor: "red",
+          borderRadius: 10,
+          width: 20,
+          height: 20,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        {name}
-      </Text>
-    </View>
-  );
-};
-
-export const commonTabOptions = (icon, name) => ({
-  tabBarIcon: ({ color, focused }) => (
-    <TabIcon icon={icon} color={color} focused={focused} name={name} />
-  ),
-  tabBarLabel: "",
-  tabBarActiveTintColor: "#EF9920",
-  tabBarInactiveTintColor: "gray",
-  tabBarStyle: { backgroundColor: "#FFFFFF", height: 60, paddingBottom: 5 },
-});
+        <Text style={{ color: "white", fontWeight: "bold" }}>{badgeCount}</Text>
+      </View>
+    )}
+  </View>
+);
 
 export default TabIcon;

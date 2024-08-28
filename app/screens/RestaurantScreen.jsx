@@ -6,6 +6,7 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { vratiRestoran } from "../../api/restoranApi";
 import { images } from "../../constants";
 import DishCard from "../components/DishCard";
+import JeloModal from "../components/JeloModal";
 
 const RestaurantScreen = ({ route }) => {
   const { restoranId } = route.params;
@@ -14,14 +15,13 @@ const RestaurantScreen = ({ route }) => {
   const [restoran, setRestoran] = useState({});
   const [routes, setRoutes] = useState([]);
   const [scenes, setScenes] = useState({});
-  const navigation = useNavigation();
+  const [jelo, setJelo] = useState("");
 
   useEffect(() => {
     const vratiRestoranPoId = async () => {
       const odgovor = await vratiRestoran(restoranId);
       setRestoran(odgovor);
 
-      // Group dishes by type
       const groupedDishes = odgovor.jela.reduce((groups, jelo) => {
         const { tipJela } = jelo;
         if (!groups[tipJela]) {
@@ -31,13 +31,11 @@ const RestaurantScreen = ({ route }) => {
         return groups;
       }, {});
 
-      // Check if grouped dishes exist
       if (Object.keys(groupedDishes).length === 0) {
         console.error("No dishes found for the restaurant.");
         return;
       }
 
-      // Create routes and scenes dynamically based on dish types
       const generatedRoutes = Object.keys(groupedDishes).map((tipJela) => ({
         key: tipJela,
         title: tipJela.charAt(0).toUpperCase() + tipJela.slice(1),
@@ -49,7 +47,9 @@ const RestaurantScreen = ({ route }) => {
             <FlatList
               data={groupedDishes[tipJela]}
               renderItem={({ item }) => (
-                <DishCard dish={item} onPress={() => handlePress(item)} />
+                <View>
+                  <DishCard onPress={() => setJelo(item)} jelo={item} />
+                </View>
               )}
               keyExtractor={(item) => item.naziv}
             />
@@ -66,11 +66,6 @@ const RestaurantScreen = ({ route }) => {
     vratiRestoranPoId();
   }, [restoranId]);
 
-  const handlePress = (jela) => {
-    navigation.navigate("Jelo", { jela });
-  };
-
-  // Check if routes and scenes are set before rendering TabView
   if (routes.length === 0 || Object.keys(scenes).length === 0) {
     return <Text>Loading...</Text>;
   }
@@ -98,6 +93,7 @@ const RestaurantScreen = ({ route }) => {
           />
         )}
       />
+      {jelo && <JeloModal jelo={jelo} onClose={() => setJelo("")} />}
     </SafeAreaView>
   );
 };

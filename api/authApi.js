@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API_BASE_URL = "http://192.168.1.54:5076/api/musterija";
-const API_BASE_URL = "http://192.168.0.13:5076/api/musterija";
+const API_BASE_URL = "http://192.168.1.54:5076/api/musterija";
+//const API_BASE_URL = "http://192.168.0.13:5076/api/musterija";
 
 export const registerUser = async (userData) => {
   try {

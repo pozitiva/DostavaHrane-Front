@@ -13,6 +13,7 @@ import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import delivery from "../assets/icons/food-delivery_7541708.png";
 import leftarrow from "../assets/icons/leftarrow.png";
+import cart from "../assets/icons/cart.png";
 
 export default {
   play,
@@ -30,4 +31,5 @@ export default {
   eye,
   delivery,
   leftarrow,
+  cart,
 };
