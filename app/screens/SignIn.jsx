@@ -6,6 +6,7 @@ import FormField from "../components/FormField";
 import { images } from "../../constants";
 import { useNavigation } from "expo-router";
 import { loginUser } from "../../api/authApi";
+import useMusterijaSkladiste from "./../../store/MusterijaSkladiste";
 
 const SignIn = () => {
   const [musterija, setMusterija] = useState({
@@ -16,14 +17,18 @@ const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
+  const { setKorisnik } = useMusterijaSkladiste();
 
   const handleLogin = async () => {
     setIsSubmitting(true);
     setError(null);
     try {
-      const response = await loginUser(musterija);
-      if (response !== null) {
+      const odgovor = await loginUser(musterija);
+      console.log(odgovor);
+      if (odgovor !== null) {
         //navigation.navigate("Pocetna");
+        setKorisnik(odgovor);
+        console.log(odgovor);
         navigation.navigate("MainTabs", {
           screen: "Pocetna",
         });

@@ -27,7 +27,6 @@ const JeloModal = ({ jelo, onClose }) => {
 
   const handleAddToCart = () => {
     const uniqueId = `${jelo.id}-${Date.now()}`;
-    console.log(uniqueId);
 
     const item = {
       ...jelo,
@@ -37,12 +36,13 @@ const JeloModal = ({ jelo, onClose }) => {
     };
     addToCart(item);
     setKolicina(1);
+    onClose();
     //setSelectedExtras([]);
   };
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={100} // Visina na koju će modal stati
+      snapPoint={600} // Visina na koju će modal stati
       modalHeight={600} // Maksimalna visina modala
       onClose={() => onClose()}
     >

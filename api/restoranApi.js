@@ -5,8 +5,8 @@ const API_BASE_URL = "http://192.168.1.54:5076/api/restoran";
 
 export const vratiSveRestorane = async () => {
   try {
-    const response = await axios.get(API_BASE_URL);
-    return response.data;
+    const odgovor = await axios.get(API_BASE_URL);
+    return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);
     throw error;
@@ -15,8 +15,8 @@ export const vratiSveRestorane = async () => {
 
 export const vratiRestoran = async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${id}`);
-    return response.data;
+    const odgovor = await axios.get(`${API_BASE_URL}/${id}`);
+    return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);
     throw error;
@@ -25,8 +25,8 @@ export const vratiRestoran = async (id) => {
 
 export const vratiJelaZaRestoran = async (id) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${id}/jela`);
-    return response.data;
+    const odgovor = await axios.get(`${API_BASE_URL}/${id}/jela`);
+    return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);
     throw error;
