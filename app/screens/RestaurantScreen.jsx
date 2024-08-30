@@ -73,7 +73,10 @@ const RestaurantScreen = ({ route }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="items-center mb-6">
-        <Image source={images.cards} className="w-full h-48 rounded-lg" />
+        <Image
+          source={{ uri: restoran.slikaUrl }}
+          className="w-full h-48 rounded-lg"
+        />
         <Text className="text-2xl font-bold mt-4">{restoran.ime}</Text>
         <Text className="text-left mt-2">
           Radno vreme: {restoran.radnoVreme}

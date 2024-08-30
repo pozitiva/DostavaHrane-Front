@@ -9,9 +9,6 @@ const CartItem = ({ item, removeFromCart }) => {
       {item.selectedExtras.length > 0 && (
         <Text>Extras: {item.selectedExtras.join(", ")}</Text>
       )}
-      <TouchableOpacity onPress={() => removeFromCart(item.uniqueId)}>
-        <Text className="text-red-500">Remove</Text>
-      </TouchableOpacity>
     </View>
   );
 };

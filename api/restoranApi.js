@@ -1,11 +1,11 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
-const API_BASE_URL = "http://192.168.1.54:5076/api/restoran";
-//const API_BASE_URL = "http://192.168.0.13:5076/api/restoran";
+// const API_BASE_URL = "http://192.168.1.54:5076/api/restoran";
+const API_BASE_URL = "http://192.168.0.13:5076/api/restoran";
 
 export const vratiSveRestorane = async () => {
   try {
-    const odgovor = await axios.get(API_BASE_URL);
+    const odgovor = await axiosInstance.get("/restoran");
     return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);
@@ -15,7 +15,7 @@ export const vratiSveRestorane = async () => {
 
 export const vratiRestoran = async (id) => {
   try {
-    const odgovor = await axios.get(`${API_BASE_URL}/${id}`);
+    const odgovor = await axiosInstance.get(`/restoran/${id}`);
     return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);
@@ -25,7 +25,7 @@ export const vratiRestoran = async (id) => {
 
 export const vratiJelaZaRestoran = async (id) => {
   try {
-    const odgovor = await axios.get(`${API_BASE_URL}/${id}/jela`);
+    const odgovor = await axiosInstance.get(`/restoran/${id}/jela`);
     return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);

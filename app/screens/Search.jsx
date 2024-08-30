@@ -3,24 +3,28 @@ import { FlatList, TextInput, Text, View } from "react-native";
 import { restoraniMock } from "../../utils/dataMocks";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantCard from "../components/RestaurantCard";
-import { useNavigation } from "@react-navigation/native"; // Make sure to use the correct useNavigation hook
+import { useNavigation } from "@react-navigation/native";
+import { vratiSveRestorane } from "../../api/restoranApi";
 
 const Search = () => {
   const [restorani, setRestorani] = useState([]);
-  const navigation = useNavigation();
 
   useEffect(() => {
-    setRestorani(restoraniMock);
-  }, []);
+    const handleRestorans = async () => {
+      try {
+        const odgovor = await vratiSveRestorane();
+        setRestorani(odgovor);
+      } catch (error) {
+        console.error("Error fetching restorani:", error);
+      }
+    };
 
-  const handlePress = (restoran) => {
-    navigation.navigate("Restoran", { restoran });
-  };
+    handleRestorans();
+  }, []);
 
   return (
     <SafeAreaView className="flex-1">
       <View className="p-4">
-        {/* <Text className="text-2xl font-bold">Search</Text> */}
         <TextInput
           placeholder="Pretraži restorane"
           className="p-3 bg-gray-200 rounded-md"
@@ -32,9 +36,7 @@ const Search = () => {
       <FlatList
         className="flex-1 mx-4"
         data={restorani}
-        renderItem={({ item }) => (
-          <RestaurantCard restoran={item} onPress={handlePress} />
-        )}
+        renderItem={({ item }) => <RestaurantCard restoran={item} />}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         contentContainerStyle={{ alignItems: "center" }}

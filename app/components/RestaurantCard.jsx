@@ -1,7 +1,6 @@
+import { useNavigation } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity } from "react-native";
-import { images } from "../../constants";
-import { useNavigation } from "expo-router";
 
 const RestaurantCard = ({ restoran }) => {
   const navigation = useNavigation();
@@ -17,7 +16,10 @@ const RestaurantCard = ({ restoran }) => {
       onPress={() => handlePress()}
       className="w-[45%] mb-4 mx-[2.5%]"
     >
-      <Image source={images.cards} className="h-48 w-full" />
+      <Image
+        source={{ uri: restoran.slikaUrl }}
+        className="h-48 w-full rounded-xl"
+      />
       <Text className="text-left mt-2">{restoran.ime}</Text>
       <Text className="text-left mt-2">Radno vreme: {restoran.radnoVreme}</Text>
     </TouchableOpacity>

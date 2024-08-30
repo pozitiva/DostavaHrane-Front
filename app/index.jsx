@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { icons } from "../constants"; // Ensure icons are properly imported
 import TabIcon from "./components/TabIcon";
@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator();
 const TabNav = createBottomTabNavigator();
 
 const headerOptions = {
-  headerShown: true,
+  headerShown: false,
   headerTitleAlign: "center",
   headerTitleStyle: {
     color: "#EF9920",
@@ -33,7 +33,7 @@ const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Pocetna"
+        name="Home"
         component={Pocetna}
         options={{
           headerShown: true,
@@ -89,7 +89,7 @@ const TabScreens = () => {
     <TabNav.Navigator
       screenOptions={({ route }) => ({
         ...headerOptions,
-        headerShown: false,
+        headerShown: true,
         tabBarIcon: ({ focused }) => {
           const color = focused ? "#EF9920" : "gray";
           const iconSource = {

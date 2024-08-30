@@ -1,9 +1,8 @@
 import axiosInstance from "./axiosInstance";
 
-// const API_BASE_URL = "http://192.168.1.54:5076/api/narudzbina";
-const API_BASE_URL = "http://192.168.0.13:5076/api/narudzbina";
+const API_BASE_URL = "http://192.168.0.13:5076/api/adresa";
 
-export const napraviNarudzbinu = async (orderData) => {
+export const kreirajAdresu = async (orderData) => {
   try {
     const odgovor = await axiosInstance.post(API_BASE_URL, orderData, {
       headers: {

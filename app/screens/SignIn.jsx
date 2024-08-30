@@ -26,12 +26,12 @@ const SignIn = () => {
       const odgovor = await loginUser(musterija);
       console.log(odgovor);
       if (odgovor !== null) {
-        //navigation.navigate("Pocetna");
         setKorisnik(odgovor);
         console.log(odgovor);
         navigation.navigate("MainTabs", {
           screen: "Pocetna",
         });
+        // navigation.navigate("Pocetna");
       }
     } catch (error) {
       setError("Neuspešno logovanje");
@@ -76,10 +76,7 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
         <Text className="text-xs text-center text-gray-600 mb-4">Or</Text>
-        <TouchableOpacity className="bg-blue-700 rounded-lg p-4 flex-row items-center justify-center mb-4">
-          <Image source={images.facebook} className="w-5 h-5 mr-3" />
-          <Text className="text-white font-bold">CONNECT WITH FACEBOOK</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity className="bg-red-600 rounded-lg p-4 flex-row items-center justify-center">
           <Image source={images.google} className="w-5 h-5 mr-3" />
           <Text className="text-white font-bold">CONNECT WITH GOOGLE</Text>

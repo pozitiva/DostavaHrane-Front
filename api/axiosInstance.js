@@ -1,0 +1,23 @@
+import axios from "axios";
+import useMusterijaSkladiste from "../store/MusterijaSkladiste";
+
+const axiosInstance = axios.create({
+  baseURL: "http://192.168.0.13:5076/api",
+});
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const { korisnik } = useMusterijaSkladiste.getState();
+
+    if (korisnik?.id) {
+      config.headers["Authorization"] = `${korisnik.id}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export default axiosInstance;

@@ -47,7 +47,10 @@ const JeloModal = ({ jelo, onClose }) => {
       onClose={() => onClose()}
     >
       <View className="items-center mb-6">
-        <Image source={images.cards} className="w-full h-48 rounded-lg" />
+        <Image
+          source={{ uri: jelo.slikaUrl }}
+          className="w-full h-48 rounded-lg"
+        />
         {/* <Text className="text-2xl font-bold mt-4">{jelo.naziv}</Text> */}
       </View>
 

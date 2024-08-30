@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { FlatList, Modal, Text, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useCartStore from "../../store/CartStore";
-import CustomButton from "../components/CustomButton";
 import Counter from "../components/Counter";
-import useMusterijaSkladiste from "./../../store/MusterijaSkladiste";
+import CustomButton from "../components/CustomButton";
 import { napraviNarudzbinu } from "./../../api/narudzbinaApi";
-import { Picker } from "@react-native-picker/picker";
+import useMusterijaSkladiste from "./../../store/MusterijaSkladiste";
 
 const CartScreen = () => {
   const { korisnik } = useMusterijaSkladiste.getState();
+  const [narudzbinaUspesno, setNarudzbinaUspesno] = useState(false);
+  const [ukupnaCena, setUkupnaCena] = useState(0);
+  const [izabranaAdresa, setIzabranaAdresa] = useState(korisnik.adrese[0]);
+  const navigation = useNavigation();
+
   const { cart, removeFromCart, clearCart, addToCart } = useCartStore(
     (state) => ({
       cart: state.cart,
@@ -18,13 +24,24 @@ const CartScreen = () => {
       addToCart: state.addToCart,
     })
   );
-  const [izabranaAdresa, setIzabranaAdresa] = useState(korisnik.adrese[0]);
 
-  const handlePlaceOrder = async () => {
-    const firstItem = cart[0];
-    const restoranId = firstItem.restoranId;
+  const izracunajUkupnuCenu = () => {
+    const ukupno = cart.reduce(
+      (sum, item) => sum + item.cena * item.kolicina,
+      0
+    );
+    setUkupnaCena(ukupno);
+  };
 
-    const orderData = {
+  useEffect(() => {
+    izracunajUkupnuCenu();
+  }, [cart]);
+
+  const obradiNarucivanje = async () => {
+    const prviElement = cart[0];
+    const restoranId = prviElement.restoranId;
+
+    const narudzbina = {
       restoranId: restoranId,
       adresaId: izabranaAdresa.id,
       stavkeNarudzbine: cart.map((item) => ({
@@ -35,9 +52,10 @@ const CartScreen = () => {
     };
 
     try {
-      const response = await napraviNarudzbinu(orderData);
-      console.log("Narudžbina je uspešno napravljena:", response);
-      // obrisa5ti korp, iskociti pop up uspesno narudceno, vratiti na pocetni ekran
+      const odgovor = await napraviNarudzbinu(narudzbina);
+      setNarudzbinaUspesno(true);
+      console.log("Narudžbina je uspešno napravljena:", odgovor);
+      clearCart();
     } catch (error) {
       console.error("Došlo je do greške prilikom naručivanja:", error);
     }
@@ -46,9 +64,6 @@ const CartScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white p-4">
       <FlatList
-        ListHeaderComponent={() => (
-          <Text className="text-2xl font-bold mb-4">Vaša korpa</Text>
-        )}
         data={cart}
         keyExtractor={(item) => item.uniqueId.toString()}
         renderItem={({ item }) => (
@@ -56,12 +71,13 @@ const CartScreen = () => {
             <View>
               <Text className="text-lg font-bold">{item.naziv}</Text>
               <Text>Kolicina: {item.kolicina}</Text>
+              <Text>Cena: {item.cena}</Text>
             </View>
             <Counter
               kolicina={item.kolicina}
-              setKolicina={(newKolicina) => {
-                if (newKolicina > 0) {
-                  addToCart({ ...item, kolicina: newKolicina });
+              setKolicina={(novaKolicina) => {
+                if (novaKolicina > 0) {
+                  addToCart({ ...item, kolicina: novaKolicina });
                 } else {
                   removeFromCart(item.uniqueId);
                 }
@@ -70,7 +86,6 @@ const CartScreen = () => {
               addToCart={addToCart}
               removeFromCart={removeFromCart}
             />
-            {/* UKUPNA CENA */}
           </View>
         )}
         ListFooterComponent={() => (
@@ -84,10 +99,13 @@ const CartScreen = () => {
                 <Picker.Item
                   key={adresa.id}
                   label={`${adresa.naziv} (${adresa.ulica}, ${adresa.grad})`}
-                  value={adresa.id}
+                  value={adresa}
                 />
               ))}
             </Picker>
+            <Text className="text-lg font-bold mt-4">
+              Ukupna cena: {ukupnaCena} RSD
+            </Text>
             <CustomButton
               title="Isprazni korpu"
               handlePress={clearCart}
@@ -95,12 +113,35 @@ const CartScreen = () => {
             />
             <CustomButton
               title="Poruči"
-              handlePress={handlePlaceOrder}
+              handlePress={obradiNarucivanje}
               containerStyles="w-[335px] h-[48px] rounded-full mt-4"
             />
           </View>
         )}
       />
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={narudzbinaUspesno}
+        onRequestClose={() => setNarudzbinaUspesno(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="w-[300px] p-4 bg-white rounded-lg items-center">
+            <Text className="text-lg font-bold mb-4">
+              Narudžbina je uspešno napravljena!
+            </Text>
+            <CustomButton
+              title="Zatvori"
+              handlePress={() => {
+                setNarudzbinaUspesno(false);
+                navigation.navigate("Pocetna");
+              }}
+              containerStyles="w-full h-[48px] rounded-full"
+            />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
