@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Modal, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import useMusterijaSkladiste from "../../store/MusterijaSkladiste";
+import useMusterijaSkladiste from "../../store/KorisnikSkladiste";
 import FormField from "../components/FormField";
 import ListaAdresa from "../components/ListaAdresa";
 import CustomButton from "../components/CustomButton";
@@ -14,18 +14,21 @@ const Profile = () => {
     ulica: "",
     grad: "",
   });
+  const [adresaUspesno, setAdresaUspesno] = useState(false);
 
   const obradiKreiranjeAdrese = async () => {
-    const adresa = {
-      naziv: adresa.naziv,
-      ulica: adresa.ulica,
-      grad: adresa.grad,
-    };
-
     try {
       const odgovor = await kreirajAdresu(adresa);
-      console.log("Adresa je uspešno kreirana:", odgovor);
-      clearCart();
+
+      if (odgovor === "Adresa je uspesno dodato") {
+        setAdresaUspesno(true);
+        setAdresa({
+          naziv: "",
+          ulica: "",
+          grad: "",
+        });
+        console.log("Adresa je uspešno kreirana:", odgovor);
+      }
     } catch (error) {
       console.error("Došlo je do greške prilikom kreiranja adrese:", error);
     }
@@ -65,6 +68,29 @@ const Profile = () => {
             />
           </View>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={adresaUspesno}
+          onRequestClose={() => setAdresaUspesno(false)}
+        >
+          <View className="flex-1 justify-center items-center bg-black/50">
+            <View className="w-[300px] p-4 bg-white rounded-lg items-center">
+              <Text className="text-lg font-bold mb-4">
+                Adresa je uspešno napravljena!
+              </Text>
+              <CustomButton
+                title="Zatvori"
+                handlePress={() => {
+                  setAdresaUspesno(false);
+                  //navigation.navigate("Pocetna");
+                }}
+                containerStyles="w-full h-[48px] rounded-full"
+              />
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );

@@ -20,7 +20,7 @@ export default function Welcome({ navigation }) {
       </Text>
       <CustomButton
         title="Uloguj se"
-        handlePress={() => navigation.navigate("Uloguj")}
+        handlePress={() => navigation.navigate("MusterijaLogin")}
         containerStyles="w-full mt-7"
       />
     </SafeAreaView>

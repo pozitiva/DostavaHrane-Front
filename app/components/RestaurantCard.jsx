@@ -20,8 +20,8 @@ const RestaurantCard = ({ restoran }) => {
         source={{ uri: restoran.slikaUrl }}
         className="h-48 w-full rounded-xl"
       />
-      <Text className="text-left mt-2">{restoran.ime}</Text>
-      <Text className="text-left mt-2">Radno vreme: {restoran.radnoVreme}</Text>
+      <Text className="text-left mt-2 ml-1">{restoran.ime}</Text>
+      <Text className="text-left mt-1"> {restoran.opis}</Text>
     </TouchableOpacity>
   );
 };

@@ -1,21 +1,22 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React from "react";
+import { Image, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { icons } from "../constants"; // Ensure icons are properly imported
-import TabIcon from "./components/TabIcon";
+import useCartStore from "../store/CartStore";
+import BackButton from "./components/BackButton";
 import CartScreen from "./screens/CartScreen";
 import Pocetna from "./screens/HomeScreen";
+import MusterijaLogin from "./screens/MusterijaLogin";
+import NarudzbineEkran from "./screens/NarudzbineEkran";
 import Profile from "./screens/Profile";
 import RestaurantScreen from "./screens/RestaurantScreen";
+import RestoranLogin from "./screens/RestoranLogin";
 import Search from "./screens/Search";
-import SignIn from "./screens/SignIn";
-import SignUp from "./screens/SignUp";
 import Welcome from "./screens/WelcomeScreen";
-import BackButton from "./components/BackButton";
-import useCartStore from "../store/CartStore";
-import { Image, Text, View } from "react-native";
+import MusterijaRegistracija from "./screens/MusterijaRegistracija";
 
 const Stack = createNativeStackNavigator();
 const TabNav = createBottomTabNavigator();
@@ -151,20 +152,39 @@ const App = () => {
             component={Welcome}
             options={{ headerShown: false }}
           />
+
           <Stack.Screen
-            name="Uloguj"
-            component={SignIn}
+            name="MusterijaLogin"
+            component={MusterijaLogin}
             options={{
               ...headerOptions,
               headerTitle: "Logovanje",
             }}
           />
+
           <Stack.Screen
-            name="Registruj"
-            component={SignUp}
+            name="MusterijaRegistracija"
+            component={MusterijaRegistracija}
             options={{
               ...headerOptions,
               headerTitle: "Registracija",
+            }}
+          />
+          <Stack.Screen
+            name="RestoranLogin"
+            component={RestoranLogin}
+            options={{
+              ...headerOptions,
+              headerTitle: "Logovanje",
+            }}
+          />
+
+          <Stack.Screen
+            name="NarudzbineEkran"
+            component={NarudzbineEkran}
+            options={{
+              ...headerOptions,
+              headerTitle: "Narudzbine",
             }}
           />
           <Stack.Screen

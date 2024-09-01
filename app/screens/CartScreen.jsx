@@ -7,7 +7,7 @@ import useCartStore from "../../store/CartStore";
 import Counter from "../components/Counter";
 import CustomButton from "../components/CustomButton";
 import { napraviNarudzbinu } from "./../../api/narudzbinaApi";
-import useMusterijaSkladiste from "./../../store/MusterijaSkladiste";
+import useMusterijaSkladiste from "../../store/KorisnikSkladiste";
 
 const CartScreen = () => {
   const { korisnik } = useMusterijaSkladiste.getState();

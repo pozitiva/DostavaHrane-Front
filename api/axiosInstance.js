@@ -1,6 +1,9 @@
 import axios from "axios";
-import useMusterijaSkladiste from "../store/MusterijaSkladiste";
+import useMusterijaSkladiste from "../store/KorisnikSkladiste";
 
+// const axiosInstance = axios.create({
+//   baseURL: "http://192.168.1.54:5076/api",
+// });
 const axiosInstance = axios.create({
   baseURL: "http://192.168.0.13:5076/api",
 });

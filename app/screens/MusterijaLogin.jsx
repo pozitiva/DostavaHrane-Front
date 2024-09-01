@@ -1,29 +1,29 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "expo-router";
 import React, { useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { loginMusterija } from "../../api/authApi";
+import { images } from "../../constants";
+import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
-import { images } from "../../constants";
-import { useNavigation } from "expo-router";
-import { loginUser } from "../../api/authApi";
-import useMusterijaSkladiste from "./../../store/MusterijaSkladiste";
 
-const SignIn = () => {
+const MusterijaLogin = () => {
   const [musterija, setMusterija] = useState({
-    email: "dunja@dunja.com",
-    sifra: "dunja123",
+    email: "milos@milos.com",
+    sifra: "milos145",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
-  const { setKorisnik } = useMusterijaSkladiste();
+  const { setKorisnik } = useKorisnikSkladiste();
 
   const handleLogin = async () => {
     setIsSubmitting(true);
     setError(null);
     try {
-      const odgovor = await loginUser(musterija);
+      const odgovor = await loginMusterija(musterija);
       console.log(odgovor);
       if (odgovor !== null) {
         setKorisnik(odgovor);
@@ -31,7 +31,6 @@ const SignIn = () => {
         navigation.navigate("MainTabs", {
           screen: "Pocetna",
         });
-        // navigation.navigate("Pocetna");
       }
     } catch (error) {
       setError("Neuspešno logovanje");
@@ -44,13 +43,12 @@ const SignIn = () => {
       <ScrollView>
         <Text className="text-3xl font-bold text-gray-900">Dobrodošli!</Text>
         <Text className="text-sm text-gray-600 mt-2 mb-6">
-          Enter your Phone number or Email address for sign in. Enjoy your food
+          Unesite vaše podatke
         </Text>
         <FormField
           title="EMAIL"
           value={musterija.email}
           handleChangeText={(e) => setMusterija({ ...musterija, email: e })}
-          //otherStyles="mt-7"
           keyboardType="email-address"
           placeholder="Tvoj email"
         />
@@ -58,32 +56,45 @@ const SignIn = () => {
           title="PASSWORD"
           value={musterija.sifra}
           handleChangeText={(e) => setMusterija({ ...musterija, sifra: e })}
-          //otherStyles="mt-7"
           placeholder="Tvoja sifra"
         />
         <CustomButton
           title="Uloguj se"
           handlePress={handleLogin}
           containerStyles="#22A45D rounded-lg p-4 mb-4"
-          //isLoading={isSubmitting}
         />
         {error && <Text className="text-red-500">{error}</Text>}
-        <View className="flex-row justify-center mb-4">
-          <Text className="text-xs text-gray-600">Nemaš nalogt? </Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate("Registruj")}>
-            <Text className="text-xs text-orange-500">Kreiraj novi nalog.</Text>
+        <View className="flex-row justify-center mb-4">
+          <Text className="text-xs text-gray-600">Nemaš nalog? </Text>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("MusterijaRegistracija")}
+          >
+            <Text className="text-xs text-secondary">Kreiraj novi nalog.</Text>
           </TouchableOpacity>
         </View>
-        <Text className="text-xs text-center text-gray-600 mb-4">Or</Text>
+        <Text className="text-xs text-center text-gray-600 mb-4">ILI</Text>
 
         <TouchableOpacity className="bg-red-600 rounded-lg p-4 flex-row items-center justify-center">
           <Image source={images.google} className="w-5 h-5 mr-3" />
-          <Text className="text-white font-bold">CONNECT WITH GOOGLE</Text>
+          <Text className="text-white font-bold">Uloguj se sa Googlom</Text>
         </TouchableOpacity>
+
+        <View className="flex-row justify-center mb-4 mt-5">
+          <Text className="text-xs text-gray-600 ">Upravljaš restoranom? </Text>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("RestoranLogin")}
+          >
+            <Text className="text-xs text-secondary">
+              Uloguj se kao restoran.
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default SignIn;
+export default MusterijaLogin;

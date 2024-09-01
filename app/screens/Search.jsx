@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, TextInput, Text, View } from "react-native";
-import { restoraniMock } from "../../utils/dataMocks";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantCard from "../components/RestaurantCard";
 import { useNavigation } from "@react-navigation/native";

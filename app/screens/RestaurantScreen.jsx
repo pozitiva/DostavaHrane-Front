@@ -77,11 +77,10 @@ const RestaurantScreen = ({ route }) => {
           source={{ uri: restoran.slikaUrl }}
           className="w-full h-48 rounded-lg"
         />
-        <Text className="text-2xl font-bold mt-4">{restoran.ime}</Text>
-        <Text className="text-left mt-2">
-          Radno vreme: {restoran.radnoVreme}
-        </Text>
+        <Text className="text-2xl font-bold ml-1">{restoran.ime}</Text>
+        <Text className="text-left ">{restoran.opis}</Text>
       </View>
+
       <TabView
         navigationState={{ index, routes }}
         renderScene={SceneMap(scenes)}

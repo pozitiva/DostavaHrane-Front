@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useCartStore from "../../store/CartStore";
-import { images } from "../../constants";
-import CustomButton from "./CustomButton";
 import Counter from "./Counter";
+import CustomButton from "./CustomButton";
 
 const JeloModal = ({ jelo, onClose }) => {
   console.log(jelo);
@@ -42,8 +41,8 @@ const JeloModal = ({ jelo, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={600} // Visina na koju će modal stati
-      modalHeight={600} // Maksimalna visina modala
+      snapPoint={600}
+      modalHeight={600}
       onClose={() => onClose()}
     >
       <View className="items-center mb-6">
