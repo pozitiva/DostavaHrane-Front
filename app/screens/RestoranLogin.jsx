@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { loginRestoran } from "../../api/authApi";
+import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
-import useMusterijaSkladiste from "../../store/KorisnikSkladiste";
-import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 
 const RestoranLogin = () => {
   const [restoran, setRestoran] = useState({
@@ -17,7 +16,7 @@ const RestoranLogin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
-  const { setKorisnik } = useKorisnikSkladiste();
+  const { setKorisnik, setTipKorisnika } = useKorisnikSkladiste();
 
   const handleLogin = async () => {
     setIsSubmitting(true);
@@ -27,14 +26,14 @@ const RestoranLogin = () => {
       console.log(odgovor);
       if (odgovor !== null) {
         setKorisnik(odgovor);
-        // console.log(odgovor);
-        navigation.navigate("NarudzbineEkran");
-        // navigation.navigate("Pocetna");
+        setTipKorisnika("restoran");
+        console.log("Korisnik set in store:", odgovor);
+        navigation.navigate("MainTabs", {
+          screen: "NarudzbinaEkran",
+        });
       }
     } catch (error) {
       setError("Neuspešno logovanje");
-    } finally {
-      setIsSubmitting(false);
     }
   };
   return (
@@ -42,13 +41,12 @@ const RestoranLogin = () => {
       <ScrollView>
         <Text className="text-3xl font-bold text-gray-900">Dobrodošli!</Text>
         <Text className="text-sm text-gray-600 mt-2 mb-6">
-          Enter your Phone number or Email address for sign in. Enjoy your food
+          Unesi podatke svog restorana
         </Text>
         <FormField
           title="EMAIL"
           value={restoran.email}
           handleChangeText={(e) => setRestoran({ ...restoran, email: e })}
-          //otherStyles="mt-7"
           keyboardType="email-address"
           placeholder="Tvoj email"
         />
@@ -56,14 +54,12 @@ const RestoranLogin = () => {
           title="PASSWORD"
           value={restoran.sifra}
           handleChangeText={(e) => setRestoran({ ...restoran, sifra: e })}
-          //otherStyles="mt-7"
           placeholder="Tvoja sifra"
         />
         <CustomButton
           title="Uloguj se"
           handlePress={handleLogin}
           containerStyles="#22A45D rounded-lg p-4 mb-4"
-          //isLoading={isSubmitting}
         />
         {error && <Text className="text-red-500">{error}</Text>}
 
@@ -73,7 +69,7 @@ const RestoranLogin = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate("MusterijaLogin")}
           >
-            <Text className="text-xs text-orange-500">
+            <Text className="text-xs text-secondary">
               Uloguj se kao musterija.
             </Text>
           </TouchableOpacity>

@@ -17,17 +17,15 @@ const MusterijaLogin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
-  const { setKorisnik } = useKorisnikSkladiste();
+  const { setKorisnik, setTipKorisnika } = useKorisnikSkladiste();
 
   const handleLogin = async () => {
-    setIsSubmitting(true);
-    setError(null);
     try {
       const odgovor = await loginMusterija(musterija);
       console.log(odgovor);
       if (odgovor !== null) {
         setKorisnik(odgovor);
-        console.log(odgovor);
+        setTipKorisnika("musterija");
         navigation.navigate("MainTabs", {
           screen: "Pocetna",
         });
@@ -61,7 +59,7 @@ const MusterijaLogin = () => {
         <CustomButton
           title="Uloguj se"
           handlePress={handleLogin}
-          containerStyles="#22A45D rounded-lg p-4 mb-4"
+          containerStyles=" rounded-lg p-4 mb-4"
         />
         {error && <Text className="text-red-500">{error}</Text>}
 

@@ -48,7 +48,7 @@ const MusterijaRegistracija = () => {
       <ScrollView>
         <Text className="text-3xl font-bold text-gray-900">Kreiraj nalog</Text>
 
-        <View className="text-xs text-gray-600 text-sm text-gray-600 mt-2 mb-6">
+        <View className="text-xs text-gray-600 mt-2 mb-6">
           <Text>Unesi svoje podatke</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("MusterijaLogin")}

@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import CustomButton from "./CustomButton";
 
 const NarudzbinaCard = ({ narudzbina, onClick: obradiKlikNarudzbine }) => {
   return (

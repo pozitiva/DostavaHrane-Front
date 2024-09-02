@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Dimensions, Image, Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useCartStore from "../../store/CartStore";
 import Counter from "./Counter";
@@ -9,6 +9,7 @@ const JeloModal = ({ jelo, onClose }) => {
   console.log(jelo);
   const [kolicina, setKolicina] = useState(1);
   const modalizeRef = useRef(null);
+  const screenHeight = Dimensions.get("window").height;
 
   useEffect(() => {
     modalizeRef.current?.open();
@@ -41,8 +42,8 @@ const JeloModal = ({ jelo, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={600}
-      modalHeight={600}
+      snapPoint={Dimensions.get("window").height * 0.5} // Adjust based on screen height
+      modalHeight={Dimensions.get("window").height * 0.7}
       onClose={() => onClose()}
     >
       <View className="items-center mb-6">
@@ -85,3 +86,4 @@ const JeloModal = ({ jelo, onClose }) => {
 };
 
 export default JeloModal;
+3;

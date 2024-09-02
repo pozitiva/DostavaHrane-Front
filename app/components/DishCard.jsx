@@ -1,7 +1,5 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { images } from "../../constants";
-import { useNavigation } from "expo-router";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const DishCard = ({ jelo, onPress }) => {
   // console.log(jelo);

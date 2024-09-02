@@ -1,10 +1,8 @@
-import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { vratiRestoran } from "../../api/restoranApi";
-import { images } from "../../constants";
 import DishCard from "../components/DishCard";
 import JeloModal from "../components/JeloModal";
 

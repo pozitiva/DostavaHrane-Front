@@ -17,6 +17,9 @@ import RestoranLogin from "./screens/RestoranLogin";
 import Search from "./screens/Search";
 import Welcome from "./screens/WelcomeScreen";
 import MusterijaRegistracija from "./screens/MusterijaRegistracija";
+import JelaRestoranaEkran from "./screens/JelaRestoranaEkran";
+import KreirajJelo from "./screens/KreirajJelo";
+import useKorisnikSkladiste from "../store/KorisnikSkladiste";
 
 const Stack = createNativeStackNavigator();
 const TabNav = createBottomTabNavigator();
@@ -57,6 +60,7 @@ const HomeStack = () => {
 
 const TabScreens = () => {
   const cartCount = useCartStore((state) => state.cart.length);
+  const tipKorisnika = useKorisnikSkladiste((state) => state.tipKorisnika);
 
   const BadgeIcon = ({ icon, badgeCount }) => (
     <View style={{ position: "relative", alignItems: "center" }}>
@@ -113,31 +117,41 @@ const TabScreens = () => {
             />
           );
         },
-        tabBarLabel: ({ focused }) => {
-          const color = focused ? "#EF9920" : "gray";
-          return (
-            <Text style={{ color, fontSize: 12 }}>
-              {route.name === "Pocetna"
-                ? "Pocetna"
-                : route.name === "Pretraga"
-                ? "Pretraga"
-                : route.name === "Profil"
-                ? "Profil"
-                : route.name === "Korpa"
-                ? "Korpa"
-                : ""}
-            </Text>
-          );
-        },
+        // tabBarLabel: ({ focused }) => {
+        //   const color = focused ? "#EF9920" : "gray";
+        //   return (
+        //     <Text style={{ color, fontSize: 12 }}>
+        //       {route.name === "Pocetna"
+        //         ? "Pocetna"
+        //         : route.name === "Pretraga"
+        //         ? "Pretraga"
+        //         : route.name === "Profil"
+        //         ? "Profil"
+        //         : route.name === "Korpa"
+        //         ? "Korpa"
+        //         : ""}
+        //     </Text>
+        //   );
+        // },
         tabBarLabelStyle: {
           fontSize: 12, // Customize label size if needed
         },
       })}
     >
-      <TabNav.Screen name="Pocetna" component={HomeStack} />
-      <TabNav.Screen name="Pretraga" component={Search} />
-      <TabNav.Screen name="Profil" component={Profile} />
-      <TabNav.Screen name="Korpa" component={CartScreen} />
+      {tipKorisnika === "musterija" ? (
+        <>
+          <TabNav.Screen name="Pocetna" component={HomeStack} />
+          <TabNav.Screen name="Pretraga" component={Search} />
+          <TabNav.Screen name="Profil" component={Profile} />
+          <TabNav.Screen name="Korpa" component={CartScreen} />
+        </>
+      ) : (
+        <>
+          <TabNav.Screen name="JelaRestorana" component={JelaRestoranaEkran} />
+          <TabNav.Screen name="KreirajJelo" component={KreirajJelo} />
+          <TabNav.Screen name="NarudzbineEkran" component={NarudzbineEkran} />
+        </>
+      )}
     </TabNav.Navigator>
   );
 };
@@ -179,14 +193,32 @@ const App = () => {
             }}
           />
 
-          <Stack.Screen
+          {/* <Stack.Screen
             name="NarudzbineEkran"
             component={NarudzbineEkran}
             options={{
               ...headerOptions,
               headerTitle: "Narudzbine",
             }}
-          />
+          /> */}
+
+          {/* <Stack.Screen
+            name="JelaRestorana"
+            component={JelaRestoranaEkran}
+            options={{
+              ...headerOptions,
+              headerTitle: "Sva jela",
+            }}
+          /> */}
+
+          {/* <Stack.Screen
+            name="KreirajJelo"
+            component={KreirajJelo}
+            options={{
+              ...headerOptions,
+              headerTitle: "Kreiraj jelo",
+            }}
+          /> */}
           <Stack.Screen
             name="MainTabs"
             component={TabScreens}

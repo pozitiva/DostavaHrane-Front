@@ -1,16 +1,16 @@
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Modal, Text, View, Image } from "react-native";
+import { FlatList, Modal, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useCartStore from "../../store/CartStore";
+import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import Counter from "../components/Counter";
 import CustomButton from "../components/CustomButton";
 import { napraviNarudzbinu } from "./../../api/narudzbinaApi";
-import useMusterijaSkladiste from "../../store/KorisnikSkladiste";
 
 const CartScreen = () => {
-  const { korisnik } = useMusterijaSkladiste.getState();
+  const { korisnik } = useKorisnikSkladiste.getState();
   const [narudzbinaUspesno, setNarudzbinaUspesno] = useState(false);
   const [ukupnaCena, setUkupnaCena] = useState(0);
   const [izabranaAdresa, setIzabranaAdresa] = useState(korisnik.adrese[0]);
