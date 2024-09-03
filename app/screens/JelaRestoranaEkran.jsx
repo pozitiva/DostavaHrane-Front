@@ -33,18 +33,9 @@ const JelaRestoranaEkran = () => {
     obradiJela();
   }, []);
 
-  const obradiIzaberiJelo = (jelo) => {
-    setIzabranoJelo(jelo);
-  };
   return (
     <SafeAreaView>
       <View>
-        <CustomButton
-          title="Kreiraj novo jelo"
-          handlePress={() => navigator.navigate("KreirajJelo")}
-          containerStyles=" rounded-lg  "
-        />
-        <Text>Jela</Text>
         <FlatList
           data={jela}
           renderItem={({ item }) => (

@@ -15,7 +15,7 @@ import Profile from "./screens/Profile";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import RestoranLogin from "./screens/RestoranLogin";
 import Search from "./screens/Search";
-import Welcome from "./screens/WelcomeScreen";
+import Welcome from "./screens/Welcome";
 import MusterijaRegistracija from "./screens/MusterijaRegistracija";
 import JelaRestoranaEkran from "./screens/JelaRestoranaEkran";
 import KreirajJelo from "./screens/KreirajJelo";
@@ -102,6 +102,9 @@ const TabScreens = () => {
             Pretraga: icons.search,
             Profil: icons.profile,
             Korpa: icons.cart,
+            Narudzbine: icons.orders,
+            JelaRestorana: icons.meals,
+            KreirajJelo: icons.create,
           }[route.name];
 
           return route.name === "Korpa" ? (
@@ -117,24 +120,30 @@ const TabScreens = () => {
             />
           );
         },
-        // tabBarLabel: ({ focused }) => {
-        //   const color = focused ? "#EF9920" : "gray";
-        //   return (
-        //     <Text style={{ color, fontSize: 12 }}>
-        //       {route.name === "Pocetna"
-        //         ? "Pocetna"
-        //         : route.name === "Pretraga"
-        //         ? "Pretraga"
-        //         : route.name === "Profil"
-        //         ? "Profil"
-        //         : route.name === "Korpa"
-        //         ? "Korpa"
-        //         : ""}
-        //     </Text>
-        //   );
-        // },
+        tabBarLabel: ({ focused }) => {
+          const color = focused ? "#EF9920" : "gray";
+          return (
+            <Text style={{ color, fontSize: 12 }}>
+              {route.name === "Pocetna"
+                ? "Početna"
+                : route.name === "Pretraga"
+                ? "Pretraga"
+                : route.name === "Profil"
+                ? "Profil"
+                : route.name === "Korpa"
+                ? "Korpa"
+                : route.name === "Narudzbine"
+                ? "Narudžbine"
+                : route.name === "JelaRestorana"
+                ? "Jela"
+                : route.name === "KreirajJelo"
+                ? "Kreiraj jelo"
+                : ""}
+            </Text>
+          );
+        },
         tabBarLabelStyle: {
-          fontSize: 12, // Customize label size if needed
+          fontSize: 12,
         },
       })}
     >
@@ -147,9 +156,9 @@ const TabScreens = () => {
         </>
       ) : (
         <>
+          <TabNav.Screen name="Narudzbine" component={NarudzbineEkran} />
           <TabNav.Screen name="JelaRestorana" component={JelaRestoranaEkran} />
           <TabNav.Screen name="KreirajJelo" component={KreirajJelo} />
-          <TabNav.Screen name="NarudzbineEkran" component={NarudzbineEkran} />
         </>
       )}
     </TabNav.Navigator>

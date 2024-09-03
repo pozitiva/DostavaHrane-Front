@@ -39,8 +39,10 @@ const RestoranLogin = () => {
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>
-        <Text className="text-3xl font-bold text-gray-900">Dobrodošli!</Text>
-        <Text className="text-sm text-gray-600 mt-2 mb-6">
+        <Text className="text-4xl font-bold text-gray-900">
+          Uloguj se kao restoran!
+        </Text>
+        <Text className="text-xl text-gray-600 mt-2 mb-6">
           Unesi podatke svog restorana
         </Text>
         <FormField
@@ -48,28 +50,28 @@ const RestoranLogin = () => {
           value={restoran.email}
           handleChangeText={(e) => setRestoran({ ...restoran, email: e })}
           keyboardType="email-address"
-          placeholder="Tvoj email"
+          placeholder="restoran@restoran.com"
         />
         <FormField
           title="PASSWORD"
           value={restoran.sifra}
           handleChangeText={(e) => setRestoran({ ...restoran, sifra: e })}
-          placeholder="Tvoja sifra"
+          placeholder="primersifre"
         />
         <CustomButton
           title="Uloguj se"
           handlePress={handleLogin}
-          containerStyles="#22A45D rounded-lg p-4 mb-4"
+          containerStyles="#22A45D rounded-lg p-4 mb-9 mt-9"
         />
         {error && <Text className="text-red-500">{error}</Text>}
 
         <View className="flex-row justify-center mb-4 mt-5">
-          <Text className="text-xs text-gray-600 ">Nisi restoran? </Text>
+          <Text className="text-m text-gray-600 ">Nisi restoran? </Text>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("MusterijaLogin")}
           >
-            <Text className="text-xs text-secondary">
+            <Text className="text-m text-secondary">
               Uloguj se kao musterija.
             </Text>
           </TouchableOpacity>

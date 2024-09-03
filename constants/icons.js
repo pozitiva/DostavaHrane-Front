@@ -14,6 +14,9 @@ import play from "../assets/icons/play.png";
 import delivery from "../assets/icons/food-delivery_7541708.png";
 import leftarrow from "../assets/icons/leftarrow.png";
 import cart from "../assets/icons/cart.png";
+import orders from "../assets/icons/orders.png";
+import meals from "../assets/icons/meals.png";
+import create from "../assets/icons/create.png";
 
 export default {
   play,
@@ -32,4 +35,7 @@ export default {
   delivery,
   leftarrow,
   cart,
+  orders,
+  meals,
+  create,
 };

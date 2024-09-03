@@ -4,8 +4,7 @@ import {
   izmeniJelo,
   kreirajJelo,
   obrisiJelo,
-  vratiJelo,
-  vratiSvaJela,
+  vratiSvaJelaRestorana,
 } from "../api/jeloApi";
 
 const useJeloSkladiste = create((set) => ({
@@ -13,7 +12,7 @@ const useJeloSkladiste = create((set) => ({
 
   ucitajJela: async () => {
     try {
-      const response = await vratiSvaJela();
+      const response = await vratiSvaJelaRestorana();
       set({ jela: response });
     } catch (error) {
       console.error("Greška prilikom učitavanja jela:", error);
@@ -34,9 +33,7 @@ const useJeloSkladiste = create((set) => ({
 
   dodajJelo: async (novoJelo) => {
     try {
-      console.log("USAO SAM U DODAVANJE");
-      console.log(novoJelo);
-      const response = await kreirajJelo(novoJelo);
+      await kreirajJelo(novoJelo);
       // set((state) => ({ jela: [...state.jela, response] }));
     } catch (error) {
       console.error("Greška prilikom dodavanja jela:", error);

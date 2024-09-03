@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const API_BASE_URL = "http://192.168.1.54:5076/api/jelo";
+// const API_BASE_URL = "http://192.168.1.54:5076/api/jelo";
 // const API_BASE_URL = "http://192.168.0.13:5076/api/jelo";
 
 export const vratiJelo = async (id) => {
@@ -13,7 +13,7 @@ export const vratiJelo = async (id) => {
   }
 };
 
-export const vratiSvaJela = async () => {
+export const vratiSvaJelaRestorana = async () => {
   try {
     const odgovor = await axiosInstance.get("/jelo");
     console.log(odgovor.data);
@@ -24,16 +24,13 @@ export const vratiSvaJela = async () => {
   }
 };
 
-export const kreirajJelo = async (jeloZaKreirati) => {
+export const kreirajJelo = async (jeloZaKreiranje) => {
   try {
-    console.log("USAO SAM U KREIRAJ");
-    const odgovor = await axiosInstance.post("/jelo", jeloZaKreirati, {
+    await axiosInstance.post("/jelo", jeloZaKreiranje, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(odgovor);
-    return odgovor.data;
   } catch (error) {
     console.error("Greska prilikom kreiranja jela:", error);
     throw error;

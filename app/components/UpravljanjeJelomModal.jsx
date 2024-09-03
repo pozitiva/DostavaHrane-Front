@@ -22,7 +22,6 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const modalizeRef = useRef(null);
   const [izmenjenoJelo, setIzmenjenoJelo] = useState(jelo);
   const [izabranTipJela, setIzabranTipJela] = useState(jelo.tipJela);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const { izmeniJelo, obrisiJelo } = useJeloSkladiste((state) => ({
     izmeniJelo: state.izmeniJelo,
@@ -31,24 +30,8 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   useEffect(() => {
     setIzmenjenoJelo(jelo);
     setIzabranTipJela(jelo.tipJela);
-    modalizeRef.current?.open();
 
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
-      }
-    );
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
+    modalizeRef.current?.open();
   }, [jelo]);
 
   const obradiIzmenuJela = async () => {
@@ -87,8 +70,8 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={450}
-      modalHeight={650 + keyboardHeight}
+      snapPoint={400}
+      modalHeight={635}
       onClose={() => onClose()}
     >
       <KeyboardAvoidingView
@@ -153,13 +136,13 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
           <View className="flex-row justify-center mb-10">
             <CustomButton
               title="Izmeni jelo"
-              containerStyles="w-[160px] h-[48px] rounded-full mr-8" // Increased margin-right
+              containerStyles="w-[160px] h-[48px] rounded-full mr-8"
               handlePress={obradiIzmenuJela}
             />
 
             <CustomButton
               title="Obriši jelo"
-              containerStyles="w-[160px] h-[48px] rounded-full ml-4" // Increased margin-left
+              containerStyles="w-[160px] h-[48px] rounded-full ml-4"
               handlePress={obradiBrisanjeJela}
             />
           </View>

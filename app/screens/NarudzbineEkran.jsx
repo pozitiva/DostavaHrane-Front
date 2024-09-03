@@ -54,15 +54,6 @@ const NarudzbineEkran = () => {
           onClose={() => setIzabranaNarudzbina(null)}
         />
       )}
-
-      <Text className="text-xl font-bold text-gray-900">Upravljaj jelima</Text>
-      <CustomButton
-        title="Pogledaj sva jela"
-        handlePress={() => {
-          navigation.navigate("JelaRestorana");
-        }}
-        containerStyles="mb-10 mt-5"
-      />
     </SafeAreaView>
   );
 };
