@@ -1,8 +1,5 @@
 import axiosInstance from "./axiosInstance";
 
-// const API_BASE_URL = "http://192.168.1.54:5076/api/jelo";
-// const API_BASE_URL = "http://192.168.0.13:5076/api/jelo";
-
 export const vratiJelo = async (id) => {
   try {
     const response = await axiosInstance.get(`/jelo/${id}`);
@@ -37,10 +34,10 @@ export const kreirajJelo = async (jeloZaKreiranje) => {
   }
 };
 
-export const izmeniJelo = async (id, jeloData) => {
+export const izmeniJelo = async (jeloData) => {
   try {
     console.log("uslo");
-    const response = await axiosInstance.put(`/jelo/${id}`, jeloData, {
+    const response = await axiosInstance.put(`/jelo`, jeloData, {
       headers: {
         "Content-Type": "application/json",
       },

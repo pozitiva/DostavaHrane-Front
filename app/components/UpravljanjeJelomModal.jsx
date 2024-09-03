@@ -2,7 +2,6 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Text,
@@ -17,17 +16,21 @@ import FormField from "./FormField";
 
 const tipoviJela = ["Burgeri", "Paste", "Rostilj", "Nuggets", "Kofice"];
 
+const baseUrl = "http://192.168.0.13:5076";
+
 const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const { korisnik } = useKorisnikSkladiste.getState();
   const modalizeRef = useRef(null);
   const [izmenjenoJelo, setIzmenjenoJelo] = useState(jelo);
   const [izabranTipJela, setIzabranTipJela] = useState(jelo.tipJela);
 
-  const { izmeniJelo, obrisiJelo } = useJeloSkladiste((state) => ({
+  const { izmeniJelo, obrisiJelo, ucitajJela } = useJeloSkladiste((state) => ({
     izmeniJelo: state.izmeniJelo,
     obrisiJelo: state.obrisiJelo,
+    ucitajJela: state.ucitajJela,
   }));
   useEffect(() => {
+    console.log(jelo);
     setIzmenjenoJelo(jelo);
     setIzabranTipJela(jelo.tipJela);
 
@@ -42,14 +45,15 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
         cena: izmenjenoJelo.cena,
         tipJela: izabranTipJela,
         restoranId: korisnik.id,
-        //slikaUrl: izmenjenoJelo.slikaUrl,
+        slikaUrl: jelo.slikaUrl,
       };
       console.log(jeloData);
 
-      const odgovor = await izmeniJelo(izmenjenoJelo.id, jeloData);
+      const odgovor = await izmeniJelo(jeloData);
 
       console.log(odgovor);
 
+      ucitajJela();
       onClose();
     } catch (error) {
       console.error("Greska prilikom izmene jela:", error);
@@ -81,7 +85,9 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View className="items-center mb-6">
             <Image
-              source={{ uri: izmenjenoJelo.slikaUrl }}
+              source={{
+                uri: `${baseUrl}${izmenjenoJelo.slikaUrl}`,
+              }}
               className="w-full h-48 rounded-lg"
             />
           </View>

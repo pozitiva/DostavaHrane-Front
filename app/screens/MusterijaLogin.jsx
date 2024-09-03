@@ -73,13 +73,6 @@ const MusterijaLogin = () => {
           </TouchableOpacity>
         </View>
 
-        <Text className="text-m text-center text-gray-600 mb-8">ILI</Text>
-
-        <TouchableOpacity className="bg-red-600 rounded-lg p-4 flex-row items-center justify-center">
-          <Image source={images.google} className="w-5 h-5 mr-3" />
-          <Text className="text-white font-bold">Uloguj se sa Googlom</Text>
-        </TouchableOpacity>
-
         <View className="flex-row justify-center mb-4 mt-8">
           <Text className="text-m text-gray-600 ">Upravljaš restoranom? </Text>
 

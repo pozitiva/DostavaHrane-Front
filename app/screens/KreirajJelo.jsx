@@ -8,8 +8,6 @@ import useJeloSkladiste from "../../store/JeloSkladiste";
 import * as ImagePicker from "expo-image-picker";
 
 const KreirajJelo = () => {
-  //   const { korisnik } = useKorisnikSkladiste.getState();
-
   const { dodajJelo, ucitajJela } = useJeloSkladiste((state) => ({
     dodajJelo: state.dodajJelo,
     ucitajJela: state.ucitajJela,
@@ -44,7 +42,7 @@ const KreirajJelo = () => {
       const formData = new FormData();
       formData.append("slika", {
         uri: jelo.slikaUrl,
-        type: "image/jpeg", // Možeš podesiti tip prema vrsti slike
+        type: "image/jpeg",
         name: "photo.jpg",
       });
 
@@ -103,7 +101,7 @@ const KreirajJelo = () => {
             <Button title="Izaberite sliku" onPress={obradiBiranjeSlike} />
             {jelo.slikaUrl && (
               <Image
-                source={{ uri: jelo.slikaUrl }}
+                source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
                 style={{ width: 200, height: 200 }}
               />
             )}

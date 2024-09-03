@@ -102,13 +102,6 @@ const MusterijaRegistracija = () => {
           </Text>
         </View>
 
-        <Text className="text-xs text-center text-gray-600 mb-4">ILI</Text>
-
-        <TouchableOpacity className="bg-red-600 rounded-lg p-4 flex-row items-center justify-center">
-          <Image source={images.google} className="w-5 h-5 mr-3" />
-          <Text className="text-white font-bold">Registruj se sa Googlom</Text>
-        </TouchableOpacity>
-
         <Modal
           animationType="fade"
           transparent={true}

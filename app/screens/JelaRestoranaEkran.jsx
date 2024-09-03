@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-// import { vratiSvaJela } from "../../api/jeloApi";
+import useJeloSkladiste from "../../store/JeloSkladiste";
 import DishCard from "../components/DishCard";
 import UpravljanjeJelomModal from "../components/UpravljanjeJelomModal";
-import CustomButton from "../components/CustomButton";
-import { useNavigation } from "expo-router";
-import useJeloSkladiste from "../../store/JeloSkladiste";
 
 const JelaRestoranaEkran = () => {
   //const [jela, setJela] = useState([]);
   const [jelo, setJelo] = useState("");
-
-  const navigator = useNavigation();
 
   const { jela, ucitajJela } = useJeloSkladiste((state) => ({
     jela: state.jela,
@@ -22,6 +17,7 @@ const JelaRestoranaEkran = () => {
   useEffect(() => {
     const obradiJela = async () => {
       try {
+        console.log(jelo);
         await ucitajJela();
         // const odgovor = await vratiSvaJela();
         //setJela(odgovor);

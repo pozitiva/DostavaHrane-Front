@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-  izmeniAdresu,
-  obrisiAdresu,
-  vratiSveAdreseMusterije,
-} from "../api/adresaApi";
+import { izmeniAdresu, vratiSveAdreseMusterije } from "../api/adresaApi";
 
 const useAdresaSkladiste = create((set) => ({
   adrese: [],

@@ -17,6 +17,7 @@ export const napraviNarudzbinu = async (orderData) => {
 
 export const vratiSveNarudzbine = async () => {
   try {
+    console.log("uslo u narudzbineee");
     const odgovor = await axiosInstance.get("/narudzbina");
     return odgovor.data;
   } catch (error) {

@@ -2,7 +2,6 @@ import { create } from "zustand";
 
 const useCartStore = create((set) => ({
   cart: [],
-  // addToCart: (product) => set((state) => ({ cart: [...state.cart, product] })),
 
   addToCart: (product) =>
     set((state) => {
@@ -10,7 +9,6 @@ const useCartStore = create((set) => ({
         (item) => item.uniqueId === product.uniqueId
       );
       if (existingProductIndex > -1) {
-        // Update quantity of existing product
         const updatedCart = [...state.cart];
         updatedCart[existingProductIndex] = { ...product };
         return { cart: updatedCart };

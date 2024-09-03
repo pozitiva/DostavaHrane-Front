@@ -40,14 +40,14 @@ const useJeloSkladiste = create((set) => ({
     }
   },
 
-  izmeniJelo: async (id, izmenjenoJelo) => {
+  izmeniJelo: async (izmenjenoJelo) => {
     try {
-      await izmeniJelo(id, izmenjenoJelo);
-      set((state) => ({
-        jela: state.jela.map((jelo) =>
-          jelo.id === id ? { ...jelo, ...izmenjenoJelo } : jelo
-        ),
-      }));
+      await izmeniJelo(izmenjenoJelo);
+      // set((state) => ({
+      //   jela: state.jela.map((jelo) =>
+      //     jelo.id === id ? { ...jelo, ...izmenjenoJelo } : jelo
+      //   ),
+      // }));
     } catch (error) {
       console.error("Greška prilikom izmene jela:", error);
     }
