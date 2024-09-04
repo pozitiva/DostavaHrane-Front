@@ -1,5 +1,5 @@
 import { create } from "zustand";
-//import JeloApi from "../api/jeloApi";
+
 import {
   izmeniJelo,
   kreirajJelo,

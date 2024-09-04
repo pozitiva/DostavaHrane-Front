@@ -98,7 +98,11 @@ const KreirajJelo = () => {
               ))}
             </Picker>
 
-            <Button title="Izaberite sliku" onPress={obradiBiranjeSlike} />
+            <CustomButton
+              title="Izaberite sliku"
+              handlePress={obradiBiranjeSlike}
+              containerStyles="w-full h-[48px] rounded-full mt-10 mb-10"
+            />
             {jelo.slikaUrl && (
               <Image
                 source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}

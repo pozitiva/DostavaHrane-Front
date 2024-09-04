@@ -19,8 +19,6 @@ const JelaRestoranaEkran = () => {
       try {
         console.log(jelo);
         await ucitajJela();
-        // const odgovor = await vratiSvaJela();
-        //setJela(odgovor);
       } catch (error) {
         console.error("Error fetching narudzbine:", error);
       }

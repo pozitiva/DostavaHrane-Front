@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, LogBox, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { icons } from "../constants"; // Ensure icons are properly imported
+import { icons } from "../constants";
 import useCartStore from "../store/CartStore";
 import BackButton from "./components/BackButton";
 import CartScreen from "./screens/CartScreen";
@@ -20,6 +20,8 @@ import MusterijaRegistracija from "./screens/MusterijaRegistracija";
 import JelaRestoranaEkran from "./screens/JelaRestoranaEkran";
 import KreirajJelo from "./screens/KreirajJelo";
 import useKorisnikSkladiste from "../store/KorisnikSkladiste";
+
+LogBox.ignoreAllLogs();
 
 const Stack = createNativeStackNavigator();
 const TabNav = createBottomTabNavigator();

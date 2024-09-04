@@ -1,17 +1,30 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
+import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
 import CustomButton from "./CustomButton";
 
 const NarudzbinaModal = ({ narudzbina, onClose }) => {
+  const { izmeniNarudzbinu, ucitajNarudzbine } = useNarudzbinaSkladiste(
+    (state) => ({
+      izmeniNarudzbinu: state.izmeniNarudzbinu,
+      ucitajNarudzbine: state.ucitajNarudzbine,
+    })
+  );
   const modalizeRef = useRef(null);
 
   useEffect(() => {
     modalizeRef.current?.open();
   }, [narudzbina]);
 
-  const handlePromeniStatus = () => {
-    console.log("usao ovde");
+  const obradiPromenuStatusa = async () => {
+    try {
+      console.log("uslo u promenu statusa");
+      await izmeniNarudzbinu(narudzbina);
+      ucitajNarudzbine();
+    } catch (error) {
+      console.error("Greska prilikom izmene statusa narudzbine:", error);
+    }
   };
   return (
     <Modalize
@@ -32,7 +45,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
           Ukupna cena: {narudzbina.ukupnaCena} RSD
         </Text>
         <Text className="text-base mb-1">
-          Dostavljač ID: {narudzbina.dostavljacId || "N/A"}
+          Dostavljač : {narudzbina.dostavljacIme || "N/A"}
         </Text>
         <Text className="text-base mb-1">Adresa: {narudzbina.adresa}</Text>
         <Text className="text-base mb-1">
@@ -55,7 +68,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
         <CustomButton
           title="Promeni status"
           containerStyles="w-[335px] h-[48px] rounded-full mt-4"
-          handlePress={handlePromeniStatus}
+          handlePress={obradiPromenuStatusa}
         />
       </View>
     </Modalize>
