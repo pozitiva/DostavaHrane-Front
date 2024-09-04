@@ -10,7 +10,7 @@ export default function Welcome({ navigation }) {
       <View className="mb-8">
         <Image source={images.cooking} className="w-80 h-80" />
       </View>
-      <Text className="text-3xl font-bold text-gray-800 mb-2">Miss D</Text>
+      <Text className="text-3xl font-bold text-gray-800 mb-2">Bocado</Text>
       <Text className="text-base text-gray-600 text-center mb-8">
         Vaš sledeći ukusan obrok je samo nekoliko klikova daleko. Prepustite se
         uživanju i otkrijte omiljena jela jednostavno i brzo!

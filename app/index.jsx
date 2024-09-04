@@ -14,12 +14,13 @@ import NarudzbineEkran from "./screens/NarudzbineEkran";
 import Profile from "./screens/Profile";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import RestoranLogin from "./screens/RestoranLogin";
-import Search from "./screens/Search";
+
 import Welcome from "./screens/Welcome";
 import MusterijaRegistracija from "./screens/MusterijaRegistracija";
 import JelaRestoranaEkran from "./screens/JelaRestoranaEkran";
 import KreirajJelo from "./screens/KreirajJelo";
 import useKorisnikSkladiste from "../store/KorisnikSkladiste";
+import Search from "./screens/PretragaEkran";
 
 LogBox.ignoreAllLogs();
 

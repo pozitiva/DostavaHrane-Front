@@ -6,10 +6,8 @@ import {
   vratiSveNarudzbine,
 } from "../api/narudzbinaApi";
 
-const useNarudzbinaSkladiste = create((set) => ({
+const useNarudzbinaSkladiste = create((set, get) => ({
   narudzbine: [],
-  trenutnaNarudzbina: null,
-
   ucitajNarudzbine: async () => {
     try {
       const response = await vratiSveNarudzbine();
@@ -39,11 +37,21 @@ const useNarudzbinaSkladiste = create((set) => ({
 
   izmeniNarudzbinu: async (narudzbinaId) => {
     try {
-      await izmeniNarudzbinu(narudzbinaId);
+      const izmenjenaNarudzbina = await izmeniNarudzbinu(narudzbinaId);
+      const narudzbine = get().narudzbine.map((n) =>
+        n.id === narudzbinaId ? izmenjenaNarudzbina : n
+      );
+      set({ narudzbine });
+      if (get().trenutnaNarudzbina?.id === narudzbinaId) {
+        set({ trenutnaNarudzbina: izmenjenaNarudzbina });
+      }
     } catch (error) {
-      console.error("Greška prilikom izmene jela:", error);
+      console.error("Greška prilikom izmene narudžbine:", error);
     }
   },
+
+  setTrenutnaNarudzbina: (narudzbina) =>
+    set({ trenutnaNarudzbina: narudzbina }),
 }));
 
 export default useNarudzbinaSkladiste;

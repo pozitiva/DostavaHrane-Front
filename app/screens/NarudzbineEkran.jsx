@@ -6,7 +6,6 @@ import NarudzbinaCard from "./../components/NarudzbinaCard";
 import NarudzbinaModal from "./../components/NarudzbinaModal";
 
 const NarudzbineEkran = () => {
-  const [narudzbina, setNarudzbina] = useState([]);
   const [izabranaNarudzbina, setIzabranaNarudzbina] = useState(null);
   const { narudzbine, ucitajNarudzbine } = useNarudzbinaSkladiste((state) => ({
     narudzbine: state.narudzbine,

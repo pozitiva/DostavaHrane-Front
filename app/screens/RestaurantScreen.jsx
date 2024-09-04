@@ -5,6 +5,7 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { vratiRestoran } from "../../api/restoranApi";
 import DishCard from "../components/DishCard";
 import JeloModal from "../components/JeloModal";
+import useJeloSkladiste from "../../store/JeloSkladiste";
 
 const RestaurantScreen = ({ route }) => {
   const { restoranId } = route.params;
@@ -14,6 +15,11 @@ const RestaurantScreen = ({ route }) => {
   const [routes, setRoutes] = useState([]);
   const [scenes, setScenes] = useState({});
   const [jelo, setJelo] = useState("");
+
+  const { jela, ucitajJela } = useJeloSkladiste((state) => ({
+    jela: state.jela,
+    ucitajJela: state.ucitajJela,
+  }));
 
   useEffect(() => {
     const vratiRestoranPoId = async () => {

@@ -2,7 +2,6 @@ import axiosInstance from "./axiosInstance";
 
 export const napraviNarudzbinu = async (orderData) => {
   try {
-    console.log("uslo ponovo");
     const odgovor = await axiosInstance.post("/narudzbina", orderData, {
       headers: {
         "Content-Type": "application/json",

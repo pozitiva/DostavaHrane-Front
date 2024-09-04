@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Modal, Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
 import CustomButton from "./CustomButton";
+import { useNavigation } from "expo-router";
 
 const NarudzbinaModal = ({ narudzbina, onClose }) => {
   const { izmeniNarudzbinu, ucitajNarudzbine } = useNarudzbinaSkladiste(
@@ -12,7 +13,8 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
     })
   );
   const modalizeRef = useRef(null);
-
+  const [uspesnoIzmenjeno, setUspesnoIzmenjeno] = useState(false);
+  const navigation = useNavigation();
   useEffect(() => {
     modalizeRef.current?.open();
   }, [narudzbina]);
@@ -21,6 +23,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
     try {
       console.log("uslo u promenu statusa");
       await izmeniNarudzbinu(narudzbina);
+      setUspesnoIzmenjeno(true);
       ucitajNarudzbine();
     } catch (error) {
       console.error("Greska prilikom izmene statusa narudzbine:", error);
@@ -71,6 +74,29 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
           handlePress={obradiPromenuStatusa}
         />
       </View>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={uspesnoIzmenjeno}
+        onRequestClose={() => setUspesnoIzmenjeno(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="w-[300px] p-4 bg-white rounded-lg items-center">
+            <Text className="text-lg font-bold mb-4">
+              Status je uspesno izmenjen!
+            </Text>
+            <CustomButton
+              title="Zatvori"
+              handlePress={() => {
+                setUspesnoIzmenjeno(false);
+                navigation.navigate("Narudzbine");
+              }}
+              containerStyles="w-full h-[48px] rounded-full"
+            />
+          </View>
+        </View>
+      </Modal>
     </Modalize>
   );
 };
