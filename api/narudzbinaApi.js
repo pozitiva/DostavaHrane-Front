@@ -44,7 +44,7 @@ export const izmeniNarudzbinu = async (narudzbinaData) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Greska prilikom izmene jela:", error);
+    console.error("Greska prilikom izmene narudzbine:", error);
     throw error;
   }
 };

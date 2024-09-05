@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { KeyboardAvoidingView, Platform, View } from "react-native";
+import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
-import useAdresaSkladiste from "../../store/AdresaSkladiste";
-import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
+import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 
 const AdresaModal = ({ adresa, onClose }) => {
   const modalizeRef = useRef(null);
   const [izmenjenaAdresa, setIzmenjenaAdresa] = useState(adresa);
 
-  const { izmeniAdresu } = useAdresaSkladiste((state) => ({
-    izmeniAdresu: state.izmeniAdresu,
-  }));
+  const { izmeniAdresu } = useKorisnikSkladiste.getState();
 
   useEffect(() => {
-    setIzmenjenaAdresa(adresa);
-
-    modalizeRef.current?.open();
+    if (adresa && adresa.id) {
+      setIzmenjenaAdresa(adresa);
+      modalizeRef.current?.open();
+    }
   }, [adresa]);
 
   const obradiIzmenuAdrese = async () => {
@@ -45,57 +43,52 @@ const AdresaModal = ({ adresa, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={400}
+      snapPoint={550}
       modalHeight={635}
       onClose={() => onClose()}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View className="flex-1 bg-white p-4 items-center mb-6">
-            <View className="flex-1 bg-white p-4 items-center mb-6">
-              <FormField
-                title="Naziv"
-                value={izmenjenaAdresa.naziv}
-                placeholder="Unesite naziv adrese"
-                handleChangeText={(text) =>
-                  setIzmenjenaAdresa({ ...izmenjenaAdresa, naziv: text })
-                }
-                otherStyles="w-full max-w-[335px] h-[70px]"
-              />
-              <FormField
-                title="Ulica"
-                value={izmenjenaAdresa.ulica}
-                placeholder="Unesite ulicu i broj"
-                handleChangeText={(text) =>
-                  setIzmenjenaAdresa({ ...izmenjenaAdresa, ulica: text })
-                }
-                otherStyles="w-full max-w-[335px] h-[70px]"
-              />
+      <ScrollView>
+        <View className="flex-1 bg-white p-4 items-center ">
+          <View className="flex-1 bg-white p-4 items-center ">
+            <FormField
+              title="Naziv"
+              value={izmenjenaAdresa.naziv}
+              placeholder="Unesite naziv adrese"
+              handleChangeText={(text) =>
+                setIzmenjenaAdresa({ ...izmenjenaAdresa, naziv: text })
+              }
+              otherStyles="w-full height: 50, width: 270 "
+            />
+            <FormField
+              title="Ulica"
+              value={izmenjenaAdresa.ulica}
+              placeholder="Unesite ulicu i broj"
+              handleChangeText={(text) =>
+                setIzmenjenaAdresa({ ...izmenjenaAdresa, ulica: text })
+              }
+              otherStyles="w-full max-w-[335px] h-[70px] mt-7"
+            />
 
-              <FormField
-                title="Grad"
-                value={izmenjenaAdresa.grad}
-                placeholder="Unesite grad"
-                handleChangeText={(text) =>
-                  setIzmenjenaAdresa({ ...izmenjenaAdresa, grad: text })
-                }
-                otherStyles="w-full max-w-[335px] h-[70px]"
-              />
-            </View>
-          </View>
-
-          <View className="flex-row justify-center mb-10">
-            <CustomButton
-              title="Izmeni adresu"
-              containerStyles="w-[160px] h-[48px] rounded-full mr-8"
-              handlePress={obradiIzmenuAdrese}
+            <FormField
+              title="Grad"
+              value={izmenjenaAdresa.grad}
+              placeholder="Unesite grad"
+              handleChangeText={(text) =>
+                setIzmenjenaAdresa({ ...izmenjenaAdresa, grad: text })
+              }
+              otherStyles="w-full max-w-[335px] h-[70px] mt-7"
             />
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </View>
+
+        <View className="flex-row justify-center ">
+          <CustomButton
+            title="Izmeni adresu"
+            containerStyles="w-[160px] h-[48px] rounded-full "
+            handlePress={obradiIzmenuAdrese}
+          />
+        </View>
+      </ScrollView>
     </Modalize>
   );
 };

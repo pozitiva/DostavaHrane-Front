@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = `http://192.168.0.13:5076/api/korisnik`;
+// const API_BASE_URL = `http://192.168.0.13:5076/api/korisnik`;
+const API_BASE_URL = `http://192.168.1.54:5076/api/korisnik`;
 
 export const registracijaMusterije = async (userData) => {
   try {
@@ -23,6 +24,7 @@ export const loginMusterija = async (userData) => {
       userData
     );
 
+    console.log(odgovor.data);
     return odgovor.data;
   } catch (error) {
     console.error("Error logging in user:", error);

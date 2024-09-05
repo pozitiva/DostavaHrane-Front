@@ -37,14 +37,9 @@ const useNarudzbinaSkladiste = create((set, get) => ({
 
   izmeniNarudzbinu: async (narudzbinaId) => {
     try {
-      const izmenjenaNarudzbina = await izmeniNarudzbinu(narudzbinaId);
-      const narudzbine = get().narudzbine.map((n) =>
-        n.id === narudzbinaId ? izmenjenaNarudzbina : n
-      );
-      set({ narudzbine });
-      if (get().trenutnaNarudzbina?.id === narudzbinaId) {
-        set({ trenutnaNarudzbina: izmenjenaNarudzbina });
-      }
+      await izmeniNarudzbinu(narudzbinaId);
+      const vraceneNarudzbine = await vratiSveNarudzbine();
+      set({ narudzbine: vraceneNarudzbine });
     } catch (error) {
       console.error("Greška prilikom izmene narudžbine:", error);
     }

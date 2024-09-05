@@ -90,6 +90,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
               title="Zatvori"
               handlePress={() => {
                 setUspesnoIzmenjeno(false);
+                onClose();
                 navigation.navigate("Narudzbine");
               }}
               containerStyles="w-full h-[48px] rounded-full"
