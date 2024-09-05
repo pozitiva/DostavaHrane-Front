@@ -7,6 +7,7 @@ import { Picker } from "@react-native-picker/picker";
 import useJeloSkladiste from "../../store/JeloSkladiste";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "expo-router";
+import { tipoviJela } from "../../utils/zajednickiPodaci";
 
 const KreirajJelo = () => {
   const { dodajJelo, ucitajJela } = useJeloSkladiste((state) => ({
@@ -22,7 +23,6 @@ const KreirajJelo = () => {
   const [jeloUspesno, setJeloUspesno] = useState(false);
 
   const navigation = useNavigation();
-  const tipoviJela = ["Burgeri", "Paste", "Rostilj", "Nuggets", "Kofice"];
 
   const obradiBiranjeSlike = async () => {
     console.log("OVO JE BIRANJE SLIKEEEEEEEEE");
