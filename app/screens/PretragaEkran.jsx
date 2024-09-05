@@ -3,6 +3,7 @@ import { FlatList, TextInput, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantCard from "../components/RestaurantCard";
 import { vratiSveRestorane } from "../../api/restoranApi";
+import CustomButton from "../components/CustomButton";
 
 const Search = () => {
   const [restorani, setRestorani] = useState([]);
@@ -43,10 +44,9 @@ const Search = () => {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)} // Ažuriramo searchQuery pri promeni unosa
         />
+        <CustomButton title="Pretrazi" handlePress={() => {}}></CustomButton>
       </View>
-      <Text className="text-lg font-bold mt-4 mb-2 px-4">
-        Najbolji restorani
-      </Text>
+      <Text className="text-lg font-bold mt-4 mb-2 px-4">Restorani</Text>
       <FlatList
         className="flex-1 mx-4"
         data={filteredRestorani}

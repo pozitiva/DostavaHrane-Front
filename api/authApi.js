@@ -1,4 +1,5 @@
 import axios from "axios";
+import { storeToken } from "../utils/tokenService";
 
 // const API_BASE_URL = `http://192.168.0.13:5076/api/korisnik`;
 const API_BASE_URL = `http://192.168.1.54:5076/api/korisnik`;
@@ -24,7 +25,11 @@ export const loginMusterija = async (userData) => {
       userData
     );
 
-    console.log(odgovor.data);
+    if (odgovor.status === 200) {
+      const { token } = odgovor.data;
+      await storeToken(token);
+    }
+
     return odgovor.data;
   } catch (error) {
     console.error("Error logging in user:", error);

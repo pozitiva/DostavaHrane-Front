@@ -1,5 +1,5 @@
 import axios from "axios";
-import useKorisnikSkladiste from "../store/KorisnikSkladiste";
+import { getToken } from "../utils/tokenService";
 
 // const axiosInstance = axios.create({
 //   baseURL: "http://192.168.0.13:5076/api",
@@ -10,11 +10,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  (config) => {
-    const { korisnik } = useKorisnikSkladiste.getState();
-    if (korisnik?.id) {
-      config.headers["Authorization"] = `${korisnik.id}`;
-    }
+  async (config) => {
+    const token = await getToken();
+    config.headers["Authorization"] = `Bearer ${token}`;
 
     return config;
   },
