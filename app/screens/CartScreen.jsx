@@ -10,7 +10,10 @@ import CustomButton from "../components/CustomButton";
 import { napraviNarudzbinu } from "./../../api/narudzbinaApi";
 
 const CartScreen = () => {
-  const { korisnik } = useKorisnikSkladiste.getState();
+  const { korisnik, dodajNarudzbinu } = useKorisnikSkladiste((state) => ({
+    korisnik: state.korisnik,
+    dodajNarudzbinu: state.dodajNarudzbinu,
+  }));
   const [narudzbinaUspesno, setNarudzbinaUspesno] = useState(false);
   const [ukupnaCena, setUkupnaCena] = useState(0);
   const [izabranaAdresa, setIzabranaAdresa] = useState(korisnik.adrese[0]);
@@ -52,7 +55,7 @@ const CartScreen = () => {
     };
 
     try {
-      const odgovor = await napraviNarudzbinu(narudzbina);
+      const odgovor = await dodajNarudzbinu(narudzbina);
       setNarudzbinaUspesno(true);
       console.log("Narudžbina je uspešno napravljena:", odgovor);
       clearCart();

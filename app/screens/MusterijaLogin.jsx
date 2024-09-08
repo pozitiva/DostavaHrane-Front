@@ -18,6 +18,7 @@ const MusterijaLogin = () => {
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const { setKorisnik, setTipKorisnika } = useKorisnikSkladiste();
+  const [verzijaBrojac, setVerzijaBrojac] = useState(0);
 
   const handleLogin = async () => {
     try {
@@ -74,14 +75,26 @@ const MusterijaLogin = () => {
         </View>
 
         <View className="flex-row justify-center mb-4 mt-8">
-          <Text className="text-m text-gray-600 ">Upravljaš restoranom? </Text>
+          <Text className="text-m text-gray-600 ">Imaš restoran? </Text>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("RestoranLogin")}
           >
-            <Text className="text-m text-secondary">
-              Uloguj se kao restoran.
-            </Text>
+            <Text className="text-m text-secondary">Upravljaj restoranom.</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View className="mb-4 mt-8 justify-center ">
+          <TouchableOpacity
+            onPress={() => {
+              setVerzijaBrojac(verzijaBrojac + 1);
+              if (verzijaBrojac === 5) {
+                navigation.navigate("AdminLogin");
+                setVerzijaBrojac(0);
+              }
+            }}
+          >
+            <Text className=" text-m text-gray-600">Verzija 1.0.0</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

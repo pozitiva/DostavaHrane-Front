@@ -8,6 +8,7 @@ import CustomButton from "../components/CustomButton";
 
 import AdresaModal from "../components/AdresaModal";
 import FormField from "../components/FormField";
+import { useNavigation } from "expo-router";
 
 const Profile = () => {
   const { korisnik, dodajAdresu } = useKorisnikSkladiste((state) => ({
@@ -15,6 +16,7 @@ const Profile = () => {
     dodajAdresu: state.dodajAdresu,
   }));
 
+  const navigation = useNavigation();
   const [adresa, setAdresa] = useState({
     id: "",
     naziv: "",
@@ -43,80 +45,82 @@ const Profile = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View className="p-3">
-          <Text className="text-xl font-bold">{korisnik.ime}</Text>
+      <View className="p-3">
+        <Text className="text-xl font-bold">{korisnik.ime}</Text>
 
-          <Text className="text-lg font-semibold mt-6 ">Adrese:</Text>
-          <FlatList
-            data={korisnik.adrese}
-            renderItem={({ item }) => (
-              <View>
-                <AdresaKartica onPress={() => setAdresa(item)} adresa={item} />
-              </View>
-            )}
-            key={(item) => item.id}
-            keyExtractor={(item) => item.naziv}
+        <CustomButton
+          title="Moje narudzbine"
+          handlePress={() => navigation.navigate("MojeNarudzbine")}
+        />
+        <Text className="text-lg font-semibold mt-6 ">Adrese:</Text>
+        <FlatList
+          data={korisnik.adrese}
+          renderItem={({ item }) => (
+            <View>
+              <AdresaKartica onPress={() => setAdresa(item)} adresa={item} />
+            </View>
+          )}
+          key={(item) => item.id}
+          keyExtractor={(item) => item.naziv}
+        />
+        <View className="p-4">
+          <Text className="text-xl font-bold mb-5 ">Dodaj novu adresu</Text>
+          <FormField
+            title="Naziv"
+            value={adresa.naziv}
+            handleChangeText={(e) =>
+              setAdresa({ ...adresa, naziv: e.target.value })
+            }
+            // otherStyles="w-[93%]"
           />
-          <View className="p-4">
-            <Text className="text-xl font-bold mb-5 ">Dodaj novu adresu</Text>
-            <FormField
-              title="Naziv"
-              value={adresa.naziv}
-              handleChangeText={(e) =>
-                setAdresa({ ...adresa, naziv: e.target.value })
-              }
-              // otherStyles="w-[93%]"
-            />
-            <FormField
-              title="Ulica"
-              value={adresa.ulica}
-              handleChangeText={(e) =>
-                setAdresa({ ...adresa, ulica: e.target.value })
-              }
-              // otherStyles="w-[93%]"
-            />
-            <FormField
-              title="Grad"
-              value={adresa.grad}
-              handleChangeText={(e) =>
-                setAdresa({ ...adresa, grad: e.target.value })
-              }
-              // otherStyles="w-[93%]"
-            />
+          <FormField
+            title="Ulica"
+            value={adresa.ulica}
+            handleChangeText={(e) =>
+              setAdresa({ ...adresa, ulica: e.target.value })
+            }
+            // otherStyles="w-[93%]"
+          />
+          <FormField
+            title="Grad"
+            value={adresa.grad}
+            handleChangeText={(e) =>
+              setAdresa({ ...adresa, grad: e.target.value })
+            }
+            // otherStyles="w-[93%]"
+          />
+          <CustomButton
+            title="Dodaj adresu"
+            handlePress={obradiKreiranjeAdrese}
+            containerStyles="w-full h-[48px] rounded-full"
+          />
+        </View>
+        {adresa && (
+          <AdresaModal adresa={adresa} onClose={() => setAdresa("")} />
+        )}
+      </View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={adresaUspesno}
+        onRequestClose={() => setAdresaUspesno(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="w-[300px] p-4 bg-white rounded-lg items-center">
+            <Text className="text-lg font-bold mb-4">
+              Adresa je uspešno napravljena!
+            </Text>
             <CustomButton
-              title="Dodaj adresu"
-              handlePress={obradiKreiranjeAdrese}
+              title="Zatvori"
+              handlePress={() => {
+                setAdresaUspesno(false);
+                //navigation.navigate("Pocetna");
+              }}
               containerStyles="w-full h-[48px] rounded-full"
             />
           </View>
-          {adresa && (
-            <AdresaModal adresa={adresa} onClose={() => setAdresa("")} />
-          )}
         </View>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={adresaUspesno}
-          onRequestClose={() => setAdresaUspesno(false)}
-        >
-          <View className="flex-1 justify-center items-center bg-black/50">
-            <View className="w-[300px] p-4 bg-white rounded-lg items-center">
-              <Text className="text-lg font-bold mb-4">
-                Adresa je uspešno napravljena!
-              </Text>
-              <CustomButton
-                title="Zatvori"
-                handlePress={() => {
-                  setAdresaUspesno(false);
-                  //navigation.navigate("Pocetna");
-                }}
-                containerStyles="w-full h-[48px] rounded-full"
-              />
-            </View>
-          </View>
-        </Modal>
-      </ScrollView>
+      </Modal>
     </SafeAreaView>
   );
 };

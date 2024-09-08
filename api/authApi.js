@@ -1,8 +1,8 @@
 import axios from "axios";
 import { storeToken } from "../utils/tokenService";
 
-// const API_BASE_URL = `http://192.168.0.13:5076/api/korisnik`;
-const API_BASE_URL = `http://192.168.1.54:5076/api/korisnik`;
+const API_BASE_URL = `http://192.168.0.13:5076/api/korisnik`;
+// const API_BASE_URL = `http://192.168.1.54:5076/api/korisnik`;
 
 export const registracijaMusterije = async (userData) => {
   try {
@@ -25,12 +25,9 @@ export const loginMusterija = async (userData) => {
       userData
     );
 
-    if (odgovor.status === 200) {
-      const { token } = odgovor.data;
-      await storeToken(token);
-    }
-
-    return odgovor.data;
+    const { token } = odgovor.data;
+    await storeToken(token);
+    return odgovor.data.rezultat;
   } catch (error) {
     console.error("Error logging in user:", error);
     throw error;
@@ -44,7 +41,22 @@ export const loginRestoran = async (userData) => {
       userData
     );
 
-    return odgovor.data;
+    const { token } = odgovor.data;
+    await storeToken(token);
+    return odgovor.data.rezultat;
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    throw error;
+  }
+};
+
+export const loginAdmin = async (userData) => {
+  try {
+    const odgovor = await axios.post(`${API_BASE_URL}/admin/login`, userData);
+
+    const { token } = odgovor.data;
+    await storeToken(token);
+    return odgovor.data.rezultat;
   } catch (error) {
     console.error("Error logging in user:", error);
     throw error;

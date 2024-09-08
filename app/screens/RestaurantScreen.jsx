@@ -78,8 +78,8 @@ const RestaurantScreen = ({ route }) => {
     <SafeAreaView className="flex-1 bg-white">
       <View className="items-center mb-6">
         <Image
-          // source={{ uri: `http://192.168.0.13:5076${restoran.slikaUrl}` }}
-          source={{ uri: `http://192.168.1.54:5076${restoran.slikaUrl}` }}
+          source={{ uri: `http://192.168.0.13:5076${restoran.slikaUrl}` }}
+          // source={{ uri: `http://192.168.1.54:5076${restoran.slikaUrl}` }}
           className="w-full h-48 rounded-lg"
         />
         <Text className="text-2xl font-bold ml-1">{restoran.ime}</Text>

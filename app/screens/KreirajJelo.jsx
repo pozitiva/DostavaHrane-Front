@@ -107,8 +107,8 @@ const KreirajJelo = () => {
             />
             {jelo.slikaUrl && (
               <Image
-                // source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
-                source={{ uri: `http://192.168.1.54:5076${jelo.slikaUrl}` }}
+                source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
+                // source={{ uri: `http://192.168.1.54:5076${jelo.slikaUrl}` }}
                 style={{ width: 200, height: 200 }}
               />
             )}

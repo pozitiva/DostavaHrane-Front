@@ -4,6 +4,7 @@ import {
   kreirajAdresu,
   vratiSveAdreseMusterije,
 } from "../api/adresaApi";
+import { napraviNarudzbinu } from "../api/narudzbinaApi";
 
 const useKorisnikSkladiste = create((set) => ({
   korisnik: null,
@@ -11,6 +12,19 @@ const useKorisnikSkladiste = create((set) => ({
   setKorisnik: (korisnik) => set({ korisnik }),
   setTipKorisnika: (tipKorisnika) => set({ tipKorisnika }),
   clearKorisnik: () => set({ korisnik: null }),
+  dodajNarudzbinu: async (novaNarudzbina) => {
+    try {
+      await napraviNarudzbinu(novaNarudzbina);
+      set((state) => ({
+        korisnik: {
+          ...state.korisnik, // Zadrži ostala polja korisnika
+          narudzbine: [novaNarudzbina, ...state.korisnik.narudzbine], // Dodaj ili ažuriraj polje 'adrese'
+        },
+      }));
+    } catch (error) {
+      console.error("Greška prilikom kreiranja adrese:", error);
+    }
+  },
   dodajAdresu: async (novaAdresa) => {
     try {
       await kreirajAdresu(novaAdresa);

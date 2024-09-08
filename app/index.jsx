@@ -21,6 +21,9 @@ import JelaRestoranaEkran from "./screens/JelaRestoranaEkran";
 import KreirajJelo from "./screens/KreirajJelo";
 import useKorisnikSkladiste from "../store/KorisnikSkladiste";
 import Search from "./screens/PretragaEkran";
+import MojeNarudzbine from "./screens/MojeNarudzbine";
+import AdminLogin from "./screens/AdminLogin";
+import AdminPanel from "./screens/AdminPanel";
 
 LogBox.ignoreAllLogs();
 
@@ -54,6 +57,15 @@ const HomeStack = () => {
         options={{
           headerShown: true,
           headerTitle: "Restoran",
+          ...headerOptions,
+        }}
+      />
+      <Stack.Screen
+        name="MojeNarudzbine"
+        component={MojeNarudzbine}
+        options={{
+          headerShown: true,
+          headerTitle: "Moje narudzbine",
           ...headerOptions,
         }}
       />
@@ -185,6 +197,22 @@ const App = () => {
             options={{
               ...headerOptions,
               headerTitle: "Logovanje",
+            }}
+          />
+          <Stack.Screen
+            name="AdminLogin"
+            component={AdminLogin}
+            options={{
+              ...headerOptions,
+              headerTitle: "Logovanje",
+            }}
+          />
+          <Stack.Screen
+            name="AdminPanel"
+            component={AdminPanel}
+            options={{
+              ...headerOptions,
+              headerTitle: "Admin panel",
             }}
           />
 

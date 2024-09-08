@@ -9,8 +9,8 @@ const DishCard = ({ jelo, onPress }) => {
       className="flex-row items-center py-4 border-b border-gray-200"
     >
       <Image
-        // source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
-        source={{ uri: `http://192.168.1.54:5076${jelo.slikaUrl}` }}
+        source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
+        // source={{ uri: `http://192.168.1.54:5076${jelo.slikaUrl}` }}
         className="h-20 w-20 rounded-lg ml-2"
         resizeMode="cover"
       />

@@ -14,8 +14,8 @@ import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
 
-// const baseUrl = "http://192.168.0.13:5076";
-const baseUrl = "http://192.168.1.54:5076";
+const baseUrl = "http://192.168.0.13:5076";
+// const baseUrl = "http://192.168.1.54:5076";
 
 const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const { korisnik } = useKorisnikSkladiste.getState();
