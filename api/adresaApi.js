@@ -29,11 +29,15 @@ export const vratiSveAdreseMusterije = async () => {
 export const izmeniAdresu = async (id, adresaData) => {
   try {
     console.log(" uslo u api");
-    const response = await axiosInstance.put(`/adresa/${id}`, adresaData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosInstance.put(
+      `${baseUrl}/adresa/${id}`,
+      adresaData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Greska prilikom izmene adrese:", error);
