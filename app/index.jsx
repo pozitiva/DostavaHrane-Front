@@ -24,6 +24,8 @@ import Search from "./screens/PretragaEkran";
 import MojeNarudzbine from "./screens/MojeNarudzbine";
 import AdminLogin from "./screens/AdminLogin";
 import AdminPanel from "./screens/AdminPanel";
+import KreirajRestoran from "./screens/KreirajRestoran";
+import KreirajDostavljaca from "./screens/KreirajDostavljaca";
 
 LogBox.ignoreAllLogs();
 
@@ -207,12 +209,33 @@ const App = () => {
               headerTitle: "Logovanje",
             }}
           />
+
+          <Stack.Screen
+            name="KreirajRestoran"
+            component={KreirajRestoran}
+            options={{
+              ...headerOptions,
+              headerTitle: "Kreiraj restoran",
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="KreirajDostavljaca"
+            component={KreirajDostavljaca}
+            options={{
+              ...headerOptions,
+              headerTitle: "Kreiraj dostavljaca",
+              headerShown: true,
+            }}
+          />
+
           <Stack.Screen
             name="AdminPanel"
             component={AdminPanel}
             options={{
               ...headerOptions,
               headerTitle: "Admin panel",
+              headerShown: true,
             }}
           />
 

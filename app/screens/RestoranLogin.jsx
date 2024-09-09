@@ -17,6 +17,7 @@ const RestoranLogin = () => {
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const { setKorisnik, setTipKorisnika } = useKorisnikSkladiste();
+  const [verzijaBrojac, setVerzijaBrojac] = useState(0);
 
   const handleLogin = async () => {
     setIsSubmitting(true);
@@ -66,13 +67,30 @@ const RestoranLogin = () => {
         {error && <Text className="text-red-500">{error}</Text>}
 
         <View className="flex-row justify-center mb-4 mt-5">
-          <Text className="text-m text-gray-600 ">Nisi restoran? </Text>
+          <Text className="text-m text-gray-600 ">
+            Ne upravljaš restoranom?{" "}
+          </Text>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("MusterijaLogin")}
           >
             <Text className="text-m text-secondary">
-              Uloguj se kao musterija.
+              Uloguj se kao mušterija.
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row justify-center mt-36 ">
+          <TouchableOpacity
+            onPress={() => {
+              setVerzijaBrojac(verzijaBrojac + 1);
+              if (verzijaBrojac === 5) {
+                navigation.navigate("AdminLogin");
+                setVerzijaBrojac(0);
+              }
+            }}
+          >
+            <Text className=" text-m align-middle text-gray-600">
+              Verzija 1.0.0
             </Text>
           </TouchableOpacity>
         </View>

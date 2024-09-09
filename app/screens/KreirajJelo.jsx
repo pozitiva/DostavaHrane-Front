@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Button, Image, Modal, ScrollView, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "../components/CustomButton";
-import FormField from "../components/FormField";
 import { Picker } from "@react-native-picker/picker";
-import useJeloSkladiste from "../../store/JeloSkladiste";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "expo-router";
-import { tipoviJela } from "../../utils/zajednickiPodaci";
+import React, { useState } from "react";
+import { Image, Modal, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import useJeloSkladiste from "../../store/JeloSkladiste";
+import { API_BASE_URL, tipoviJela } from "../../utils/zajednickiPodaci";
+import CustomButton from "../components/CustomButton";
+import FormField from "../components/FormField";
 
 const KreirajJelo = () => {
   const { dodajJelo, ucitajJela } = useJeloSkladiste((state) => ({
@@ -107,8 +107,7 @@ const KreirajJelo = () => {
             />
             {jelo.slikaUrl && (
               <Image
-                source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
-                // source={{ uri: `http://192.168.1.54:5076${jelo.slikaUrl}` }}
+                source={{ uri: `${API_BASE_URL}${jelo.slikaUrl}` }}
                 style={{ width: 200, height: 200 }}
               />
             )}

@@ -36,7 +36,8 @@ export const kreirajJelo = async (jeloZaKreiranje) => {
 
 export const izmeniJelo = async (jeloData) => {
   try {
-    console.log("uslo");
+    console.log(jeloData);
+    console.log("uslo u izmenu jela");
     const response = await axiosInstance.put(`/jelo`, jeloData, {
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,6 @@ export const izmeniJelo = async (jeloData) => {
     return response.data;
   } catch (error) {
     console.error("Greska prilikom izmene jela:", error);
-    throw error;
   }
 };
 

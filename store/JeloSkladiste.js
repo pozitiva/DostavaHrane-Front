@@ -19,18 +19,6 @@ const useJeloSkladiste = create((set) => ({
     }
   },
 
-  // vratiJelo: asyn c (jeloId) => {
-  //   try {
-  //     const odgovor = await vratiJelo(jeloId);
-  //     set({ trenutnoJelo: odgovor });
-  //   } catch (error) {
-  //     console.error(
-  //       `Greška prilikom dobijanja jela sa ID-jem ${jeloId}:`,
-  //       error
-  //     );
-  //   }
-  // },
-
   dodajJelo: async (novoJelo) => {
     try {
       await kreirajJelo(novoJelo);
@@ -42,6 +30,7 @@ const useJeloSkladiste = create((set) => ({
 
   izmeniJelo: async (izmenjenoJelo) => {
     try {
+      console.log("uslo u skladiste");
       await izmeniJelo(izmenjenoJelo);
       // set((state) => ({
       //   jela: state.jela.map((jelo) =>

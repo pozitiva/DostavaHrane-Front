@@ -41,3 +41,16 @@ export const pretragaRestorana = async (naziv = null, tip = null) => {
     throw error;
   }
 };
+
+export const kreirajRestoran = async (restoranZaKreiranje) => {
+  try {
+    await axiosInstance.post("/restoran", restoranZaKreiranje, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  } catch (error) {
+    console.error("Greska prilikom kreiranja restorana:", error);
+    throw error;
+  }
+};

@@ -21,8 +21,10 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
 
   const obradiPromenuStatusa = async () => {
     try {
-      console.log("uslo u promenu statusa");
-      await izmeniNarudzbinu(narudzbina);
+      const odgovor = await izmeniNarudzbinu(narudzbina);
+      if (odgovor == "Neuspeh") {
+        throw new Error("nema slobodnog dostavljaca");
+      }
       setUspesnoIzmenjeno(true);
       ucitajNarudzbine();
     } catch (error) {

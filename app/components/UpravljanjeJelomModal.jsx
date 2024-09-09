@@ -13,9 +13,9 @@ import useJeloSkladiste from "../../store/JeloSkladiste";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
+import { API_BASE_URL, tipoviJela } from "../../utils/zajednickiPodaci";
 
-const baseUrl = "http://192.168.0.13:5076";
-// const baseUrl = "http://192.168.1.54:5076";
+const baseUrl = API_BASE_URL;
 
 const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const { korisnik } = useKorisnikSkladiste.getState();
@@ -38,6 +38,7 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
 
   const obradiIzmenuJela = async () => {
     try {
+      console.log(jelo.id);
       const jeloData = {
         id: jelo.id,
         naziv: izmenjenoJelo.naziv,
@@ -45,6 +46,7 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
         tipJela: izabranTipJela,
         restoranId: korisnik.id,
         slikaUrl: jelo.slikaUrl,
+        opis: "",
       };
       console.log(jeloData);
 
@@ -73,86 +75,79 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={400}
-      modalHeight={635}
+      snapPoint={180}
+      modalHeight={640}
       onClose={() => onClose()}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View className="items-center mb-6">
-            <Image
-              source={{
-                uri: `${baseUrl}${izmenjenoJelo.slikaUrl}`,
-              }}
-              className="w-full h-48 rounded-lg"
-            />
-          </View>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View className="items-center mb-6">
+          <Image
+            source={{
+              uri: `${baseUrl}${izmenjenoJelo.slikaUrl}`,
+            }}
+            className="w-full h-48 rounded-lg"
+          />
+        </View>
 
-          <View className="flex-1 bg-white p-4 items-center mb-6">
-            <FormField
-              title="Naziv"
-              value={izmenjenoJelo.naziv}
-              placeholder="Unesite naziv jela"
-              handleChangeText={(text) =>
-                setIzmenjenoJelo({ ...izmenjenoJelo, naziv: text })
-              }
-              otherStyles="w-full max-w-[335px]"
-            />
+        <View className="flex-1 bg-white p-4 items-center mb-6">
+          <FormField
+            title="Naziv"
+            value={izmenjenoJelo.naziv}
+            placeholder="Unesite naziv jela"
+            handleChangeText={(text) =>
+              setIzmenjenoJelo({ ...izmenjenoJelo, naziv: text })
+            }
+            otherStyles="w-full max-w-[335px]"
+          />
 
-            <FormField
-              title="Cena"
-              value={
-                isNaN(izmenjenoJelo.cena) ? "" : String(izmenjenoJelo.cena)
-              }
-              placeholder="Unesite cenu jela"
-              handleChangeText={(text) => {
-                const novaCena = text.trim() === "" ? "" : parseFloat(text);
-                setIzmenjenoJelo({
-                  ...izmenjenoJelo,
-                  cena: isNaN(novaCena) ? "" : novaCena,
-                });
-              }}
-              keyboardType="numeric"
-              otherStyles="w-full max-w-[335px]"
-            />
+          <FormField
+            title="Cena"
+            value={isNaN(izmenjenoJelo.cena) ? "" : String(izmenjenoJelo.cena)}
+            placeholder="Unesite cenu jela"
+            handleChangeText={(text) => {
+              const novaCena = text.trim() === "" ? "" : parseFloat(text);
+              setIzmenjenoJelo({
+                ...izmenjenoJelo,
+                cena: isNaN(novaCena) ? "" : novaCena,
+              });
+            }}
+            keyboardType="numeric"
+            otherStyles="w-full max-w-[335px]"
+          />
 
-            <View className="w-full max-w-[335px] mb-4">
-              <Text className="text-xs text-gray-500 mb-1">Tip jela</Text>
-              <View className="border border-gray-300 rounded-md">
-                <Picker
-                  selectedValue={izabranTipJela}
-                  onValueChange={(itemValue) => {
-                    setIzabranTipJela(itemValue);
-                    setIzmenjenoJelo({ ...izmenjenoJelo, tipJela: itemValue });
-                  }}
-                  className="text-base py-2 px-2 border-gray-300 rounded-md text-black"
-                >
-                  {tipoviJela.map((tipJela, index) => (
-                    <Picker.Item key={index} label={tipJela} value={tipJela} />
-                  ))}
-                </Picker>
-              </View>
+          <View className="w-full max-w-[335px]">
+            <Text className="text-xs text-gray-500 mb-1">Tip jela</Text>
+            <View className="border border-gray-300 rounded-md">
+              <Picker
+                selectedValue={izabranTipJela}
+                onValueChange={(itemValue) => {
+                  setIzabranTipJela(itemValue);
+                  setIzmenjenoJelo({ ...izmenjenoJelo, tipJela: itemValue });
+                }}
+                className="text-base py-2 px-2 border-gray-300 rounded-md text-black"
+              >
+                {tipoviJela.map((tipJela, index) => (
+                  <Picker.Item key={index} label={tipJela} value={tipJela} />
+                ))}
+              </Picker>
             </View>
           </View>
+        </View>
 
-          <View className="flex-row justify-center mb-10">
-            <CustomButton
-              title="Izmeni jelo"
-              containerStyles="w-[160px] h-[48px] rounded-full mr-8"
-              handlePress={obradiIzmenuJela}
-            />
+        <View className="flex-row justify-center">
+          <CustomButton
+            title="Izmeni jelo"
+            containerStyles="w-[160px] h-[48px] rounded-full mr-8"
+            handlePress={obradiIzmenuJela}
+          />
 
-            <CustomButton
-              title="Obriši jelo"
-              containerStyles="w-[160px] h-[48px] rounded-full ml-4"
-              handlePress={obradiBrisanjeJela}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <CustomButton
+            title="Obriši jelo"
+            containerStyles="w-[160px] h-[48px] rounded-full ml-4"
+            handlePress={obradiBrisanjeJela}
+          />
+        </View>
+      </ScrollView>
     </Modalize>
   );
 };

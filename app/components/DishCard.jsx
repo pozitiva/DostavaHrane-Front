@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { API_BASE_URL } from "../../utils/zajednickiPodaci";
 
 const DishCard = ({ jelo, onPress }) => {
   // console.log(jelo);
@@ -9,8 +10,7 @@ const DishCard = ({ jelo, onPress }) => {
       className="flex-row items-center py-4 border-b border-gray-200"
     >
       <Image
-        source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
-        // source={{ uri: `http://192.168.1.54:5076${jelo.slikaUrl}` }}
+        source={{ uri: `${API_BASE_URL}${jelo.slikaUrl}` }}
         className="h-20 w-20 rounded-lg ml-2"
         resizeMode="cover"
       />

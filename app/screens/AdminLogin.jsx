@@ -22,17 +22,17 @@ const AdminLogin = () => {
   const handleLogin = async () => {
     setIsSubmitting(true);
     setError(null);
-    // try {
-    const odgovor = await loginAdmin(admin);
-    console.log(odgovor);
-    if (odgovor !== null) {
-      setKorisnik(odgovor);
-      setTipKorisnika("admin");
-      navigation.navigate("AdminPanel");
+    try {
+      const odgovor = await loginAdmin(admin);
+      console.log(odgovor);
+      if (odgovor !== null) {
+        setKorisnik(odgovor);
+        setTipKorisnika("admin");
+        navigation.navigate("AdminPanel");
+      }
+    } catch (error) {
+      setError("Neuspešno logovanje");
     }
-    // } catch (error) {
-    //   setError("Neuspešno logovanje");
-    // }
   };
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
@@ -60,18 +60,6 @@ const AdminLogin = () => {
           containerStyles="#22A45D rounded-lg p-4 mb-9 mt-9"
         />
         {error && <Text className="text-red-500">{error}</Text>}
-
-        {/* <View className="flex-row justify-center mb-4 mt-5">
-          <Text className="text-m text-gray-600 ">Nisi restoran? </Text>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("MusterijaLogin")}
-          >
-            <Text className="text-m text-secondary">
-              Uloguj se kao musterija.
-            </Text>
-          </TouchableOpacity>
-        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,12 +1,13 @@
 import axios from "axios";
 import { getToken } from "../utils/tokenService";
+import { API_BASE_URL } from "../utils/zajednickiPodaci";
 
 const axiosInstance = axios.create({
-  baseURL: "http://192.168.0.13:5076/api",
+  baseURL: API_BASE_URL,
 });
 
 // const axiosInstance = axios.create({
-//   baseURL: "http://192.168.1.54:5076/api",
+//   baseURL: API_BASE_URL  ,
 // });
 
 axiosInstance.interceptors.request.use(

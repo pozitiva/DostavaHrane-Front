@@ -84,7 +84,7 @@ const MusterijaLogin = () => {
           </TouchableOpacity>
         </View>
 
-        <View className="mb-4 mt-8 justify-center ">
+        <View className="flex-row justify-center mt-20 ">
           <TouchableOpacity
             onPress={() => {
               setVerzijaBrojac(verzijaBrojac + 1);
@@ -94,7 +94,9 @@ const MusterijaLogin = () => {
               }
             }}
           >
-            <Text className=" text-m text-gray-600">Verzija 1.0.0</Text>
+            <Text className=" text-m align-middle text-gray-600">
+              Verzija 1.0.0
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
