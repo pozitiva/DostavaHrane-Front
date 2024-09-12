@@ -2,14 +2,14 @@ import axios from "axios";
 import { storeToken } from "../utils/tokenService";
 import { API_BASE_URL } from "../utils/zajednickiPodaci";
 
+const baseUrl = `${API_BASE_URL}/api`;
 export const registracijaMusterije = async (userData) => {
   try {
     console.log(userData);
     const odgovor = await axios.post(
-      `${API_BASE_URL}/korisnik/musterija/register`,
+      `${baseUrl}/korisnik/musterija/register`,
       userData
     );
-    //console.log(odgovor.data);
     return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);
@@ -19,7 +19,7 @@ export const registracijaMusterije = async (userData) => {
 export const loginMusterija = async (userData) => {
   try {
     const odgovor = await axios.post(
-      `${API_BASE_URL}/korisnik/musterija/login`,
+      `${baseUrl}/korisnik/musterija/login`,
       userData
     );
 
@@ -35,7 +35,7 @@ export const loginMusterija = async (userData) => {
 export const loginRestoran = async (userData) => {
   try {
     const odgovor = await axios.post(
-      `${API_BASE_URL}/korisnik/restoran/login`,
+      `${baseUrl}/korisnik/restoran/login`,
       userData
     );
 
@@ -50,7 +50,7 @@ export const loginRestoran = async (userData) => {
 export const loginAdmin = async (userData) => {
   try {
     const odgovor = await axios.post(
-      `${API_BASE_URL}/korisnik/admin/login`,
+      `${baseUrl}/korisnik/admin/login`,
       userData
     );
 

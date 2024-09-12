@@ -3,7 +3,7 @@ import { getToken } from "../utils/tokenService";
 import { API_BASE_URL } from "../utils/zajednickiPodaci";
 
 const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${API_BASE_URL}/api`,
 });
 
 // const axiosInstance = axios.create({

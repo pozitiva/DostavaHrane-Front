@@ -1,6 +1,13 @@
 import { useNavigation } from "expo-router";
 import React, { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Modal,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { loginMusterija } from "../../api/authApi";
 import { images } from "../../constants";
@@ -14,7 +21,7 @@ const MusterijaLogin = () => {
     sifra: "milos145",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uspesanLog, setUspesanLog] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const { setKorisnik, setTipKorisnika } = useKorisnikSkladiste();
@@ -23,18 +30,18 @@ const MusterijaLogin = () => {
   const handleLogin = async () => {
     try {
       const odgovor = await loginMusterija(musterija);
-      console.log(odgovor);
+
       if (odgovor !== null) {
         setKorisnik(odgovor);
         setTipKorisnika("musterija");
-        navigation.navigate("MainTabs", {
-          screen: "Pocetna",
-        });
+        console.log("postavljeno na true");
+        setUspesanLog(true);
+        // navigation.navigate("MainTabs", {
+        //   screen: "Pocetna",
+        // });
       }
     } catch (error) {
       setError("Neuspešno logovanje");
-    } finally {
-      setIsSubmitting(false);
     }
   };
   return (
@@ -99,6 +106,29 @@ const MusterijaLogin = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={uspesanLog}
+          onRequestClose={() => setUspesanLog(false)}
+        >
+          <View className="flex-1 justify-center items-center bg-black/50">
+            <View className="w-[300px] p-4 bg-white rounded-lg items-center">
+              <Text className="text-lg font-bold mb-4">Uspešno logovanje!</Text>
+              <CustomButton
+                title="Zatvori"
+                handlePress={() => {
+                  setUspesanLog(false);
+                  navigation.navigate("MainTabs", {
+                    screen: "Pocetna",
+                  });
+                }}
+                containerStyles="w-full h-[48px] rounded-full"
+              />
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );

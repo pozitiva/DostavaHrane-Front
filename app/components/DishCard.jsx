@@ -3,7 +3,6 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { API_BASE_URL } from "../../utils/zajednickiPodaci";
 
 const DishCard = ({ jelo, onPress }) => {
-  // console.log(jelo);
   return (
     <TouchableOpacity
       onPress={() => onPress()}

@@ -1,10 +1,11 @@
 import { API_BASE_URL } from "../utils/zajednickiPodaci";
 import axiosInstance from "./axiosInstance";
 
+const baseUrl = `${API_BASE_URL}/api`;
 export const kreirajAdresu = async (adresaZaKreiranje) => {
   try {
     console.log("uslo u api");
-    await axiosInstance.post(API_BASE_URL, adresaZaKreiranje, {
+    await axiosInstance.post(baseUrl, adresaZaKreiranje, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -18,7 +19,6 @@ export const kreirajAdresu = async (adresaZaKreiranje) => {
 export const vratiSveAdreseMusterije = async () => {
   try {
     const odgovor = await axiosInstance.get("/adresa");
-    console.log(odgovor.data);
     return odgovor.data;
   } catch (error) {
     console.error("Greska prilikom vracanja adresa:", error);
@@ -28,7 +28,6 @@ export const vratiSveAdreseMusterije = async () => {
 
 export const izmeniAdresu = async (id, adresaData) => {
   try {
-    console.log(" uslo u api");
     const response = await axiosInstance.put(
       `${baseUrl}/adresa/${id}`,
       adresaData,

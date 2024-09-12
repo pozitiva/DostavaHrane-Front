@@ -23,6 +23,7 @@ export const vratiSvaJelaRestorana = async () => {
 
 export const kreirajJelo = async (jeloZaKreiranje) => {
   try {
+    console.log(jeloZaKreiranje);
     await axiosInstance.post("/jelo", jeloZaKreiranje, {
       headers: {
         "Content-Type": "multipart/form-data",

@@ -7,7 +7,6 @@ import useCartStore from "../../store/CartStore";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import Counter from "../components/Counter";
 import CustomButton from "../components/CustomButton";
-import { napraviNarudzbinu } from "./../../api/narudzbinaApi";
 
 const CartScreen = () => {
   const { korisnik, dodajNarudzbinu } = useKorisnikSkladiste((state) => ({
@@ -132,7 +131,8 @@ const CartScreen = () => {
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-[300px] p-4 bg-white rounded-lg items-center">
             <Text className="text-lg font-bold mb-4">
-              Narudžbina je uspešno napravljena!
+              {/* Narudžbina je uspešno napravljena! */}
+              Došlo je do greške pri kreiranju narudzbine!
             </Text>
             <CustomButton
               title="Zatvori"

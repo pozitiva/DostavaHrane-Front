@@ -1,21 +1,13 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-  View,
-} from "react-native";
+import { Image, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import useJeloSkladiste from "../../store/JeloSkladiste";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
+import { API_BASE_URL, tipoviJela } from "../../utils/zajednickiPodaci";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
-import { API_BASE_URL, tipoviJela } from "../../utils/zajednickiPodaci";
-
-const baseUrl = API_BASE_URL;
 
 const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const { korisnik } = useKorisnikSkladiste.getState();
@@ -28,6 +20,7 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
     obrisiJelo: state.obrisiJelo,
     ucitajJela: state.ucitajJela,
   }));
+
   useEffect(() => {
     console.log(jelo);
     setIzmenjenoJelo(jelo);
@@ -38,7 +31,6 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
 
   const obradiIzmenuJela = async () => {
     try {
-      console.log(jelo.id);
       const jeloData = {
         id: jelo.id,
         naziv: izmenjenoJelo.naziv,
@@ -46,13 +38,10 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
         tipJela: izabranTipJela,
         restoranId: korisnik.id,
         slikaUrl: jelo.slikaUrl,
-        opis: "",
+        opis: jelo.opis,
       };
-      console.log(jeloData);
 
-      const odgovor = await izmeniJelo(jeloData);
-
-      console.log(odgovor);
+      await izmeniJelo(jeloData);
 
       ucitajJela();
       onClose();
@@ -63,9 +52,8 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
 
   const obradiBrisanjeJela = async () => {
     try {
-      const odgovor = await obrisiJelo(jelo.id);
-
-      console.log(odgovor);
+      await obrisiJelo(jelo.id);
+      ucitajJela();
       onClose();
     } catch (error) {
       console.error("Greska prilikom izmene jela:", error);
@@ -75,15 +63,15 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={180}
-      modalHeight={640}
+      snapPoint={300}
+      modalHeight={870}
       onClose={() => onClose()}
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View className="items-center mb-6">
           <Image
             source={{
-              uri: `${baseUrl}${izmenjenoJelo.slikaUrl}`,
+              uri: `${API_BASE_URL}${izmenjenoJelo.slikaUrl}`,
             }}
             className="w-full h-48 rounded-lg"
           />
@@ -114,6 +102,15 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
             keyboardType="numeric"
             otherStyles="w-full max-w-[335px]"
           />
+          {/* <FormField
+            title="Opis"
+            value={izmenjenoJelo.opis}
+            placeholder="Unesite opis jela"
+            handleChangeText={(text) =>
+              setIzmenjenoJelo({ ...izmenjenoJelo, opis: text })
+            }
+            otherStyles="w-full max-w-[335px]"
+          /> */}
 
           <View className="w-full max-w-[335px]">
             <Text className="text-xs text-gray-500 mb-1">Tip jela</Text>

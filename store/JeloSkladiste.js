@@ -21,6 +21,7 @@ const useJeloSkladiste = create((set) => ({
 
   dodajJelo: async (novoJelo) => {
     try {
+      console.log("USLO U SKLADISTE");
       await kreirajJelo(novoJelo);
       // set((state) => ({ jela: [...state.jela, response] }));
     } catch (error) {

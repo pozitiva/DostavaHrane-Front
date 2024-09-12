@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Image, Modal, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useJeloSkladiste from "../../store/JeloSkladiste";
-import { API_BASE_URL, tipoviJela } from "../../utils/zajednickiPodaci";
+import { tipoviJela } from "../../utils/zajednickiPodaci";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 
@@ -17,6 +17,7 @@ const KreirajJelo = () => {
   const [jelo, setJelo] = useState({
     naziv: "",
     cena: "",
+    opis: "",
     tipJela: "",
     slikaUrl: "",
   });
@@ -51,7 +52,9 @@ const KreirajJelo = () => {
       formData.append("naziv", jelo.naziv);
       formData.append("cena", jelo.cena);
       formData.append("tipJela", jelo.tipJela);
-      console.log("SAD CU DA UDJEM U DODAVANJE");
+      formData.append("opis", jelo.opis);
+
+      console.log(formData);
       await dodajJelo(formData);
       await ucitajJela();
 
@@ -59,6 +62,7 @@ const KreirajJelo = () => {
       setJelo({
         naziv: "",
         cena: "",
+        opis: "",
         tipJela: "",
         slikaUrl: "",
       });
@@ -87,7 +91,12 @@ const KreirajJelo = () => {
               otherStyles="w-[93%]"
               keyboardType="numeric"
             />
-
+            <FormField
+              title="Opis"
+              value={jelo.opis}
+              handleChangeText={(e) => setJelo({ ...jelo, opis: e })}
+              otherStyles="w-[93%]"
+            />
             <Picker
               selectedValue={jelo.tipJela || ""}
               onValueChange={(itemValue) => {
@@ -107,7 +116,7 @@ const KreirajJelo = () => {
             />
             {jelo.slikaUrl && (
               <Image
-                source={{ uri: `${API_BASE_URL}${jelo.slikaUrl}` }}
+                source={{ uri: `${jelo.slikaUrl}` }}
                 style={{ width: 200, height: 200 }}
               />
             )}
@@ -129,7 +138,7 @@ const KreirajJelo = () => {
           <View className="flex-1 justify-center items-center bg-black/50">
             <View className="w-[300px] p-4 bg-white rounded-lg items-center">
               <Text className="text-lg font-bold mb-4">
-                Jelo je uspešno kreirano!
+                Jelo je uspesno kreirano!
               </Text>
               <CustomButton
                 title="Zatvori"

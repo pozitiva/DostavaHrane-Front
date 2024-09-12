@@ -1,8 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
+  Modal,
   Text,
   TextInput,
   TouchableOpacity,
@@ -18,6 +19,7 @@ const Search = () => {
   const [restorani, setRestorani] = useState([]);
   const [nazivZaPretragu, setNazivZaPretragu] = useState("");
   const [tipZaPretragu, setTipZaPretragu] = useState("");
+  const [uspesnaPreraga, setUspesnaPreraga] = useState(false);
 
   const obradiPretragu = async () => {
     try {
@@ -26,8 +28,10 @@ const Search = () => {
         tipZaPretragu || ""
       );
       setRestorani(odgovor);
+      setUspesnaPreraga(true);
     } catch (error) {
       console.error("Greska prilikom pretrage restorana", error);
+      setUspesnaPreraga(false);
     }
   };
   return (
@@ -45,7 +49,7 @@ const Search = () => {
             setTipZaPretragu(itemValue);
           }}
         >
-          <Picker.Item label={"N/A"} value={""} />
+          <Picker.Item label={"Svi restorani"} value={""} />
           {tipoviJela.map((tipJela, index) => (
             <Picker.Item key={index} label={tipJela} value={tipJela} />
           ))}
