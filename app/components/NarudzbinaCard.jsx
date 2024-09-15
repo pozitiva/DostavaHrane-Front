@@ -18,8 +18,6 @@ const NarudzbinaCard = ({ narudzbina, onPress }) => {
       >
         <Text className="text-white text-center">Pogledaj detalje</Text>
       </TouchableOpacity>
-
-      {/* Modal za detalje narudžbine */}
     </View>
   );
 };

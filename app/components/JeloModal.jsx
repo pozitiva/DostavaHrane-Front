@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
-import useCartStore from "../../store/CartStore";
+import useKorpaSkladiste from "../../store/KorpaSkladiste";
 import { API_BASE_URL } from "../../utils/zajednickiPodaci";
 import Counter from "./Counter";
 import CustomButton from "./CustomButton";
@@ -15,7 +15,7 @@ const JeloModal = ({ jelo, onClose }) => {
     modalizeRef.current?.open();
   }, [jelo]);
 
-  const addToCart = useCartStore((state) => state.addToCart);
+  const addToCart = useKorpaSkladiste((state) => state.addToCart);
 
   const handleAddToCart = () => {
     const uniqueId = `${jelo.id}-${Date.now()}`;
@@ -38,7 +38,6 @@ const JeloModal = ({ jelo, onClose }) => {
     >
       <View className="items-center mb-6">
         <Image
-          // source={{ uri: `http://192.168.0.13:5076${jelo.slikaUrl}` }}
           source={{ uri: `${API_BASE_URL}${jelo.slikaUrl}` }}
           className="w-full h-48 rounded-lg"
         />

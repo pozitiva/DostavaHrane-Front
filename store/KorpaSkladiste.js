@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useCartStore = create((set) => ({
+const useKorpaSkladiste = create((set) => ({
   cart: [],
 
   addToCart: (product) =>
@@ -33,4 +33,4 @@ const useCartStore = create((set) => ({
     })),
 }));
 
-export default useCartStore;
+export default useKorpaSkladiste;

@@ -5,7 +5,7 @@ import React from "react";
 import { Image, LogBox, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { icons } from "../constants";
-import useCartStore from "../store/CartStore";
+import useKorpaSkladiste from "../store/KorpaSkladiste";
 import BackButton from "./components/BackButton";
 import CartScreen from "./screens/CartScreen";
 import Pocetna from "./screens/HomeScreen";
@@ -26,6 +26,8 @@ import AdminLogin from "./screens/AdminLogin";
 import AdminPanel from "./screens/AdminPanel";
 import KreirajRestoran from "./screens/KreirajRestoran";
 import KreirajDostavljaca from "./screens/KreirajDostavljaca";
+import NalogEkran from "./screens/NalogEkran";
+import AdreseEkran from "./screens/AdreseEkran";
 
 LogBox.ignoreAllLogs();
 
@@ -63,6 +65,24 @@ const HomeStack = () => {
         }}
       />
       <Stack.Screen
+        name="NalogEkran"
+        component={NalogEkran}
+        options={{
+          headerShown: true,
+          headerTitle: "Nalog",
+          ...headerOptions,
+        }}
+      />
+      <Stack.Screen
+        name="AdreseEkran"
+        component={AdreseEkran}
+        options={{
+          headerShown: true,
+          headerTitle: "Moje adrese",
+          ...headerOptions,
+        }}
+      />
+      <Stack.Screen
         name="MojeNarudzbine"
         component={MojeNarudzbine}
         options={{
@@ -76,14 +96,14 @@ const HomeStack = () => {
 };
 
 const TabScreens = () => {
-  const cartCount = useCartStore((state) => state.cart.length);
+  const cartCount = useKorpaSkladiste((state) => state.cart.length);
   const tipKorisnika = useKorisnikSkladiste((state) => state.tipKorisnika);
 
   const BadgeIcon = ({ icon, badgeCount }) => (
     <View style={{ position: "relative", alignItems: "center" }}>
       <Image
         source={icon}
-        style={{ width: 24, height: 24, tintColor: "#EF9920" }}
+        style={{ width: 24, height: 24, tintColor: "grey" }}
       />
       {badgeCount > 0 && (
         <View
@@ -256,32 +276,6 @@ const App = () => {
             }}
           />
 
-          {/* <Stack.Screen
-            name="NarudzbineEkran"
-            component={NarudzbineEkran}
-            options={{
-              ...headerOptions,
-              headerTitle: "Narudzbine",
-            }}
-          /> */}
-
-          {/* <Stack.Screen
-            name="JelaRestorana"
-            component={JelaRestoranaEkran}
-            options={{
-              ...headerOptions,
-              headerTitle: "Sva jela",
-            }}
-          /> */}
-
-          {/* <Stack.Screen
-            name="KreirajJelo"
-            component={KreirajJelo}
-            options={{
-              ...headerOptions,
-              headerTitle: "Kreiraj jelo",
-            }}
-          /> */}
           <Stack.Screen
             name="MainTabs"
             component={TabScreens}

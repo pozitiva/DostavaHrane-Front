@@ -5,20 +5,20 @@ import {
   vratiSveAdreseMusterije,
 } from "../api/adresaApi";
 import { napraviNarudzbinu } from "../api/narudzbinaApi";
+import { izmeniKorisnika } from "../api/musterijaApi";
 
 const useKorisnikSkladiste = create((set) => ({
   korisnik: null,
   tipKorisnika: null,
   setKorisnik: (korisnik) => set({ korisnik }),
   setTipKorisnika: (tipKorisnika) => set({ tipKorisnika }),
-  clearKorisnik: () => set({ korisnik: null }),
   dodajNarudzbinu: async (novaNarudzbina) => {
     try {
       await napraviNarudzbinu(novaNarudzbina);
       set((state) => ({
         korisnik: {
-          ...state.korisnik, // Zadrži ostala polja korisnika
-          narudzbine: [novaNarudzbina, ...state.korisnik.narudzbine], // Dodaj ili ažuriraj polje 'adrese'
+          ...state.korisnik,
+          narudzbine: [novaNarudzbina, ...state.korisnik.narudzbine],
         },
       }));
     } catch (error) {
@@ -31,8 +31,8 @@ const useKorisnikSkladiste = create((set) => ({
       const adreseKorisnika = await vratiSveAdreseMusterije();
       set((state) => ({
         korisnik: {
-          ...state.korisnik, // Zadrži ostala polja korisnika
-          adrese: adreseKorisnika, // Dodaj ili ažuriraj polje 'adrese'
+          ...state.korisnik,
+          adrese: adreseKorisnika,
         },
       }));
     } catch (error) {
@@ -46,7 +46,6 @@ const useKorisnikSkladiste = create((set) => ({
       set((state) => ({
         korisnik: {
           ...state.korisnik,
-          // Ažuriramo adresu u korisniku
           adrese: state.korisnik.adrese.map((adresa) =>
             adresa.id === id ? izmenjenaAdresa : adresa
           ),
@@ -54,6 +53,13 @@ const useKorisnikSkladiste = create((set) => ({
       }));
     } catch (error) {
       console.error("Greška prilikom izmene adrese:", error);
+    }
+  },
+  izmeniKorisnika: async (izmenjeniKorisnik) => {
+    try {
+      await izmeniKorisnika(izmenjeniKorisnik);
+    } catch (error) {
+      console.error("Greška prilikom izmene korisnika:", error);
     }
   },
 }));

@@ -19,6 +19,7 @@ const MusterijaLogin = () => {
   const [musterija, setMusterija] = useState({
     email: "milos@milos.com",
     sifra: "milos145",
+    tipKorisnika: "",
   });
 
   const [uspesanLog, setUspesanLog] = useState(false);
@@ -34,11 +35,7 @@ const MusterijaLogin = () => {
       if (odgovor !== null) {
         setKorisnik(odgovor);
         setTipKorisnika("musterija");
-        console.log("postavljeno na true");
         setUspesanLog(true);
-        // navigation.navigate("MainTabs", {
-        //   screen: "Pocetna",
-        // });
       }
     } catch (error) {
       setError("Neuspešno logovanje");

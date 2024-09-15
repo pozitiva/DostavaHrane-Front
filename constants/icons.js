@@ -17,6 +17,7 @@ import cart from "../assets/icons/cart.png";
 import orders from "../assets/icons/orders.png";
 import meals from "../assets/icons/meals.png";
 import create from "../assets/icons/create.png";
+import profilePic from "../assets/icons/profilePic.png";
 
 export default {
   play,
@@ -38,4 +39,5 @@ export default {
   orders,
   meals,
   create,
+  profilePic,
 };

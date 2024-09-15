@@ -3,7 +3,7 @@ import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, Modal, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import useCartStore from "../../store/CartStore";
+import useKorpaSkladiste from "../../store/KorpaSkladiste";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import Counter from "../components/Counter";
 import CustomButton from "../components/CustomButton";
@@ -18,7 +18,7 @@ const CartScreen = () => {
   const [izabranaAdresa, setIzabranaAdresa] = useState(korisnik.adrese[0]);
   const navigation = useNavigation();
 
-  const { cart, removeFromCart, clearCart, addToCart } = useCartStore(
+  const { cart, removeFromCart, clearCart, addToCart } = useKorpaSkladiste(
     (state) => ({
       cart: state.cart,
       removeFromCart: state.removeFromCart,
