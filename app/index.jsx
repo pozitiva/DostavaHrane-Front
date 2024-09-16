@@ -14,7 +14,6 @@ import NarudzbineEkran from "./screens/NarudzbineEkran";
 import Profile from "./screens/Profile";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import RestoranLogin from "./screens/RestoranLogin";
-
 import Welcome from "./screens/Welcome";
 import MusterijaRegistracija from "./screens/MusterijaRegistracija";
 import JelaRestoranaEkran from "./screens/JelaRestoranaEkran";
@@ -27,15 +26,14 @@ import AdminPanel from "./screens/AdminPanel";
 import KreirajRestoran from "./screens/KreirajRestoran";
 import KreirajDostavljaca from "./screens/KreirajDostavljaca";
 import NalogEkran from "./screens/NalogEkran";
-import AdreseEkran from "./screens/AdreseEkran";
+import AdreseEkran from "./screens/MojeAdrese";
 
 LogBox.ignoreAllLogs();
 
 const Stack = createNativeStackNavigator();
-const TabNav = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const headerOptions = {
-  headerShown: false,
   headerTitleAlign: "center",
   headerTitleStyle: {
     color: "#EF9920",
@@ -43,59 +41,53 @@ const headerOptions = {
   headerLeft: () => <BackButton />,
 };
 
+const TabIcon = ({ focused, icon }) => {
+  const color = focused ? "#EF9920" : "gray";
+  return (
+    <Image
+      source={icon}
+      style={{
+        width: 24,
+        height: 24,
+        tintColor: color,
+      }}
+    />
+  );
+};
+
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen
-        name="Home"
+        name="PocetnaEkran"
         component={Pocetna}
-        options={{
-          headerShown: true,
-          headerTitle: "Pocetna",
-          ...headerOptions,
-        }}
+        options={{ headerTitle: "Početna" }}
       />
       <Stack.Screen
         name="Restoran"
         component={RestaurantScreen}
-        options={{
-          headerShown: true,
-          headerTitle: "Restoran",
-          ...headerOptions,
-        }}
+        options={{ headerTitle: "Restoran" }}
       />
       <Stack.Screen
         name="NalogEkran"
         component={NalogEkran}
-        options={{
-          headerShown: true,
-          headerTitle: "Nalog",
-          ...headerOptions,
-        }}
+        options={{ headerTitle: "Nalog" }}
       />
       <Stack.Screen
         name="AdreseEkran"
         component={AdreseEkran}
-        options={{
-          headerShown: true,
-          headerTitle: "Moje adrese",
-          ...headerOptions,
-        }}
+        options={{ headerTitle: "Moje adrese" }}
       />
       <Stack.Screen
         name="MojeNarudzbine"
         component={MojeNarudzbine}
-        options={{
-          headerShown: true,
-          headerTitle: "Moje narudzbine",
-          ...headerOptions,
-        }}
+        options={{ headerTitle: "Moje narudžbine" }}
       />
     </Stack.Navigator>
   );
 };
 
-const TabScreens = () => {
+const MainTabs = () => {
   const cartCount = useKorpaSkladiste((state) => state.cart.length);
   const tipKorisnika = useKorisnikSkladiste((state) => state.tipKorisnika);
 
@@ -126,9 +118,8 @@ const TabScreens = () => {
       )}
     </View>
   );
-
   return (
-    <TabNav.Navigator
+    <Tab.Navigator
       screenOptions={({ route }) => ({
         ...headerOptions,
         headerShown: true,
@@ -186,101 +177,73 @@ const TabScreens = () => {
     >
       {tipKorisnika === "musterija" ? (
         <>
-          <TabNav.Screen name="Pocetna" component={HomeStack} />
-          <TabNav.Screen name="Pretraga" component={Search} />
-          <TabNav.Screen name="Profil" component={Profile} />
-          <TabNav.Screen name="Korpa" component={CartScreen} />
+          <Tab.Screen
+            name="Pocetna"
+            component={HomeStack}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Pretraga"
+            component={Search}
+            options={{ ...headerOptions, headerTitle: "Pretraga" }}
+          />
+          <Tab.Screen
+            name="Profil"
+            component={Profile}
+            options={{ ...headerOptions, headerTitle: "Profil" }}
+          />
+          <Tab.Screen
+            name="Korpa"
+            component={CartScreen}
+            options={{
+              ...headerOptions,
+              headerTitle: "Korpa",
+              tabBarBadge: cartCount > 0 ? cartCount : null,
+            }}
+          />
         </>
       ) : (
         <>
-          <TabNav.Screen name="Narudzbine" component={NarudzbineEkran} />
-          <TabNav.Screen name="JelaRestorana" component={JelaRestoranaEkran} />
-          <TabNav.Screen name="KreirajJelo" component={KreirajJelo} />
+          <Tab.Screen
+            name="Narudzbine"
+            component={NarudzbineEkran}
+            options={{ ...headerOptions, headerTitle: "Narudzbine" }}
+          />
+          <Tab.Screen
+            name="JelaRestorana"
+            component={JelaRestoranaEkran}
+            options={{ ...headerOptions, headerTitle: "Jela" }}
+          />
+          <Tab.Screen
+            name="KreirajJelo"
+            component={KreirajJelo}
+            options={{ ...headerOptions, headerTitle: "Kreiraj jelo" }}
+          />
         </>
       )}
-    </TabNav.Navigator>
+    </Tab.Navigator>
   );
 };
-
 const App = () => {
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer independent={true}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
-            options={{ headerShown: false }}
-          />
-
-          <Stack.Screen
-            name="MusterijaLogin"
-            component={MusterijaLogin}
-            options={{
-              ...headerOptions,
-              headerTitle: "Logovanje",
-            }}
-          />
-          <Stack.Screen
-            name="AdminLogin"
-            component={AdminLogin}
-            options={{
-              ...headerOptions,
-              headerTitle: "Logovanje",
-            }}
-          />
-
-          <Stack.Screen
-            name="KreirajRestoran"
-            component={KreirajRestoran}
-            options={{
-              ...headerOptions,
-              headerTitle: "Kreiraj restoran",
-              headerShown: true,
-            }}
-          />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="MusterijaLogin" component={MusterijaLogin} />
+          <Stack.Screen name="AdminLogin" component={AdminLogin} />
+          <Stack.Screen name="KreirajRestoran" component={KreirajRestoran} />
           <Stack.Screen
             name="KreirajDostavljaca"
             component={KreirajDostavljaca}
-            options={{
-              ...headerOptions,
-              headerTitle: "Kreiraj dostavljaca",
-              headerShown: true,
-            }}
           />
-
-          <Stack.Screen
-            name="AdminPanel"
-            component={AdminPanel}
-            options={{
-              ...headerOptions,
-              headerTitle: "Admin panel",
-              headerShown: true,
-            }}
-          />
-
+          <Stack.Screen name="AdminPanel" component={AdminPanel} />
           <Stack.Screen
             name="MusterijaRegistracija"
             component={MusterijaRegistracija}
-            options={{
-              ...headerOptions,
-              headerTitle: "Registracija",
-            }}
           />
-          <Stack.Screen
-            name="RestoranLogin"
-            component={RestoranLogin}
-            options={{
-              ...headerOptions,
-              headerTitle: "Logovanje",
-            }}
-          />
-
-          <Stack.Screen
-            name="MainTabs"
-            component={TabScreens}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="RestoranLogin" component={RestoranLogin} />
+          <Stack.Screen name="MainTabs" component={MainTabs} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

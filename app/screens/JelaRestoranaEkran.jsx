@@ -6,7 +6,6 @@ import DishCard from "../components/DishCard";
 import UpravljanjeJelomModal from "../components/UpravljanjeJelomModal";
 
 const JelaRestoranaEkran = () => {
-  //const [jela, setJela] = useState([]);
   const [jelo, setJelo] = useState("");
 
   const { jela, ucitajJela } = useJeloSkladiste((state) => ({
@@ -17,7 +16,6 @@ const JelaRestoranaEkran = () => {
   useEffect(() => {
     const obradiJela = async () => {
       try {
-        console.log(jelo);
         await ucitajJela();
       } catch (error) {
         console.error("Error fetching narudzbine:", error);

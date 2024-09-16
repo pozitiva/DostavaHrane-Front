@@ -3,7 +3,6 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
-  Modal,
   Text,
   TextInput,
   TouchableOpacity,
@@ -34,6 +33,36 @@ const Search = () => {
       setUspesnaPreraga(false);
     }
   };
+
+  // Ucitaj sve restorane kada se komponenta montira
+  useEffect(() => {
+    const ucitajSveRestorane = async () => {
+      try {
+        const odgovor = await pretragaRestorana("", "");
+        setRestorani(odgovor);
+        setUspesnaPreraga(true);
+      } catch (error) {
+        console.error("Greska prilikom ucitavanja svih restorana", error);
+        setUspesnaPreraga(false);
+      }
+    };
+
+    ucitajSveRestorane();
+  }, []);
+
+  // Funkcija za brisanje odabranog tipa i prikaz svih restorana
+  const obrisiTipIPrikaziSveRestorane = async () => {
+    setTipZaPretragu(""); // Resetuj odabran tip
+    try {
+      const odgovor = await pretragaRestorana("", ""); // Prikazi sve restorane
+      setRestorani(odgovor);
+      setUspesnaPreraga(true);
+    } catch (error) {
+      console.error("Greska prilikom ucitavanja svih restorana", error);
+      setUspesnaPreraga(false);
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1">
       <View className="p-4">
@@ -57,7 +86,7 @@ const Search = () => {
         {tipZaPretragu && (
           <TouchableOpacity
             className="absolute top-1/2 right-2 transform -translate-y-1/2"
-            onPress={() => setTipZaPretragu("")}
+            onPress={obrisiTipIPrikaziSveRestorane}
           >
             <Ionicons name="close" size={20} color="black" />
           </TouchableOpacity>

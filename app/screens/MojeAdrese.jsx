@@ -44,18 +44,7 @@ const AdreseEkran = () => {
     <SafeAreaView>
       <ScrollView>
         <View className="p-4">
-          <Text className="text-xl font-bold ">Adrese:</Text>
-          <FlatList
-            data={korisnik.adrese}
-            renderItem={({ item }) => (
-              <View>
-                <AdresaKartica onPress={() => setAdresa(item)} adresa={item} />
-              </View>
-            )}
-            key={(item) => item.id}
-            keyExtractor={(item) => item.naziv}
-          />
-          <View className="mt-5">
+          <View>
             <Text className="text-xl font-bold mb-3 ">Dodaj novu adresu</Text>
             <FormField
               title="Naziv"
@@ -87,6 +76,17 @@ const AdreseEkran = () => {
               containerStyles="w-full h-[48px] rounded-full"
             />
           </View>
+          <Text className="text-xl font-bold mt-5 ">Adrese:</Text>
+          <FlatList
+            data={korisnik.adrese}
+            renderItem={({ item }) => (
+              <View>
+                <AdresaKartica onPress={() => setAdresa(item)} adresa={item} />
+              </View>
+            )}
+            key={(item) => item.id}
+            keyExtractor={(item) => item.naziv}
+          />
           {adresa && (
             <AdresaModal adresa={adresa} onClose={() => setAdresa("")} />
           )}
