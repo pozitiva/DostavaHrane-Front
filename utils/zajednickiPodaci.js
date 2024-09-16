@@ -9,6 +9,13 @@ export const tipoviJela = [
   "Burito",
 ];
 
+export const statusi = [
+  { id: 1, naziv: "Na cekanju" },
+  { id: 2, naziv: "U pripremi" },
+  { id: 3, naziv: "Predato dostavljacu" },
+  { id: 4, naziv: "Dostavljeno" },
+];
+
 export const API_BASE_URL = "http://192.168.0.13:5076";
-// const API_BASE_URL = "http://192.168.1.54:5076/api";
+// export const API_BASE_URL = "http://192.168.1.54:5076";
 // export const API_BASE_URL = "http://192.168.27.52:5076";

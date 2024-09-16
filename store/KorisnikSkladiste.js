@@ -58,6 +58,13 @@ const useKorisnikSkladiste = create((set) => ({
   izmeniKorisnika: async (izmenjeniKorisnik) => {
     try {
       await izmeniKorisnika(izmenjeniKorisnik);
+      set((state) => ({
+        korisnik: {
+          ...state.korisnik,
+          ime: izmenjeniKorisnik.ime,
+          brojTelefona: izmenjeniKorisnik.brojTelefona,
+        },
+      }));
     } catch (error) {
       console.error("Greška prilikom izmene korisnika:", error);
     }

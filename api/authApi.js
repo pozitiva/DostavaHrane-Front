@@ -22,7 +22,7 @@ export const loginMusterija = async (userData) => {
       `${baseUrl}/korisnik/musterija/login`,
       userData
     );
-
+    console.log(odgovor);
     const { token } = odgovor.data;
     await storeToken(token);
     return odgovor.data.rezultat;

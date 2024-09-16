@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Text, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
 import CustomButton from "./CustomButton";
 import { useNavigation } from "expo-router";
+import { FlatList } from "react-native-gesture-handler";
+import { statusi } from "../../utils/zajednickiPodaci";
 
 const NarudzbinaModal = ({ narudzbina, onClose }) => {
   const { izmeniNarudzbinu, ucitajNarudzbine } = useNarudzbinaSkladiste(
@@ -14,6 +16,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
   );
   const modalizeRef = useRef(null);
   const [uspesnoIzmenjeno, setUspesnoIzmenjeno] = useState(false);
+  const [izabraniStatus, setIzabraniStatus] = useState(narudzbina.status);
   const navigation = useNavigation();
   useEffect(() => {
     modalizeRef.current?.open();
@@ -21,7 +24,11 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
 
   const obradiPromenuStatusa = async () => {
     try {
-      const odgovor = await izmeniNarudzbinu(narudzbina);
+      const novaNarudzbina = {
+        ...narudzbina,
+        status: izabraniStatus,
+      };
+      const odgovor = await izmeniNarudzbinu(novaNarudzbina);
       if (odgovor == "Neuspeh") {
         throw new Error("nema slobodnog dostavljaca");
       }
@@ -67,15 +74,52 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
             <Text className="text-sm">Količina: {stavka.kolicina}</Text>
           </View>
         ))}
+
+        <Text className="text-base font-bold mt-4 mb-2">
+          Izaberi novi status:
+        </Text>
+        <FlatList
+          data={statusi}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{ paddingHorizontal: 10 }}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              className={`p-4 mr-4 rounded-lg ${
+                izabraniStatus === item.naziv
+                  ? "bg-secondary-100"
+                  : "bg-gray-200"
+              }`}
+              onPress={() => setIzabraniStatus(item.naziv)}
+            >
+              <Text
+                className={`text-center font-bold ${
+                  izabraniStatus === item.naziv ? "text-white" : "text-gray-900"
+                }`}
+              >
+                {item.naziv}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
 
       <View className="flex items-center">
+        <CustomButton
+          title="Potvrdi status"
+          containerStyles="w-[335px] h-[48px] rounded-full mt-4"
+          handlePress={obradiPromenuStatusa}
+        />
+      </View>
+
+      {/* <View className="flex items-center">
         <CustomButton
           title="Promeni status"
           containerStyles="w-[335px] h-[48px] rounded-full mt-4"
           handlePress={obradiPromenuStatusa}
         />
-      </View>
+      </View> */}
 
       <Modal
         animationType="fade"

@@ -26,7 +26,6 @@ const KreirajJelo = () => {
   const navigation = useNavigation();
 
   const obradiBiranjeSlike = async () => {
-    console.log("OVO JE BIRANJE SLIKEEEEEEEEE");
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -35,7 +34,6 @@ const KreirajJelo = () => {
     });
 
     if (!result.canceled) {
-      console.log("IZABRANA SLIDZAAAAAAAAAAA");
       setJelo({ ...jelo, slikaUrl: result.assets[0].uri });
     }
   };
@@ -73,60 +71,55 @@ const KreirajJelo = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="ml-3">
-          <Text className="text-xl font-bold ">KREIRAJ NOVO JELO</Text>
+        <View className=" ml-3 p-4">
+          <FormField
+            title="Naziv"
+            value={jelo.naziv}
+            handleChangeText={(e) => setJelo({ ...jelo, naziv: e })}
+            otherStyles="w-[93%]"
+          />
+          <FormField
+            title="Cena"
+            value={jelo.cena}
+            handleChangeText={(e) => setJelo({ ...jelo, cena: e })}
+            otherStyles="w-[93%]"
+            keyboardType="numeric"
+          />
+          <FormField
+            title="Opis"
+            value={jelo.opis}
+            handleChangeText={(e) => setJelo({ ...jelo, opis: e })}
+            otherStyles="w-[93%]"
+          />
+          <Picker
+            selectedValue={jelo.tipJela || ""}
+            onValueChange={(itemValue) => {
+              setJelo({ ...jelo, tipJela: itemValue });
+            }}
+            className="text-base py-3 px-2 border border-gray-300 rounded-lg text-black"
+          >
+            {tipoviJela.map((tipJela, index) => (
+              <Picker.Item key={index} label={tipJela} value={tipJela} />
+            ))}
+          </Picker>
 
-          <View className="p-4">
-            <Text className="text-xl font-bold mb-5 "> </Text>
-            <FormField
-              title="Naziv"
-              value={jelo.naziv}
-              handleChangeText={(e) => setJelo({ ...jelo, naziv: e })}
-              otherStyles="w-[93%]"
+          <CustomButton
+            title="Izaberite sliku"
+            handlePress={obradiBiranjeSlike}
+            containerStyles="w-full h-[48px] rounded-full mt-10 mb-10"
+          />
+          {jelo.slikaUrl && (
+            <Image
+              source={{ uri: `${jelo.slikaUrl}` }}
+              style={{ width: 200, height: 200 }}
             />
-            <FormField
-              title="Cena"
-              value={jelo.cena}
-              handleChangeText={(e) => setJelo({ ...jelo, cena: e })}
-              otherStyles="w-[93%]"
-              keyboardType="numeric"
-            />
-            <FormField
-              title="Opis"
-              value={jelo.opis}
-              handleChangeText={(e) => setJelo({ ...jelo, opis: e })}
-              otherStyles="w-[93%]"
-            />
-            <Picker
-              selectedValue={jelo.tipJela || ""}
-              onValueChange={(itemValue) => {
-                setJelo({ ...jelo, tipJela: itemValue });
-              }}
-              className="text-base py-3 px-2 border border-gray-300 rounded-lg text-black"
-            >
-              {tipoviJela.map((tipJela, index) => (
-                <Picker.Item key={index} label={tipJela} value={tipJela} />
-              ))}
-            </Picker>
+          )}
 
-            <CustomButton
-              title="Izaberite sliku"
-              handlePress={obradiBiranjeSlike}
-              containerStyles="w-full h-[48px] rounded-full mt-10 mb-10"
-            />
-            {jelo.slikaUrl && (
-              <Image
-                source={{ uri: `${jelo.slikaUrl}` }}
-                style={{ width: 200, height: 200 }}
-              />
-            )}
-
-            <CustomButton
-              title="Kreiraj jelo"
-              handlePress={obradiKreiranjeJela}
-              containerStyles="w-full h-[48px] rounded-full"
-            />
-          </View>
+          <CustomButton
+            title="Kreiraj jelo"
+            handlePress={obradiKreiranjeJela}
+            containerStyles="w-full h-[48px] rounded-full"
+          />
         </View>
 
         <Modal

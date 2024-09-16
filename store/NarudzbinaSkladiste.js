@@ -35,9 +35,9 @@ const useNarudzbinaSkladiste = create((set, get) => ({
     }
   },
 
-  izmeniNarudzbinu: async (narudzbinaId) => {
+  izmeniNarudzbinu: async (narudzbinaData) => {
     try {
-      await izmeniNarudzbinu(narudzbinaId);
+      await izmeniNarudzbinu(narudzbinaData);
       const vraceneNarudzbine = await vratiSveNarudzbine();
       set({ narudzbine: vraceneNarudzbine });
     } catch (error) {

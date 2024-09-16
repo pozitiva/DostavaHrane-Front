@@ -24,14 +24,16 @@ const MojeNarudzbine = () => {
             <Text className="text-base mb-1">
               Ukupna cena: {item.ukupnaCena}
             </Text>
-            <Text className="text-base mb-1">Restoran: {item.restoran}</Text>
+            <Text className="text-base mb-1">
+              Restoran: {item.restoran.ime}
+            </Text>
             <Text className="text-base mb-1">Status: {item.status}</Text>
             <Text className="text-base ">Stavke narudzbine: </Text>
 
             {item.stavkeNarudzbine.map((stavka, index) => (
               <View key={index} className="rounded-lg mb-2">
                 <Text className="text-base font-semibold">
-                  {stavka.jeloIme}
+                  {stavka.jelo.naziv}
                 </Text>
                 <Text className="text-sm">Količina: {stavka.kolicina}</Text>
               </View>
