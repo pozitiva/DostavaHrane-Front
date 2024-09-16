@@ -21,18 +21,14 @@ const AdresaModal = ({ adresa, onClose }) => {
 
   const obradiIzmenuAdrese = async () => {
     try {
-      console.log("uslo");
       const adresaData = {
         id: adresa.id,
         naziv: izmenjenaAdresa.naziv,
         ulica: izmenjenaAdresa.ulica,
         grad: izmenjenaAdresa.grad,
       };
-      console.log(adresaData);
 
-      const odgovor = await izmeniAdresu(adresa.id, adresaData);
-
-      console.log(odgovor);
+      await izmeniAdresu(adresa.id, adresaData);
 
       onClose();
     } catch (error) {

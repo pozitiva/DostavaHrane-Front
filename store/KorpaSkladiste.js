@@ -2,7 +2,6 @@ import { create } from "zustand";
 
 const useKorpaSkladiste = create((set) => ({
   cart: [],
-
   addToCart: (product) =>
     set((state) => {
       const existingProductIndex = state.cart.findIndex(
@@ -13,7 +12,6 @@ const useKorpaSkladiste = create((set) => ({
         updatedCart[existingProductIndex] = { ...product };
         return { cart: updatedCart };
       } else {
-        // Add new product
         return { cart: [...state.cart, product] };
       }
     }),

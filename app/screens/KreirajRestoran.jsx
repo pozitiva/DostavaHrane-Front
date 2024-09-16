@@ -49,7 +49,6 @@ const KreirajRestoran = () => {
       formData.append("email", restoran.email);
       formData.append("sifra", restoran.sifra);
 
-      console.log(formData);
       await kreirajRestoran(formData);
 
       setRestoranUspesno(true);

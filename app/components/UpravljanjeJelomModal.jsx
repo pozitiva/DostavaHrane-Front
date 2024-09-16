@@ -22,7 +22,6 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   }));
 
   useEffect(() => {
-    console.log(jelo);
     setIzmenjenoJelo(jelo);
     setIzabranTipJela(jelo.tipJela);
 

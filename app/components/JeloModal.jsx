@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Alert, Image, Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useKorpaSkladiste from "../../store/KorpaSkladiste";
 import { API_BASE_URL } from "../../utils/zajednickiPodaci";
@@ -7,17 +7,31 @@ import Counter from "./Counter";
 import CustomButton from "./CustomButton";
 
 const JeloModal = ({ jelo, onClose }) => {
-  console.log(jelo);
   const [kolicina, setKolicina] = useState(1);
   const modalizeRef = useRef(null);
+
+  const { addToCart, clearCart, cart } = useKorpaSkladiste((state) => ({
+    addToCart: state.addToCart,
+    clearCart: state.clearCart,
+    cart: state.cart,
+  }));
 
   useEffect(() => {
     modalizeRef.current?.open();
   }, [jelo]);
 
-  const addToCart = useKorpaSkladiste((state) => state.addToCart);
-
   const handleAddToCart = () => {
+    const currentRestaurantId = jelo.restoranId;
+    const cartRestaurantId = cart.length > 0 ? cart[0].restoranId : null;
+
+    if (cartRestaurantId && cartRestaurantId !== currentRestaurantId) {
+      Alert.alert(
+        "Upozorenje",
+        "Možete dodavati stavke samo iz jednog restorana u korpu."
+      );
+      clearCart();
+    }
+
     const uniqueId = `${jelo.id}-${Date.now()}`;
 
     const item = {

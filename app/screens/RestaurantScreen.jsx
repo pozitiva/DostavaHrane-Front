@@ -83,7 +83,7 @@ const RestaurantScreen = ({ route }) => {
           source={{ uri: `${API_BASE_URL}${restoran.slikaUrl}` }}
           className="w-full h-48 rounded-lg"
         />
-        <Text className="text-2xl font-bold ml-1">{restoran.ime}</Text>
+        <Text className="text-2xl font-bold ml-1 mt-5">{restoran.ime}</Text>
         <Text className="text-left ">{restoran.opis}</Text>
       </View>
 

@@ -52,7 +52,6 @@ const KreirajJelo = () => {
       formData.append("tipJela", jelo.tipJela);
       formData.append("opis", jelo.opis);
 
-      console.log(formData);
       await dodajJelo(formData);
       await ucitajJela();
 

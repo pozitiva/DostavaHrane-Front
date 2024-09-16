@@ -13,7 +13,6 @@ export const vratiJelo = async (id) => {
 export const vratiSvaJelaRestorana = async () => {
   try {
     const odgovor = await axiosInstance.get("/jelo");
-    console.log(odgovor.data);
     return odgovor.data;
   } catch (error) {
     console.error("Greska prilikom vracanja jela:", error);
@@ -23,7 +22,6 @@ export const vratiSvaJelaRestorana = async () => {
 
 export const kreirajJelo = async (jeloZaKreiranje) => {
   try {
-    console.log(jeloZaKreiranje);
     await axiosInstance.post("/jelo", jeloZaKreiranje, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -31,14 +29,11 @@ export const kreirajJelo = async (jeloZaKreiranje) => {
     });
   } catch (error) {
     console.error("Greska prilikom kreiranja jela:", error);
-    throw error;
   }
 };
 
 export const izmeniJelo = async (jeloData) => {
   try {
-    console.log(jeloData);
-    console.log("uslo u izmenu jela");
     const response = await axiosInstance.put(`/jelo`, jeloData, {
       headers: {
         "Content-Type": "application/json",

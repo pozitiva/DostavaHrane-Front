@@ -36,7 +36,6 @@ export const vratiNarudzbinuoId = async (id) => {
 
 export const izmeniNarudzbinu = async (narudzbinaData) => {
   try {
-    console.log("uslo u skladiste");
     const response = await axiosInstance.put(`/narudzbina`, narudzbinaData, {
       headers: {
         "Content-Type": "application/json",
@@ -45,6 +44,5 @@ export const izmeniNarudzbinu = async (narudzbinaData) => {
     return response.data;
   } catch (error) {
     console.error("Greska prilikom izmene narudzbine:", error);
-    throw error;
   }
 };
