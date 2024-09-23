@@ -1,10 +1,9 @@
-import { View, Text, Modal } from "react-native";
-import React, { useState } from "react";
-import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import { useNavigation } from "expo-router";
-import FormField from "../components/FormField";
-import { izmeniKorisnika } from "./../../api/musterijaApi";
+import React, { useState } from "react";
+import { Modal, Text, View } from "react-native";
+import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import CustomButton from "../components/CustomButton";
+import FormField from "../components/FormField";
 
 const NalogEkran = () => {
   const { korisnik, izmeniKorisnika, setKorisnik } = useKorisnikSkladiste(

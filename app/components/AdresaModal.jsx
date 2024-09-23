@@ -39,12 +39,13 @@ const AdresaModal = ({ adresa, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={600}
-      modalHeight={635}
+      snapPoint={500}
+      modalHeight={550}
       onClose={() => onClose()}
+      modalStyle={{ paddingBottom: 0, marginBottom: 0 }}
     >
-      <ScrollView>
-        <View className="flex-1 bg-white p-4 items-center ">
+      <ScrollView contentContainerStyle={{ paddingBottom: 0 }}>
+        <View className="p-2 items-center ">
           <FormField
             title="Naziv"
             value={izmenjenaAdresa.naziv}

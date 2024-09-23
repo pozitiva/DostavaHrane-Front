@@ -78,9 +78,18 @@ const Search = () => {
             setTipZaPretragu(itemValue);
           }}
         >
-          <Picker.Item label={"Svi restorani"} value={""} />
+          <Picker.Item
+            label={"Svi restorani"}
+            value={""}
+            color="text-primary"
+          />
           {tipoviJela.map((tipJela, index) => (
-            <Picker.Item key={index} label={tipJela} value={tipJela} />
+            <Picker.Item
+              key={index}
+              label={tipJela}
+              value={tipJela}
+              color="text-primary"
+            />
           ))}
         </Picker>
         {tipZaPretragu && (
@@ -96,7 +105,9 @@ const Search = () => {
           handlePress={obradiPretragu}
         ></CustomButton>
       </View>
-      <Text className="text-lg font-bold mt-4 mb-2 px-4">Restorani</Text>
+      <Text className="text-lg font-bold mt-4 mb-2 px-4 text-primary">
+        Restorani
+      </Text>
       <FlatList
         className="flex-1 mx-4"
         data={restorani}

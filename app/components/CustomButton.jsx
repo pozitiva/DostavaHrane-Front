@@ -8,7 +8,7 @@ const CustomButton = ({ title, handlePress, containerStyles, textStyles }) => {
       activeOpacity={0.7}
       className={`justify-center items-center bg-secondary p-2 rounded ${containerStyles} `}
     >
-      <Text className={`black text-lg ${textStyles}`}>{title}</Text>
+      <Text className={` text-white ${textStyles}`}>{title}</Text>
     </TouchableOpacity>
   );
 };

@@ -14,24 +14,26 @@ const FormField = ({
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
-      <Text className="text-xs text-gray-500 mb-1">{title}</Text>
+      <Text className="text-xs text-primary mb-1">{title}</Text>
 
       <View
         className="border border-gray-300 rounded-lg p-3 mb-4 flex-row items-center"
         style={{ pointerEvents: "auto" }}
       >
         <TextInput
-          className="flex-1 text-black  text-base"
+          className="flex-1 text-primary text-base"
           value={value}
           placeholder={placeholder}
           placeholderTextColor="#7B7B8B"
           onChangeText={handleChangeText}
-          secureTextEntry={title === "PASSWORD" && !showPassword}
+          secureTextEntry={
+            (title === "SIFRA" || title === "POTVRDJENA SIFRA") && !showPassword
+          }
           style={{ height: 35, width: 200, zIndex: 1 }}
           {...props}
         />
 
-        {title === "PASSWORD" && (
+        {(title === "SIFRA" || title === "POTVRDJENA SIFRA") && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Image
               source={!showPassword ? icons.eye : icons.eyeHide}

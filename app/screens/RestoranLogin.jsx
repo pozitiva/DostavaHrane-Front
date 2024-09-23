@@ -9,8 +9,8 @@ import FormField from "../components/FormField";
 
 const RestoranLogin = () => {
   const [restoran, setRestoran] = useState({
-    email: "kfc@kfc.com",
-    sifra: "dunja123",
+    email: "",
+    sifra: "",
   });
 
   const [uspesanLog, setUspesanLog] = useState(false);
@@ -34,10 +34,10 @@ const RestoranLogin = () => {
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>
-        <Text className="text-4xl font-bold text-gray-900">
+        <Text className="text-4xl font-bold text-primary">
           Uloguj se kao restoran!
         </Text>
-        <Text className="text-xl text-gray-600 mt-2 mb-6">
+        <Text className="text-xl text-primary mt-2 mb-6">
           Unesi podatke svog restorana
         </Text>
         <FormField
@@ -48,7 +48,7 @@ const RestoranLogin = () => {
           placeholder="restoran@restoran.com"
         />
         <FormField
-          title="PASSWORD"
+          title="SIFRA"
           value={restoran.sifra}
           handleChangeText={(e) => setRestoran({ ...restoran, sifra: e })}
           placeholder="primersifre"
@@ -56,12 +56,13 @@ const RestoranLogin = () => {
         <CustomButton
           title="Uloguj se"
           handlePress={handleLogin}
-          containerStyles="#22A45D rounded-lg p-4 mb-9 mt-9"
+          containerStyles="rounded-lg p-4 mb-9 mt-9"
+          textStyles="text-xl text-white text-center"
         />
         {error && <Text className="text-red-500">{error}</Text>}
 
         <View className="flex-row justify-center mb-4 mt-5">
-          <Text className="text-m text-gray-600 ">
+          <Text className="text-m text-primary ">
             Ne upravljaš restoranom?{" "}
           </Text>
 
@@ -83,7 +84,7 @@ const RestoranLogin = () => {
               }
             }}
           >
-            <Text className=" text-m align-middle text-gray-600">
+            <Text className=" text-m align-middle text-primary">
               Verzija 1.0.0
             </Text>
           </TouchableOpacity>
@@ -97,7 +98,9 @@ const RestoranLogin = () => {
         >
           <View className="flex-1 justify-center items-center bg-black/50">
             <View className="w-[300px] p-4 bg-white rounded-lg items-center">
-              <Text className="text-lg font-bold mb-4">Uspešno logovanje!</Text>
+              <Text className="text-lg font-bold mb-4 text-primary">
+                Uspešna prijava!
+              </Text>
               <CustomButton
                 title="Zatvori"
                 handlePress={() => {
@@ -107,6 +110,7 @@ const RestoranLogin = () => {
                   });
                 }}
                 containerStyles="w-full h-[48px] rounded-full"
+                textStyles="text-xl text-white text-center"
               />
             </View>
           </View>

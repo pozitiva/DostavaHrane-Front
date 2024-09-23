@@ -39,19 +39,19 @@ const Profile = () => {
             title="Moje narudzbine"
             handlePress={() => navigation.navigate("MojeNarudzbine")}
             containerStyles="mt-5 bg-transparent border-b border-gray-300 rounded-none items-start"
-            textStyles="text-left"
+            textStyles="text-left text-primary text-xl"
           />
           <CustomButton
             title="Izmeni profil "
             handlePress={() => navigation.navigate("NalogEkran")}
             containerStyles="mt-5 bg-transparent border-b border-gray-300 rounded-none items-start"
-            textStyles="text-left"
+            textStyles="text-left text-primary text-xl"
           />
           <CustomButton
             title="Moje adrese"
             handlePress={() => navigation.navigate("AdreseEkran")}
             containerStyles="mt-5 bg-transparent border-b border-gray-300 rounded-none items-start"
-            textStyles="text-left"
+            textStyles="text-left text-primary text-xl"
           />
         </View>
       </ScrollView>

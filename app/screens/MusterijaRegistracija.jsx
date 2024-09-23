@@ -1,16 +1,8 @@
 import { useNavigation } from "expo-router";
 import React, { useState } from "react";
-import {
-  Image,
-  Modal,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { registracijaMusterije } from "../../api/authApi";
-import { images } from "../../constants";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 
@@ -18,6 +10,7 @@ const MusterijaRegistracija = () => {
   const [musterija, setMusterija] = useState({
     ime: "",
     email: "",
+    brojTelefona: "",
     sifra: "",
     potvrdjenaSifra: "",
   });
@@ -28,12 +21,14 @@ const MusterijaRegistracija = () => {
 
   const handleSignUp = async () => {
     try {
+      console.log(musterija);
       const odgovor = await registracijaMusterije(musterija);
 
       setRegistracijaUspesno(true);
       setMusterija({
         ime: "",
         email: "",
+        brojTelefona: "",
         sifra: "",
         potvrdjenaSifra: "",
       });
@@ -46,9 +41,9 @@ const MusterijaRegistracija = () => {
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>
-        <Text className="text-3xl font-bold text-gray-900">Kreiraj nalog</Text>
+        <Text className="text-3xl font-bold text-primary">Kreiraj nalog</Text>
 
-        <View className="text-xs text-gray-600 mt-2 mb-6">
+        <View className="text-xs text-primary mt-2 mb-6">
           <Text>Unesi svoje podatke</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("MusterijaLogin")}
@@ -70,16 +65,25 @@ const MusterijaRegistracija = () => {
           keyboardType="email-address"
           placeholder="Tvoja email adresa"
         />
+        <FormField
+          title="BROJ TELEFONA"
+          value={musterija.brojTelefona}
+          handleChangeText={(e) =>
+            setMusterija({ ...musterija, brojTelefona: e })
+          }
+          keyboardType="numeric"
+          placeholder="Tvoje broj telefona"
+        />
 
         <FormField
-          title="ŠIFRA"
+          title="SIFRA"
           value={musterija.sifra}
           handleChangeText={(e) => setMusterija({ ...musterija, sifra: e })}
           placeholder="Tvoja šifra"
         />
 
         <FormField
-          title="POTVRĐENA ŠIFRA"
+          title="POTVRDJENA SIFRA"
           value={musterija.potvrdjenaSifra}
           handleChangeText={(e) =>
             setMusterija({ ...musterija, potvrdjenaSifra: e })
@@ -90,13 +94,13 @@ const MusterijaRegistracija = () => {
         <CustomButton
           title="Registruj se"
           handlePress={handleSignUp}
-          containerStyles="#22A45D rounded-lg p-4 mb-4"
+          containerStyles=" rounded-lg p-2 mb-4"
         />
 
         {error && <Text className="text-red-500">{error}</Text>}
 
         <View className=" flex-1 justify-center items-center">
-          <Text className=" text-sm text-gray-600">
+          <Text className=" text-sm text-primary">
             Registracijom slažeš se sa uslovima korišćenja i politikom
             privatnosti.
           </Text>

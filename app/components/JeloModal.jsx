@@ -55,9 +55,9 @@ const JeloModal = ({ jelo, onClose }) => {
           source={{ uri: `${API_BASE_URL}${jelo.slikaUrl}` }}
           className="w-full h-48 rounded-lg"
         />
-        <Text className="text-2xl font-bold mt-4">{jelo.naziv}</Text>
-        <Text className="text-sm font-normal p-3 ">{jelo.opis}</Text>
-        <Text className="text-sm font-normal p-3 ">Cena: {jelo.cena}</Text>
+        <Text className="text-2xl mt-4 text-primary">{jelo.naziv}</Text>
+        <Text className="text-sm p-3 text-primary">{jelo.opis}</Text>
+        <Text className="text-xl p-2 text-primary">Cena: {jelo.cena}</Text>
       </View>
 
       <Counter kolicina={kolicina} setKolicina={setKolicina} />
@@ -74,4 +74,3 @@ const JeloModal = ({ jelo, onClose }) => {
 };
 
 export default JeloModal;
-3;

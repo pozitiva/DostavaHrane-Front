@@ -28,14 +28,14 @@ const Counter = ({
         onPress={decrement}
         className="bg-gray-200 rounded-full p-2"
       >
-        <Text className="text-xl">-</Text>
+        <Text className="text-xl text-primary">-</Text>
       </TouchableOpacity>
-      <Text className="mx-4 text-lg">{kolicina}</Text>
+      <Text className="mx-4 text-lg text-primary">{kolicina}</Text>
       <TouchableOpacity
         onPress={increment}
         className="bg-gray-200 rounded-full p-2"
       >
-        <Text className="text-xl">+</Text>
+        <Text className="text-xl text-primary">+</Text>
       </TouchableOpacity>
     </View>
   );

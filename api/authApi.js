@@ -5,6 +5,7 @@ import { API_BASE_URL } from "../utils/zajednickiPodaci";
 const baseUrl = `${API_BASE_URL}/api`;
 export const registracijaMusterije = async (userData) => {
   try {
+    console.log(userData);
     const odgovor = await axios.post(
       `${baseUrl}/korisnik/musterija/register`,
       userData

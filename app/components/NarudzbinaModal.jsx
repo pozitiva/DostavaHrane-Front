@@ -46,36 +46,42 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
       onClose={() => onClose()}
     >
       <View className="flex-1 bg-white p-4">
-        <Text className="text-lg font-bold mb-2">
+        <Text className="text-lg font-bold mb-2 text-primary">
           Detalji narudžbine #{narudzbina.id}
         </Text>
-        <Text className="text-base mb-1">
+        <Text className="text-base mb-1 text-primary">
           Datum: {new Date(narudzbina.datumNarudzbine).toLocaleDateString()}
         </Text>
-        <Text className="text-base mb-1">Status: {narudzbina.status}</Text>
-        <Text className="text-base mb-1">
+        <Text className="text-base mb-1 text-primary">
+          Status: {narudzbina.status}
+        </Text>
+        <Text className="text-base mb-1 text-primary">
           Ukupna cena: {narudzbina.ukupnaCena} RSD
         </Text>
-        <Text className="text-base mb-1">
+        <Text className="text-base mb-1 text-primary">
           Dostavljač : {narudzbina.dostavljacIme || "N/A"}
         </Text>
-        <Text className="text-base mb-1">Adresa: {narudzbina.adresa}</Text>
-        <Text className="text-base mb-1">
+        <Text className="text-base mb-1 text-primary">
+          Adresa: {narudzbina.adresa}
+        </Text>
+        <Text className="text-base mb-1 text-primary">
           Musterija: {narudzbina.musterijaIme}
         </Text>
-        <Text className="text-base font-bold mt-4 mb-2">
+        <Text className="text-base font-bold mt-4 mb-2 text-primary">
           Stavke narudžbine:
         </Text>
         {narudzbina.stavkeNarudzbine.map((stavka, index) => (
           <View key={index} className="bg-secondary-100 p-3 rounded-lg mb-2">
-            <Text className="text-base font-semibold" background>
+            <Text className="text-base font-semibold text-primary" background>
               {stavka.jeloIme}
             </Text>
-            <Text className="text-sm">Količina: {stavka.kolicina}</Text>
+            <Text className="text-sm text-primary">
+              Količina: {stavka.kolicina}
+            </Text>
           </View>
         ))}
 
-        <Text className="text-base font-bold mt-4 mb-2">
+        <Text className="text-base font-bold mt-4 mb-2 text-primary">
           Izaberi novi status:
         </Text>
         <FlatList
@@ -95,7 +101,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
             >
               <Text
                 className={`text-center font-bold ${
-                  izabraniStatus === item.naziv ? "text-white" : "text-gray-900"
+                  izabraniStatus === item.naziv ? "text-white" : "text-primary"
                 }`}
               >
                 {item.naziv}

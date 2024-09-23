@@ -30,7 +30,7 @@ const MojeNarudzbine = () => {
             >
               <Text
                 className={`text-center font-bold ${
-                  izabraniStatus === item.naziv ? "text-white" : "text-gray-900"
+                  izabraniStatus === item.naziv ? "text-white" : "text-primary"
                 }`}
               >
                 {item.naziv}
@@ -44,24 +44,28 @@ const MojeNarudzbine = () => {
         data={filtriraneNarudzbine}
         renderItem={({ item }) => (
           <View className="bg-white rounded-lg p-4 mb-4 shadow-md border border-secondary">
-            <Text className="text-lg font-bold mb-2">
+            <Text className="text-lg font-bold mb-2 text-primary">
               Narudžbina #{item.id}
             </Text>
-            <Text className="text-base mb-1">
+            <Text className="text-base mb-1 text-primary">
               Ukupna cena: {item.ukupnaCena}
             </Text>
-            <Text className="text-base mb-1">
+            <Text className="text-base mb-1 text-primary">
               Restoran: {item.restoran.ime}
             </Text>
-            <Text className="text-base mb-1">Status: {item.status}</Text>
-            <Text className="text-base ">Stavke narudzbine: </Text>
+            <Text className="text-base mb-1 text-primary">
+              Status: {item.status}
+            </Text>
+            <Text className="text-base text-primary">Stavke narudzbine: </Text>
 
             {item.stavkeNarudzbine.map((stavka, index) => (
               <View key={index} className="rounded-lg mb-2">
-                <Text className="text-base font-semibold">
+                <Text className="text-base font-semibold text-primary">
                   {stavka.jelo.naziv}
                 </Text>
-                <Text className="text-sm">Količina: {stavka.kolicina}</Text>
+                <Text className="text-sm text-primary">
+                  Količina: {stavka.kolicina}
+                </Text>
               </View>
             ))}
           </View>

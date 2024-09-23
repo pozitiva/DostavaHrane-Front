@@ -8,8 +8,8 @@ const AdresaKartica = ({ adresa, onPress }) => {
       className="flex-row items-center py-4 border-b border-gray-200"
     >
       <View className="flex-1 ml-4">
-        <Text className="text-lg font-bold">{adresa.naziv}</Text>
-        <Text className="text-gray-600 mt-1">
+        <Text className="text-lg font-bold text-primary">{adresa.naziv}</Text>
+        <Text className="text-primary mt-1">
           {adresa.ulica} , {adresa.grad}
         </Text>
       </View>

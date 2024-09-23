@@ -45,7 +45,9 @@ const AdreseEkran = () => {
       <ScrollView>
         <View className="p-4">
           <View>
-            <Text className="text-xl font-bold mb-3 ">Dodaj novu adresu</Text>
+            <Text className="text-2xl font-bold mb-3 text-primary ">
+              Dodaj novu adresu
+            </Text>
             <FormField
               title="Naziv"
               value={adresa.naziv}
@@ -76,7 +78,7 @@ const AdreseEkran = () => {
               containerStyles="w-full h-[48px] rounded-full"
             />
           </View>
-          <Text className="text-xl font-bold mt-5 ">Adrese:</Text>
+          <Text className="text-xl font-bold mt-5 text-primary ">Adrese:</Text>
           <FlatList
             data={korisnik.adrese}
             renderItem={({ item }) => (

@@ -16,6 +16,6 @@ export const statusi = [
   { id: 4, naziv: "Dostavljeno" },
 ];
 
-export const API_BASE_URL = "http://192.168.0.13:5076";
-// export const API_BASE_URL = "http://192.168.1.54:5076";
+// export const API_BASE_URL = "http://192.168.0.16:5076";
+export const API_BASE_URL = "http://192.168.1.54:5076";
 // export const API_BASE_URL = "http://192.168.27.52:5076";

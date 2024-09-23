@@ -21,8 +21,8 @@ const RestaurantCard = ({ restoran }) => {
         source={{ uri: `${API_BASE_URL}${restoran.slikaUrl}` }}
         className="h-48 w-full rounded-xl"
       />
-      <Text className="text-left mt-2 ml-1">{restoran.ime}</Text>
-      <Text className="text-left mt-1"> {restoran.opis}</Text>
+      <Text className="text-left mt-2 ml-1 text-primary">{restoran.ime}</Text>
+      <Text className="text-left mt-1 text-primary"> {restoran.opis}</Text>
     </TouchableOpacity>
   );
 };

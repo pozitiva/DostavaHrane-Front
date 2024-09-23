@@ -95,7 +95,7 @@ const CartScreen = () => {
             <Picker
               selectedValue={izabranaAdresa}
               onValueChange={(itemValue) => setIzabranaAdresa(itemValue)}
-              className="text-base py-3 px-2 border border-gray-300 rounded-lg text-black"
+              className="text-base py-3 px-2 border border-secondary rounded-lg text-primary"
             >
               {korisnik.adrese.map((adresa) => (
                 <Picker.Item
@@ -105,19 +105,21 @@ const CartScreen = () => {
                 />
               ))}
             </Picker>
-            <Text className="text-lg font-bold mt-4">
+            <Text className="text-lg font-bold mt-4 text-primary">
               Ukupna cena: {ukupnaCena} RSD
             </Text>
-            <CustomButton
-              title="Isprazni korpu"
-              handlePress={clearCart}
-              containerStyles="w-[335px] h-[48px] rounded-full mt-4"
-            />
-            <CustomButton
-              title="Poruči"
-              handlePress={obradiNarucivanje}
-              containerStyles="w-[335px] h-[48px] rounded-full mt-4"
-            />
+            <View className="items-center mt-4">
+              <CustomButton
+                title="Isprazni korpu"
+                handlePress={clearCart}
+                containerStyles="w-[335px] h-[48px] rounded-full mt-4 justify-center"
+              />
+              <CustomButton
+                title="Poruči"
+                handlePress={obradiNarucivanje}
+                containerStyles="w-[335px] h-[48px] rounded-full mt-4 justify-center"
+              />
+            </View>
           </View>
         )}
       />
@@ -131,8 +133,7 @@ const CartScreen = () => {
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-[300px] p-4 bg-white rounded-lg items-center">
             <Text className="text-lg font-bold mb-4">
-              {/* Narudžbina je uspešno napravljena! */}
-              Došlo je do greške pri kreiranju narudzbine!
+              Narudžbina je uspešno kreirana!
             </Text>
             <CustomButton
               title="Zatvori"

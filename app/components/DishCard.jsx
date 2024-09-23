@@ -14,10 +14,10 @@ const DishCard = ({ jelo, onPress }) => {
         resizeMode="cover"
       />
       <View className="flex-1 ml-4">
-        <Text className="text-lg font-bold">{jelo.naziv}</Text>
-        <Text className="text-gray-600 mt-1"> {jelo.tipJela}</Text>
+        <Text className="text-lg font-bold text-primary">{jelo.naziv}</Text>
+        <Text className="text-primary mt-1"> {jelo.tipJela}</Text>
       </View>
-      <Text className="text-base  text-right text-black absolute right-0 bottom-0 mr-4 mb-2">
+      <Text className="text-base  text-right text-primary absolute right-0 bottom-0 mr-4 mb-2">
         {jelo.cena} RSD
       </Text>
     </TouchableOpacity>

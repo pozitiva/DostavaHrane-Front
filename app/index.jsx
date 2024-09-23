@@ -101,7 +101,18 @@ const MainTabs = () => {
         },
         tabBarLabel: ({ focused }) => {
           const color = focused ? "#EF9920" : "gray";
-          return <Text style={{ color, fontSize: 12 }}>{route.name}</Text>;
+          let label;
+          switch (route.name) {
+            case "JelaRestorana":
+              label = "Jela Restorana";
+              break;
+            case "KreirajJelo":
+              label = "Kreiraj Jelo";
+              break;
+            default:
+              label = route.name;
+          }
+          return <Text style={{ color, fontSize: 12 }}>{label}</Text>;
         },
       })}
     >
@@ -137,17 +148,23 @@ const MainTabs = () => {
           <Tab.Screen
             name="Narudzbine"
             component={NarudzbineEkran}
-            options={{ ...headerOptions, headerTitle: "Narudzbine" }}
+            options={{ ...headerOptions, headerTitle: "Narudžbine" }}
           />
           <Tab.Screen
             name="JelaRestorana"
             component={JelaRestoranaEkran}
-            options={{ ...headerOptions, headerTitle: "Jela" }}
+            options={{
+              ...headerOptions,
+              headerTitle: "Jela Restorana",
+            }}
           />
           <Tab.Screen
             name="KreirajJelo"
             component={KreirajJelo}
-            options={{ ...headerOptions, headerTitle: "Kreiraj jelo" }}
+            options={{
+              ...headerOptions,
+              headerTitle: "Kreiraj Jelo",
+            }}
           />
         </>
       )}

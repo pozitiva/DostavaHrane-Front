@@ -49,7 +49,7 @@ const NarudzbineEkran = () => {
             >
               <Text
                 className={`text-center font-bold ${
-                  izabraniStatus === item.naziv ? "text-white" : "text-gray-900"
+                  izabraniStatus === item.naziv ? "text-white" : "text-primary"
                 }`}
               >
                 {item.naziv}
