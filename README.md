@@ -1,6 +1,7 @@
 **DostavaHrane-Front**
 
-This is the frontend for a food delivery application, allowing users to place orders and restaurants to manage dishes and orders.
+This is the frontend for a food delivery application, allowing users to place orders and restaurants to manage dishes and orders. 
+It also includes an admin panel for restaurant owners to manage their menus and view orders.
 
 **Demo**
 
