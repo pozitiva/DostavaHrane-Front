@@ -2,6 +2,10 @@
 
 This is the frontend for a food delivery application, allowing users to place orders and restaurants to manage dishes and orders.
 
+**Demo**
+
+Check out a demo of the app on YouTube: https://www.youtube.com/watch?v=FRvawmbNSvo&ab_channel=Iva
+
 **Features**
 * User-friendly interface for browsing and ordering food.
 * Restaurant dashboard for managing menu and orders.
@@ -40,6 +44,3 @@ This is the frontend for a food delivery application, allowing users to place or
 
     npx react-native run-ios      # for iOS
 
-**Demo**
-Check out a demo of the app on YouTube: 
-https://www.youtube.com/watch?v=FRvawmbNSvo&ab_channel=Iva
