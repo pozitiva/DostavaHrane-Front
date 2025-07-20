@@ -16,7 +16,7 @@ export const napraviNarudzbinu = async (orderData) => {
 
 export const vratiSveNarudzbine = async () => {
   try {
-    const odgovor = await axiosInstance.get("/narudzbina");
+    const odgovor = await axiosInstance.get("/narudzbina/");
     return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);

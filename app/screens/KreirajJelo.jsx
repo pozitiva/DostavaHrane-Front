@@ -2,12 +2,15 @@ import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "expo-router";
 import React, { useState } from "react";
-import { Image, Modal, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Modal, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useJeloSkladiste from "../../store/JeloSkladiste";
 import { tipoviJela } from "../../utils/zajednickiPodaci";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Feather } from "react-native-feather";
+import { Ionicons } from "@expo/vector-icons";
 
 const KreirajJelo = () => {
   const { dodajJelo, ucitajJela } = useJeloSkladiste((state) => ({
@@ -30,6 +33,28 @@ const KreirajJelo = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setJelo({ ...jelo, slikaUrl: result.assets[0].uri });
+    }
+  };
+
+  const obradiOtvoriKameru = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert(
+        "Zabranjen pristup",
+        "Potrebna je dozvola za pristup kameri."
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
       quality: 1,
     });
 
@@ -102,11 +127,20 @@ const KreirajJelo = () => {
             ))}
           </Picker>
 
-          <CustomButton
+          {/* <CustomButton
             title="Izaberite sliku"
             handlePress={obradiBiranjeSlike}
             containerStyles="w-full h-[48px] rounded-full mt-10 mb-10"
-          />
+          /> */}
+
+          <TouchableOpacity onPress={obradiOtvoriKameru}>
+            <Feather name="camera" size={32} color="#000" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={obradiBiranjeSlike}>
+            <Ionicons name="images-outline" size={32} color="#000" />
+          </TouchableOpacity>
+
           {jelo.slikaUrl && (
             <Image
               source={{ uri: `${jelo.slikaUrl}` }}

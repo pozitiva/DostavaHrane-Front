@@ -43,6 +43,10 @@ const CartScreen = () => {
     const prviElement = cart[0];
     const restoranId = prviElement.restoranId;
 
+    console.log("u obradiNaruciivanje");
+    console.log(restoranId);
+    console.log(izabranaAdresa);
+    console.log(cart);
     const narudzbina = {
       restoranId: restoranId,
       adresaId: izabranaAdresa.id,
@@ -54,7 +58,9 @@ const CartScreen = () => {
     };
 
     try {
+      console.log("try");
       const odgovor = await dodajNarudzbinu(narudzbina);
+      console.log("dodato");
       setNarudzbinaUspesno(true);
       console.log("Narudžbina je uspešno napravljena:", odgovor);
       clearCart();

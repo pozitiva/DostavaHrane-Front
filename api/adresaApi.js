@@ -4,7 +4,7 @@ import axiosInstance from "./axiosInstance";
 const baseUrl = `${API_BASE_URL}/api`;
 export const kreirajAdresu = async (adresaZaKreiranje) => {
   try {
-    await axiosInstance.post(baseUrl, adresaZaKreiranje, {
+    await axiosInstance.post("/adresa", adresaZaKreiranje, {
       headers: {
         "Content-Type": "application/json",
       },
