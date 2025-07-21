@@ -22,15 +22,20 @@ const RestoranLogin = () => {
   const handleLogin = async () => {
     try {
       const odgovor = await loginRestoran(restoran);
-      if (odgovor !== null) {
+
+      if (odgovor) {
         setKorisnik(odgovor);
         setTipKorisnika("restoran");
         setUspesanLog(true);
+        setError(null);
+      } else {
+        setError("Neuspešno logovanje");
       }
-    } catch (error) {
+    } catch (err) {
       setError("Neuspešno logovanje");
     }
   };
+
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       <ScrollView>

@@ -54,7 +54,7 @@ const NalogEkran = () => {
       />
 
       <CustomButton
-        title="Izmeni korisnika"
+        title="Izmeni profil"
         containerStyles="w-[160px] h-[48px] rounded mt-10 "
         handlePress={obradiIzmenuKorisnika}
       />
@@ -67,7 +67,7 @@ const NalogEkran = () => {
       >
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-[300px] p-4 bg-white rounded-lg items-center">
-            <Text className="text-lg font-bold mb-4">
+            <Text className="text-lg font-bold mb-4 text-primary">
               Profil je uspešno izmenjen!
             </Text>
             <CustomButton

@@ -38,11 +38,17 @@ export const loginRestoran = async (userData) => {
       userData
     );
 
-    const { token } = odgovor.data;
+    const { token, rezultat } = odgovor.data;
+
+    if (!rezultat) {
+      throw new Error("Neuspešno logovanje");
+    }
+
     await storeToken(token);
-    return odgovor.data.rezultat;
+    return rezultat;
   } catch (error) {
     console.error("Error logging in user:", error);
+    throw error;
   }
 };
 

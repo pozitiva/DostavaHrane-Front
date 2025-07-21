@@ -35,7 +35,7 @@ const AdreseEkran = () => {
         ulica: "",
         grad: "",
       });
-      // console.log("Adresa je uspešno kreirana:");
+      console.log("Adresa je uspešno kreirana:");
     } catch (error) {
       console.error("Došlo je do greške prilikom kreiranja adrese:", error);
     }
@@ -51,22 +51,17 @@ const AdreseEkran = () => {
             <FormField
               title="Naziv"
               value={adresa.naziv}
-              handleChangeText={(e) => {
-                setAdresa({ ...adresa, naziv: e });
-              }}
-              // otherStyles="w-[93%]"
+              handleChangeText={(text) => setAdresa({ ...adresa, naziv: text })}
             />
             <FormField
               title="Ulica"
               value={adresa.ulica}
-              handleChangeText={(e) => setAdresa({ ...adresa, ulica: e })}
-              // otherStyles="w-[93%]"
+              handleChangeText={(text) => setAdresa({ ...adresa, ulica: text })}
             />
             <FormField
               title="Grad"
               value={adresa.grad}
-              handleChangeText={(e) => setAdresa({ ...adresa, grad: e })}
-              // otherStyles="w-[93%]"
+              handleChangeText={(text) => setAdresa({ ...adresa, grad: text })}
             />
             <CustomButton
               title="Dodaj adresu"
@@ -97,7 +92,7 @@ const AdreseEkran = () => {
         >
           <View className="flex-1 justify-center items-center bg-black/50">
             <View className="w-[300px] p-4 bg-white rounded-lg items-center">
-              <Text className="text-lg font-bold mb-4">
+              <Text className="text-lg font-bold mb- text-primary">
                 Adresa je uspešno napravljena!
               </Text>
               <CustomButton

@@ -27,6 +27,7 @@ const useKorisnikSkladiste = create((set) => ({
   },
   dodajAdresu: async (novaAdresa) => {
     try {
+      console.log("USLO U SKLADISTE");
       await kreirajAdresu(novaAdresa);
       const adreseKorisnika = await vratiSveAdreseMusterije();
       set((state) => ({

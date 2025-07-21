@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Image, Modal, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useJeloSkladiste from "../../store/JeloSkladiste";
@@ -9,7 +9,6 @@ import { tipoviJela } from "../../utils/zajednickiPodaci";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Feather } from "react-native-feather";
 import { Ionicons } from "@expo/vector-icons";
 
 const KreirajJelo = () => {
@@ -133,13 +132,15 @@ const KreirajJelo = () => {
             containerStyles="w-full h-[48px] rounded-full mt-10 mb-10"
           /> */}
 
-          <TouchableOpacity onPress={obradiOtvoriKameru}>
-            <Feather name="camera" size={32} color="#000" />
-          </TouchableOpacity>
+          <View className="flex-row justify-center items-center gap-6 my-4">
+            <TouchableOpacity onPress={obradiOtvoriKameru}>
+              <Ionicons name="camera-outline" size={32} color="#000" />
+            </TouchableOpacity>
 
-          <TouchableOpacity onPress={obradiBiranjeSlike}>
-            <Ionicons name="images-outline" size={32} color="#000" />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={obradiBiranjeSlike}>
+              <Ionicons name="images-outline" size={32} color="#000" />
+            </TouchableOpacity>
+          </View>
 
           {jelo.slikaUrl && (
             <Image

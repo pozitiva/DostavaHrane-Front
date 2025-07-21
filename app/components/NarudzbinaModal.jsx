@@ -29,13 +29,14 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
         status: izabraniStatus,
       };
       const odgovor = await izmeniNarudzbinu(novaNarudzbina);
-      if (odgovor == "Neuspeh") {
-        throw new Error("nema slobodnog dostavljaca");
+      if (odgovor === "Neuspesna izmena statusa") {
+        throw new Error("Neuspesna izmena statusa");
       }
       setUspesnoIzmenjeno(true);
       ucitajNarudzbine();
     } catch (error) {
       console.error("Greska prilikom izmene statusa narudzbine:", error);
+      alert(error.message);
     }
   };
   return (
@@ -81,7 +82,7 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
           </View>
         ))}
 
-        <Text className="text-base font-bold mt-4 mb-2 text-primary">
+        <Text className="text-base font-bold mt-4 text-primary">
           Izaberi novi status:
         </Text>
         <FlatList
@@ -114,18 +115,10 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
       <View className="flex items-center">
         <CustomButton
           title="Potvrdi status"
-          containerStyles="w-[335px] h-[48px] rounded-full mt-4"
+          containerStyles="w-[335px] h-[48px] rounded-full"
           handlePress={obradiPromenuStatusa}
         />
       </View>
-
-      {/* <View className="flex items-center">
-        <CustomButton
-          title="Promeni status"
-          containerStyles="w-[335px] h-[48px] rounded-full mt-4"
-          handlePress={obradiPromenuStatusa}
-        />
-      </View> */}
 
       <Modal
         animationType="fade"
@@ -135,8 +128,8 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
       >
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-[300px] p-4 bg-white rounded-lg items-center">
-            <Text className="text-lg font-bold mb-4">
-              Status je uspesno izmenjen!
+            <Text className="text-lg font-bold mb-4 text-primary">
+              Uspesno izmenjen status!
             </Text>
             <CustomButton
               title="Zatvori"

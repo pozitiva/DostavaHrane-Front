@@ -27,6 +27,8 @@ import Profile from "./screens/Profile";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import RestoranLogin from "./screens/RestoranLogin";
 import Welcome from "./screens/Welcome";
+import ListaRestorana from "./screens/ListaRestorana";
+import ListaDostavljaca from "./screens/ListaDostavljaca";
 
 LogBox.ignoreAllLogs();
 
@@ -57,7 +59,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="NalogEkran"
         component={NalogEkran}
-        options={{ headerTitle: "Nalog" }}
+        options={{ headerTitle: "Izmeni profil" }}
       />
       <Stack.Screen
         name="AdreseEkran"
@@ -179,12 +181,57 @@ const App = () => {
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="MusterijaLogin" component={MusterijaLogin} />
           <Stack.Screen name="AdminLogin" component={AdminLogin} />
-          <Stack.Screen name="KreirajRestoran" component={KreirajRestoran} />
+          {/* <Stack.Screen name="KreirajRestoran" component={KreirajRestoran} />
           <Stack.Screen
             name="KreirajDostavljaca"
             component={KreirajDostavljaca}
+          /> */}
+
+          <Stack.Screen
+            name="KreirajRestoran"
+            component={KreirajRestoran}
+            options={{
+              ...headerOptions,
+              headerTitle: "Kreiraj restoran",
+              headerShown: true,
+            }}
           />
-          <Stack.Screen name="AdminPanel" component={AdminPanel} />
+          <Stack.Screen
+            name="KreirajDostavljaca"
+            component={KreirajDostavljaca}
+            options={{
+              ...headerOptions,
+              headerTitle: "Kreiraj dostavljača",
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="AdminPanel"
+            component={AdminPanel}
+            options={{
+              ...headerOptions,
+              headerTitle: "Admin Panel",
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="ListaRestorana"
+            component={ListaRestorana}
+            options={{
+              ...headerOptions,
+              headerTitle: "Lista restorana",
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="ListaDostavljaca"
+            component={ListaDostavljaca}
+            options={{
+              ...headerOptions,
+              headerTitle: "Lista dostavljaca",
+              headerShown: true,
+            }}
+          />
           <Stack.Screen
             name="MusterijaRegistracija"
             component={MusterijaRegistracija}

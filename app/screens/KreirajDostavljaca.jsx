@@ -1,7 +1,6 @@
 import { View, Text, Modal } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "expo-router";
-import { kreirajAdresu } from "../../api/adresaApi";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import FormField from "../components/FormField";
@@ -19,6 +18,7 @@ const KreirajDostavljaca = () => {
 
   const obradiKreiranjeDostavljaca = async () => {
     try {
+      console.log(dostavljac);
       const odgovor = await kreirajDostavljaca(dostavljac);
       setDostavljacUspesno(true);
       setDostavljac({

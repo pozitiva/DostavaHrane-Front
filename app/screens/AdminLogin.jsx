@@ -43,13 +43,11 @@ const AdminLogin = () => {
           value={admin.email}
           handleChangeText={(e) => setAdmin({ ...admin, email: e })}
           keyboardType="email-address"
-          placeholder="restoran@restoran.com"
         />
         <FormField
           title="SIFRA"
           value={admin.sifra}
           handleChangeText={(e) => setAdmin({ ...admin, sifra: e })}
-          placeholder="primersifre"
         />
         <CustomButton
           title="Uloguj se"
@@ -67,7 +65,7 @@ const AdminLogin = () => {
       >
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-[300px] p-4 bg-white rounded-lg items-center">
-            <Text className="text-lg font-bold mb-4">
+            <Text className="text-lg font-bold mb-4 text-primary">
               Uspešno prijavljivanje!
             </Text>
             <CustomButton

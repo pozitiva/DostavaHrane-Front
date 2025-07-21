@@ -1,22 +1,35 @@
-import { View, Text } from "react-native";
-import React from "react";
-import CustomButton from "./../components/CustomButton";
 import { useNavigation } from "expo-router";
+import React from "react";
+import { View } from "react-native";
+import CustomButton from "./../components/CustomButton";
 
 const AdminPanel = () => {
   const navigation = useNavigation();
   return (
-    <View className="flex-1 justify-center items-center space-y-4">
+    <View className="flex-1 justify-center items-center">
       <CustomButton
         title="Kreiraj restoran"
         handlePress={() => navigation.navigate("KreirajRestoran")}
-        containerStyles="py-3 px-6 rounded-full"
+        containerStyles="bg-transparent border-b border-gray-300 rounded-none items-start"
+        textStyles="text-left text-primary text-xl"
       />
-
       <CustomButton
-        title="Kreiraj dostavljaca"
+        title="Kreiraj dostavljača"
         handlePress={() => navigation.navigate("KreirajDostavljaca")}
-        containerStyles="py-3 px-6 rounded-full mt-10"
+        containerStyles="mt-5 bg-transparent border-b border-gray-300 rounded-none items-start"
+        textStyles="text-left text-primary text-xl"
+      />
+      <CustomButton
+        title="Prikazi sve restorane"
+        handlePress={() => navigation.navigate("ListaRestorana")}
+        containerStyles="mt-5 bg-transparent border-b border-gray-300 rounded-none items-start"
+        textStyles="text-left text-primary text-xl"
+      />
+      <CustomButton
+        title="Prikazi sve dostavljače"
+        handlePress={() => navigation.navigate("ListaDostavljaca")}
+        containerStyles="mt-5 bg-transparent border-b border-gray-300 rounded-none items-start"
+        textStyles="text-left text-primary text-xl"
       />
     </View>
   );

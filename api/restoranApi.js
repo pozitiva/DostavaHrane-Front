@@ -3,6 +3,7 @@ import axiosInstance from "./axiosInstance";
 export const vratiSveRestorane = async () => {
   try {
     const odgovor = await axiosInstance.get("/restoran");
+    console.log(odgovor);
     return odgovor.data;
   } catch (error) {
     console.error("Error registering user:", error);

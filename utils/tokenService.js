@@ -1,6 +1,5 @@
 import * as SecureStore from "expo-secure-store";
 
-// Save JWT Token
 export const storeToken = async (token) => {
   try {
     await SecureStore.setItemAsync("jwt_token", token);
@@ -9,7 +8,6 @@ export const storeToken = async (token) => {
   }
 };
 
-// Retrieve JWT Token
 export const getToken = async () => {
   try {
     const token = await SecureStore.getItemAsync("jwt_token");
@@ -20,7 +18,6 @@ export const getToken = async () => {
   }
 };
 
-// Remove JWT Token
 export const removeToken = async () => {
   try {
     await SecureStore.deleteItemAsync("jwt_token");

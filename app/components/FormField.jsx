@@ -27,13 +27,18 @@ const FormField = ({
           placeholderTextColor="#7B7B8B"
           onChangeText={handleChangeText}
           secureTextEntry={
-            (title === "SIFRA" || title === "POTVRDJENA SIFRA") && !showPassword
+            (title === "SIFRA" ||
+              title === "POTVRDJENA SIFRA" ||
+              title === "Sifra") &&
+            !showPassword
           }
           style={{ height: 35, width: 200, zIndex: 1 }}
           {...props}
         />
 
-        {(title === "SIFRA" || title === "POTVRDJENA SIFRA") && (
+        {(title === "SIFRA" ||
+          title === "POTVRDJENA SIFRA" ||
+          title === "Sifra") && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Image
               source={!showPassword ? icons.eye : icons.eyeHide}

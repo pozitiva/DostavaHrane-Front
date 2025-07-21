@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
-import React, { useEffect, useRef, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Image, Keyboard, Text, View, Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import useJeloSkladiste from "../../store/JeloSkladiste";
@@ -14,6 +14,8 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const modalizeRef = useRef(null);
   const [izmenjenoJelo, setIzmenjenoJelo] = useState(jelo);
   const [izabranTipJela, setIzabranTipJela] = useState(jelo.tipJela);
+  const [uspesnoObrisano, setUspsnoObrisano] = useState(false);
+  const [modalHeight, setModalHeight] = useState(870);
 
   const { izmeniJelo, obrisiJelo, ucitajJela } = useJeloSkladiste((state) => ({
     izmeniJelo: state.izmeniJelo,
@@ -26,6 +28,20 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
     setIzabranTipJela(jelo.tipJela);
 
     modalizeRef.current?.open();
+
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      (e) => setModalHeight(870 - e.endCoordinates.height)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setModalHeight(870)
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
   }, [jelo]);
 
   const obradiIzmenuJela = async () => {
@@ -52,8 +68,9 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const obradiBrisanjeJela = async () => {
     try {
       await obrisiJelo(jelo.id);
-      ucitajJela();
-      onClose();
+      setUspsnoObrisano(true);
+      // ucitajJela();
+      // onClose();
     } catch (error) {
       console.error("Greska prilikom izmene jela:", error);
     }
@@ -62,10 +79,15 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={300}
-      modalHeight={870}
+      snapPoint={630}
+      modalHeight={modalHeight}
       onClose={() => onClose()}
+      withHandle={false}
     >
+      {/* <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      > */}
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View className="items-center mb-6">
           <Image
@@ -143,7 +165,33 @@ const UpravljanjeJelomModal = ({ jelo, onClose }) => {
             handlePress={obradiBrisanjeJela}
           />
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={uspesnoObrisano}
+          onRequestClose={() => setUspsnoObrisano(false)}
+        >
+          <View className="flex-1 justify-center items-center bg-black/50">
+            <View className="w-[300px] p-4 bg-white rounded-lg items-center">
+              <Text className="text-lg font-bold mb- text-primary">
+                Jelo je uspešno obrisano!
+              </Text>
+              <CustomButton
+                title="Zatvori"
+                handlePress={() => {
+                  setUspsnoObrisano(false);
+                  ucitajJela();
+                  onClose();
+                  // navigation.navigate("Profil");
+                }}
+                containerStyles="w-full h-[48px] rounded-full"
+              />
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
+      {/* </KeyboardAvoidingView> */}
     </Modalize>
   );
 };

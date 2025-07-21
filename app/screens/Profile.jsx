@@ -32,7 +32,9 @@ const Profile = () => {
               <Text className="text-xl font-bold mb-1 text-secondary">
                 {korisnik.ime}
               </Text>
-              <Text className="text-m ">{korisnik.brojTelefona}</Text>
+              <Text className="text-m text-primary">
+                {korisnik.brojTelefona}
+              </Text>
             </View>
           </View>
           <CustomButton

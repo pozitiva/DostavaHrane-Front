@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import CustomButton from "./CustomButton";
@@ -44,46 +44,51 @@ const AdresaModal = ({ adresa, onClose }) => {
       onClose={() => onClose()}
       modalStyle={{ paddingBottom: 0, marginBottom: 0 }}
     >
-      <ScrollView contentContainerStyle={{ paddingBottom: 0 }}>
-        <View className="p-2 items-center ">
-          <FormField
-            title="Naziv"
-            value={izmenjenaAdresa.naziv}
-            placeholder="Unesite naziv adrese"
-            handleChangeText={(text) =>
-              setIzmenjenaAdresa({ ...izmenjenaAdresa, naziv: text })
-            }
-            otherStyles="w-full max-w-[335px] h-[70px] mt-7"
-          />
-          <FormField
-            title="Ulica"
-            value={izmenjenaAdresa.ulica}
-            placeholder="Unesite ulicu i broj"
-            handleChangeText={(text) =>
-              setIzmenjenaAdresa({ ...izmenjenaAdresa, ulica: text })
-            }
-            otherStyles="w-full max-w-[335px] h-[70px] mt-7"
-          />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={{ paddingBottom: 0 }}>
+          <View className="p-2 items-center ">
+            <FormField
+              title="Naziv"
+              value={izmenjenaAdresa.naziv}
+              placeholder="Unesite naziv adrese"
+              handleChangeText={(text) =>
+                setIzmenjenaAdresa({ ...izmenjenaAdresa, naziv: text })
+              }
+              otherStyles="w-full max-w-[335px] h-[70px] mt-7"
+            />
+            <FormField
+              title="Ulica"
+              value={izmenjenaAdresa.ulica}
+              placeholder="Unesite ulicu i broj"
+              handleChangeText={(text) =>
+                setIzmenjenaAdresa({ ...izmenjenaAdresa, ulica: text })
+              }
+              otherStyles="w-full max-w-[335px] h-[70px] mt-7"
+            />
 
-          <FormField
-            title="Grad"
-            value={izmenjenaAdresa.grad}
-            placeholder="Unesite grad"
-            handleChangeText={(text) =>
-              setIzmenjenaAdresa({ ...izmenjenaAdresa, grad: text })
-            }
-            otherStyles="w-full max-w-[335px] h-[70px] mt-7"
-          />
-        </View>
+            <FormField
+              title="Grad"
+              value={izmenjenaAdresa.grad}
+              placeholder="Unesite grad"
+              handleChangeText={(text) =>
+                setIzmenjenaAdresa({ ...izmenjenaAdresa, grad: text })
+              }
+              otherStyles="w-full max-w-[335px] h-[70px] mt-7"
+            />
+          </View>
 
-        <View className="flex-row justify-center ">
-          <CustomButton
-            title="Izmeni adresu"
-            containerStyles="w-[160px] h-[48px] rounded-full mt-5"
-            handlePress={obradiIzmenuAdrese}
-          />
-        </View>
-      </ScrollView>
+          <View className="flex-row justify-center ">
+            <CustomButton
+              title="Izmeni adresu"
+              containerStyles="w-[160px] h-[48px] rounded-full mt-5"
+              handlePress={obradiIzmenuAdrese}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Modalize>
   );
 };

@@ -1,5 +1,5 @@
-import { View, Text, Modal } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
+import { useState } from "react";
 import { useNavigation } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { kreirajRestoran } from "../../api/restoranApi";
@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 import { Image } from "react-native";
-import { API_BASE_URL } from "../../utils/zajednickiPodaci";
+import { Ionicons } from "@expo/vector-icons";
 
 const KreirajRestoran = () => {
   const [restoran, setRestoran] = useState({
@@ -32,6 +32,18 @@ const KreirajRestoran = () => {
 
     if (!result.canceled) {
       setRestoran({ ...restoran, slikaUrl: result.assets[0].uri });
+    }
+  };
+
+  const obradiOtvoriKameru = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert(
+        "Zabranjen pristup",
+        "Potrebna je dozvola za pristup kameri."
+      );
+      return;
     }
   };
 
@@ -89,15 +101,25 @@ const KreirajRestoran = () => {
             handleChangeText={(e) => setRestoran({ ...restoran, sifra: e })}
           />
 
-          <CustomButton
+          {/* <CustomButton
             title="Izaberite sliku"
             handlePress={obradiBiranjeSlike}
             containerStyles="w-full h-[48px] rounded-full mt-10 mb-10"
-          />
+          /> */}
+
+          <View className="flex-row justify-center items-center gap-6 my-4">
+            <TouchableOpacity onPress={obradiOtvoriKameru}>
+              <Ionicons name="camera-outline" size={32} color="#000" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={obradiBiranjeSlike}>
+              <Ionicons name="images-outline" size={32} color="#000" />
+            </TouchableOpacity>
+          </View>
 
           {restoran.slikaUrl && (
             <Image
-              source={{ uri: `${API_BASE_URL}${restoran.slikaUrl}` }}
+              source={{ uri: restoran.slikaUrl }}
               style={{ width: 200, height: 200 }}
             />
           )}
@@ -108,7 +130,6 @@ const KreirajRestoran = () => {
             containerStyles="w-full h-[48px] rounded-full"
           />
         </View>
-
         <Modal
           animationType="fade"
           transparent={true}

@@ -15,11 +15,7 @@ const BackButton = () => {
     ];
 
     if (profileRelatedScreens.includes(route.name)) {
-      if (navigation.canGoBack()) {
-        navigation.goBack();
-      } else {
-        navigation.navigate("Pocetna");
-      }
+      navigation.navigate("Profil");
     } else if (navigation.canGoBack()) {
       navigation.goBack();
     } else {
@@ -28,8 +24,8 @@ const BackButton = () => {
   };
 
   return (
-    <TouchableOpacity onPress={goBack} className="absolute p-2">
-      <Image source={icons.leftarrow} className="h-8 w-8" />
+    <TouchableOpacity onPress={goBack} style={{ padding: 10 }}>
+      <Image source={icons.leftarrow} style={{ height: 32, width: 32 }} />
     </TouchableOpacity>
   );
 };
