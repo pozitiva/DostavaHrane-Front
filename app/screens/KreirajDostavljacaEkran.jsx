@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigation } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
-import FormField from "../components/FormField";
-import CustomButton from "../components/CustomButton";
+import FormField from "../components/FormaPolje";
+import CustomButton from "../components/Dugme";
 import { kreirajDostavljaca } from "../../api/dostavljacApi";
 
 const KreirajDostavljaca = () => {

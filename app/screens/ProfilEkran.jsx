@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../../constants";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
-import CustomButton from "../components/CustomButton";
+import CustomButton from "../components/Dugme";
 
 import { useNavigation } from "expo-router";
 

@@ -3,7 +3,7 @@ import { Dimensions, FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { vratiRestoran } from "../../api/restoranApi";
-import DishCard from "../components/DishCard";
+import DishCard from "../components/JeloKartica";
 import JeloModal from "../components/JeloModal";
 import useJeloSkladiste from "../../store/JeloSkladiste";
 import { API_BASE_URL } from "../../utils/zajednickiPodaci";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, Text, View } from "react-native";
 
 import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
-import NarudzbinaCard from "./../components/NarudzbinaCard";
+import NarudzbinaCard from "../components/NarudzbinaKartica";
 import NarudzbinaModal from "./../components/NarudzbinaModal";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { statusi } from "../../utils/zajednickiPodaci";

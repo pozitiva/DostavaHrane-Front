@@ -1,29 +1,24 @@
-import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "expo-image-picker";
-import { useNavigation } from "expo-router";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { Alert, Image, Modal, ScrollView, Text, View } from "react-native";
+import { useNavigation } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
+import { kreirajRestoran } from "../../api/restoranApi";
 import { SafeAreaView } from "react-native-safe-area-context";
-import useJeloSkladiste from "../../store/JeloSkladiste";
-import { tipoviJela } from "../../utils/zajednickiPodaci";
-import CustomButton from "../components/CustomButton";
-import FormField from "../components/FormField";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";
+import CustomButton from "../components/Dugme";
+import FormField from "../components/FormaPolje";
+import { Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const KreirajJelo = () => {
-  const { dodajJelo, ucitajJela } = useJeloSkladiste((state) => ({
-    dodajJelo: state.dodajJelo,
-    ucitajJela: state.ucitajJela,
-  }));
-  const [jelo, setJelo] = useState({
-    naziv: "",
-    cena: "",
+const KreirajRestoran = () => {
+  const [restoran, setRestoran] = useState({
+    ime: "",
     opis: "",
-    tipJela: "",
+    email: "",
+    sifra: "",
     slikaUrl: "",
   });
-  const [jeloUspesno, setJeloUspesno] = useState(false);
+  const [restoranUspesno, setRestoranUspesno] = useState(false);
 
   const navigation = useNavigation();
 
@@ -36,7 +31,7 @@ const KreirajJelo = () => {
     });
 
     if (!result.canceled) {
-      setJelo({ ...jelo, slikaUrl: result.assets[0].uri });
+      setRestoran({ ...restoran, slikaUrl: result.assets[0].uri });
     }
   };
 
@@ -58,73 +53,63 @@ const KreirajJelo = () => {
     });
 
     if (!result.canceled) {
-      setJelo({ ...jelo, slikaUrl: result.assets[0].uri });
+      setRestoran({ ...restoran, slikaUrl: result.assets[0].uri });
     }
   };
 
-  const obradiKreiranjeJela = async () => {
+  const obradiKreiranjeRestorana = async () => {
     try {
       const formData = new FormData();
       formData.append("slika", {
-        uri: jelo.slikaUrl,
+        uri: restoran.slikaUrl,
         type: "image/jpeg",
         name: "photo.jpg",
       });
 
-      formData.append("naziv", jelo.naziv);
-      formData.append("cena", jelo.cena);
-      formData.append("tipJela", jelo.tipJela);
-      formData.append("opis", jelo.opis);
+      formData.append("ime", restoran.ime);
+      formData.append("opis", restoran.opis);
+      formData.append("email", restoran.email);
+      formData.append("sifra", restoran.sifra);
 
-      await dodajJelo(formData);
-      await ucitajJela();
+      await kreirajRestoran(formData);
 
-      setJeloUspesno(true);
-      setJelo({
-        naziv: "",
-        cena: "",
+      setRestoranUspesno(true);
+      setRestoran({
+        ime: "",
         opis: "",
-        tipJela: "",
+        email: "",
+        sifra: "",
         slikaUrl: "",
       });
     } catch (error) {
-      console.error("Došlo je do greške prilikom kreiranja jela:", error);
+      console.error("Došlo je do greške prilikom kreiranja restorana:", error);
     }
   };
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className=" ml-3 p-4">
+        <View className="p-4">
           <FormField
-            title="Naziv"
-            value={jelo.naziv}
-            handleChangeText={(e) => setJelo({ ...jelo, naziv: e })}
-            otherStyles="w-[93%]"
-          />
-          <FormField
-            title="Cena"
-            value={jelo.cena}
-            handleChangeText={(e) => setJelo({ ...jelo, cena: e })}
-            otherStyles="w-[93%]"
-            keyboardType="numeric"
+            title="Ime"
+            value={restoran.ime}
+            handleChangeText={(e) => setRestoran({ ...restoran, ime: e })}
           />
           <FormField
             title="Opis"
-            value={jelo.opis}
-            handleChangeText={(e) => setJelo({ ...jelo, opis: e })}
-            otherStyles="w-[93%]"
+            value={restoran.opis}
+            handleChangeText={(e) => setRestoran({ ...restoran, opis: e })}
           />
-          <Picker
-            selectedValue={jelo.tipJela || ""}
-            onValueChange={(itemValue) => {
-              setJelo({ ...jelo, tipJela: itemValue });
-            }}
-            className="text-base py-3 px-2 border border-gray-300 rounded-lg text-black"
-          >
-            {tipoviJela.map((tipJela, index) => (
-              <Picker.Item key={index} label={tipJela} value={tipJela} />
-            ))}
-          </Picker>
+          <FormField
+            title="Email"
+            value={restoran.email}
+            handleChangeText={(e) => setRestoran({ ...restoran, email: e })}
+            keyboardType="email-address"
+          />
+          <FormField
+            title="Sifra"
+            value={restoran.sifra}
+            handleChangeText={(e) => setRestoran({ ...restoran, sifra: e })}
+          />
 
           {/* <CustomButton
             title="Izaberite sliku"
@@ -142,36 +127,35 @@ const KreirajJelo = () => {
             </TouchableOpacity>
           </View>
 
-          {jelo.slikaUrl && (
+          {restoran.slikaUrl && (
             <Image
-              source={{ uri: `${jelo.slikaUrl}` }}
+              source={{ uri: restoran.slikaUrl }}
               style={{ width: 200, height: 200 }}
             />
           )}
 
           <CustomButton
-            title="Kreiraj jelo"
-            handlePress={obradiKreiranjeJela}
+            title="Kreiraj restoran"
+            handlePress={obradiKreiranjeRestorana}
             containerStyles="w-full h-[48px] rounded-full"
           />
         </View>
-
         <Modal
           animationType="fade"
           transparent={true}
-          visible={jeloUspesno}
-          onRequestClose={() => setJeloUspesno(false)}
+          visible={restoranUspesno}
+          onRequestClose={() => setRestoranUspesno(false)}
         >
           <View className="flex-1 justify-center items-center bg-black/50">
             <View className="w-[300px] p-4 bg-white rounded-lg items-center">
               <Text className="text-lg font-bold mb-4">
-                Jelo je uspesno kreirano!
+                Restoran je uspešno kreiran!
               </Text>
               <CustomButton
                 title="Zatvori"
                 handlePress={() => {
-                  setJeloUspesno(false);
-                  navigation.navigate("JelaRestorana");
+                  setRestoranUspesno(false);
+                  navigation.navigate("AdminPanel");
                 }}
                 containerStyles="w-full h-[48px] rounded-full"
               />
@@ -183,4 +167,4 @@ const KreirajJelo = () => {
   );
 };
 
-export default KreirajJelo;
+export default KreirajRestoran;

@@ -6,8 +6,8 @@ import { Modalize } from "react-native-modalize";
 import useJeloSkladiste from "../../store/JeloSkladiste";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import { API_BASE_URL, tipoviJela } from "../../utils/zajednickiPodaci";
-import CustomButton from "./CustomButton";
-import FormField from "./FormField";
+import CustomButton from "./Dugme";
+import FormField from "./FormaPolje";
 
 const UpravljanjeJelomModal = ({ jelo, onClose }) => {
   const { korisnik } = useKorisnikSkladiste.getState();

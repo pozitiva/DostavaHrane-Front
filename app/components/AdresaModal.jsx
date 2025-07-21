@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
-import CustomButton from "./CustomButton";
-import FormField from "./FormField";
+import CustomButton from "./Dugme";
+import FormField from "./FormaPolje";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 
 const AdresaModal = ({ adresa, onClose }) => {

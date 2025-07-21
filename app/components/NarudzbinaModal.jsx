@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
-import CustomButton from "./CustomButton";
+import CustomButton from "./Dugme";
 import { useNavigation } from "expo-router";
 import { FlatList } from "react-native-gesture-handler";
 import { statusi } from "../../utils/zajednickiPodaci";

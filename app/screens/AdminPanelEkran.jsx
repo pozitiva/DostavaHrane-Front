@@ -1,7 +1,7 @@
 import { useNavigation } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import CustomButton from "./../components/CustomButton";
+import CustomButton from "../components/Dugme";
 
 const AdminPanel = () => {
   const navigation = useNavigation();

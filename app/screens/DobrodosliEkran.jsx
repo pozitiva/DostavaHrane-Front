@@ -1,7 +1,6 @@
-import React from "react";
 import { Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "../components/CustomButton"; // Assuming you have a custom button component
+import CustomButton from "../components/Dugme";
 
 import { icons } from "../../constants";
 export default function Welcome({ navigation }) {

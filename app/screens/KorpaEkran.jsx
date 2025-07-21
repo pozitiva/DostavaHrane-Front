@@ -1,12 +1,12 @@
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, Modal, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useKorpaSkladiste from "../../store/KorpaSkladiste";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
-import Counter from "../components/Counter";
-import CustomButton from "../components/CustomButton";
+import Counter from "../components/Brojac";
+import CustomButton from "../components/Dugme";
 
 const CartScreen = () => {
   const { korisnik, dodajNarudzbinu } = useKorisnikSkladiste((state) => ({

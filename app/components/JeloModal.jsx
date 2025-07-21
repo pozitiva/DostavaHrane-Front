@@ -3,8 +3,8 @@ import { Alert, Image, Text, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import useKorpaSkladiste from "../../store/KorpaSkladiste";
 import { API_BASE_URL } from "../../utils/zajednickiPodaci";
-import Counter from "./Counter";
-import CustomButton from "./CustomButton";
+import Counter from "./Brojac";
+import CustomButton from "./Dugme";
 
 const JeloModal = ({ jelo, onClose }) => {
   const [kolicina, setKolicina] = useState(1);

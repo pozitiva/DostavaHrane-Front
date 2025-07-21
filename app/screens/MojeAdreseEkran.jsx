@@ -1,8 +1,8 @@
 import { View, Text, Modal } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import AdresaModal from "../components/AdresaModal";
-import CustomButton from "../components/CustomButton";
-import FormField from "../components/FormField";
+import CustomButton from "../components/Dugme";
+import FormField from "../components/FormaPolje";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";

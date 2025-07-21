@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, View } from "react-native";
 import { vratiSveRestorane } from "../../api/restoranApi";
-import RestaurantCard from "../components/RestaurantCard";
+import RestaurantCard from "../components/RestaurantKartica";
 
 const Pocetna = () => {
   const [restorani, setRestorani] = useState([]);

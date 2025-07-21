@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import useJeloSkladiste from "../../store/JeloSkladiste";
-import DishCard from "../components/DishCard";
+import DishCard from "../components/JeloKartica";
 import UpravljanjeJelomModal from "../components/UpravljanjeJelomModal";
 
 const JelaRestoranaEkran = () => {

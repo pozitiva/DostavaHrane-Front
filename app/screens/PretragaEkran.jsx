@@ -11,8 +11,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { pretragaRestorana } from "../../api/restoranApi";
 import { tipoviJela } from "../../utils/zajednickiPodaci";
-import CustomButton from "../components/CustomButton";
-import RestaurantCard from "../components/RestaurantCard";
+import CustomButton from "../components/Dugme";
+import RestaurantCard from "../components/RestaurantKartica";
 
 const Search = () => {
   const [restorani, setRestorani] = useState([]);
