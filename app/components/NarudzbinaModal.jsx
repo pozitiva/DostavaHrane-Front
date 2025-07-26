@@ -1,50 +1,40 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View, FlatList } from "react-native";
 import { Modalize } from "react-native-modalize";
-import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
 import CustomButton from "./Dugme";
 import { useNavigation } from "expo-router";
-import { FlatList } from "react-native-gesture-handler";
 import { statusi } from "../../utils/zajednickiPodaci";
 
-const NarudzbinaModal = ({ narudzbina, onClose }) => {
-  const { izmeniNarudzbinu, ucitajNarudzbine } = useNarudzbinaSkladiste(
-    (state) => ({
-      izmeniNarudzbinu: state.izmeniNarudzbinu,
-      ucitajNarudzbine: state.ucitajNarudzbine,
-    })
-  );
+const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
   const modalizeRef = useRef(null);
   const [uspesnoIzmenjeno, setUspesnoIzmenjeno] = useState(false);
   const [izabraniStatus, setIzabraniStatus] = useState(narudzbina.status);
   const navigation = useNavigation();
+
   useEffect(() => {
     modalizeRef.current?.open();
   }, [narudzbina]);
 
   const obradiPromenuStatusa = async () => {
     try {
-      const novaNarudzbina = {
-        ...narudzbina,
-        status: izabraniStatus,
-      };
-      const odgovor = await izmeniNarudzbinu(novaNarudzbina);
-      if (odgovor === "Neuspesna izmena statusa") {
-        throw new Error("Neuspesna izmena statusa");
+      const result = await promeniStatusNarudzbine(narudzbina, izabraniStatus);
+      if (result === "online") {
+        setUspesnoIzmenjeno(true);
+      } else {
+        onClose();
       }
-      setUspesnoIzmenjeno(true);
-      ucitajNarudzbine();
     } catch (error) {
       console.error("Greska prilikom izmene statusa narudzbine:", error);
-      alert(error.message);
+      alert(error.message || "Došlo je do greške.");
     }
   };
+
   return (
     <Modalize
       ref={modalizeRef}
       snapPoint={600}
       modalHeight={600}
-      onClose={() => onClose()}
+      onClose={onClose}
     >
       <View className="flex-1 bg-white p-4">
         <Text className="text-lg font-bold mb-2 text-primary">
@@ -81,22 +71,16 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
             </Text>
           </View>
         ))}
-
         <Text className="text-base font-bold mt-4 text-primary">
           Izaberi novi status:
         </Text>
         <FlatList
           data={statusi}
           horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={{ paddingHorizontal: 10 }}
           renderItem={({ item }) => (
             <TouchableOpacity
               className={`p-4 mr-4 rounded-lg ${
-                izabraniStatus === item.naziv
-                  ? "bg-secondary-100"
-                  : "bg-gray-200"
+                izabraniStatus === item.naziv ? "bg-secondary" : "bg-gray-200"
               }`}
               onPress={() => setIzabraniStatus(item.naziv)}
             >
@@ -112,10 +96,10 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
         />
       </View>
 
-      <View className="flex items-center">
+      <View className="p-4 bg-white">
         <CustomButton
           title="Potvrdi status"
-          containerStyles="w-[335px] h-[48px] rounded-full"
+          containerStyles="w-full"
           handlePress={obradiPromenuStatusa}
         />
       </View>
@@ -129,16 +113,15 @@ const NarudzbinaModal = ({ narudzbina, onClose }) => {
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-[300px] p-4 bg-white rounded-lg items-center">
             <Text className="text-lg font-bold mb-4 text-primary">
-              Uspesno izmenjen status!
+              Uspešno izmenjen status!
             </Text>
             <CustomButton
               title="Zatvori"
               handlePress={() => {
                 setUspesnoIzmenjeno(false);
                 onClose();
-                navigation.navigate("Narudzbine");
               }}
-              containerStyles="w-full h-[48px] rounded-full"
+              containerStyles="w-full"
             />
           </View>
         </View>

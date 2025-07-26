@@ -1,7 +1,7 @@
-import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-const NarudzbinaCard = ({ narudzbina, onPress }) => {
+const NarudzbinaCard = ({ narudzbina, onPress, isPending }) => {
   return (
     <View className="bg-white rounded-lg p-4 mb-4 shadow-md">
       <Text className="text-lg font-bold mb-2 text-primary">
@@ -16,10 +16,21 @@ const NarudzbinaCard = ({ narudzbina, onPress }) => {
 
       <TouchableOpacity
         onPress={() => onPress()}
-        className="mt-4 bg-secondary p-2 rounded"
+        disabled={isPending}
+        className={`mt-4 p-2 rounded ${
+          isPending ? "bg-gray-400" : "bg-secondary"
+        }`}
       >
         <Text className="text-white text-center">Pogledaj detalje</Text>
       </TouchableOpacity>
+      {isPending && (
+        <View className="absolute inset-0 bg-black/100 rounded-lg flex justify-center items-center">
+          <Ionicons name="sync-circle" size={40} color="white" />
+          <Text className="text-white text-center mt-2 font-bold">
+            Čeka na sinhronizaciju...
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

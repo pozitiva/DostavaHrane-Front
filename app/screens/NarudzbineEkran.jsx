@@ -1,35 +1,92 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, Text, View } from "react-native";
-
-import useNarudzbinaSkladiste from "../../store/NarudzbinaSkladiste";
+import { useEffect, useState } from "react";
+import {
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+import { useNarudzbinaStore } from "../../store/NarudzbinaSkladiste";
 import NarudzbinaCard from "../components/NarudzbinaKartica";
 import NarudzbinaModal from "./../components/NarudzbinaModal";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { statusi } from "../../utils/zajednickiPodaci";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const NarudzbineEkran = () => {
   const [izabranaNarudzbina, setIzabranaNarudzbina] = useState(null);
   const [izabraniStatus, setIzabraniStatus] = useState("Na cekanju");
-  const { narudzbine, ucitajNarudzbine } = useNarudzbinaSkladiste((state) => ({
-    narudzbine: state.narudzbine,
-    ucitajNarudzbine: state.ucitajNarudzbine,
-  }));
+
+  const {
+    narudzbine,
+    isLoading,
+    pendingChanges,
+    syncedJustNow,
+    clearJustSynced,
+    izmeniNarudzbinu,
+  } = useNarudzbinaStore((state) => state);
 
   useEffect(() => {
-    const obradiNarudzbine = async () => {
-      try {
-        await ucitajNarudzbine();
-      } catch (error) {
-        console.error("Error fetching narudzbine:", error);
-      }
-    };
+    if (syncedJustNow.length > 0) {
+      const message = `Uspešno je sinhronizovano ${syncedJustNow.length} narudžbina koje su čekale.`;
+      Alert.alert("Sinhronizacija uspešna!", message);
+      clearJustSynced();
+    }
+  }, [syncedJustNow]);
 
-    obradiNarudzbine();
-  }, []);
+  const promeniStatusNarudzbine = async (narudzbina, noviStatus) => {
+    const izmenjenaNarudzbina = { ...narudzbina, status: noviStatus };
+    try {
+      return izmeniNarudzbinu(izmenjenaNarudzbina);
+    } catch (error) {
+      console.error("Greška u komponenti prilikom izmene statusa:", error);
+      Alert.alert("Greška", "Neuspešna izmena statusa narudžbine.");
+    }
+  };
 
   const filtriraneNarudzbine = izabraniStatus
     ? narudzbine.filter((n) => n.status === izabraniStatus)
     : narudzbine;
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#007AFF" />
+        </View>
+      );
+    }
+
+    if (filtriraneNarudzbine.length === 0) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ fontSize: 16, color: "gray" }}>
+            Nema narudžbina sa izabranim statusom.
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <FlatList
+        data={filtriraneNarudzbine}
+        renderItem={({ item }) => (
+          <View>
+            <NarudzbinaCard
+              narudzbina={item}
+              onPress={() => setIzabranaNarudzbina(item)}
+              isPending={!!pendingChanges[item.id]}
+            />
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    );
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white p-6">
@@ -59,22 +116,13 @@ const NarudzbineEkran = () => {
         />
       </View>
 
-      <FlatList
-        data={filtriraneNarudzbine}
-        renderItem={({ item }) => (
-          <View>
-            <NarudzbinaCard
-              narudzbina={item}
-              onPress={() => setIzabranaNarudzbina(item)}
-            />
-          </View>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={{ flex: 1 }}>{renderContent()}</View>
+
       {izabranaNarudzbina && (
         <NarudzbinaModal
           narudzbina={izabranaNarudzbina}
           onClose={() => setIzabranaNarudzbina(null)}
+          promeniStatusNarudzbine={promeniStatusNarudzbine}
         />
       )}
     </SafeAreaView>
