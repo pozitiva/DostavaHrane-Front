@@ -46,3 +46,24 @@ export const izmeniNarudzbinu = async (narudzbinaData) => {
     console.error("Greska prilikom izmene narudzbine:", error);
   }
 };
+
+export const otkaziNarudzbinu = async (narudzbinaId) => {
+  try {
+    console.log(narudzbinaId);
+    const response = await axiosInstance.put(
+      `/narudzbina/otkazi`,
+      { narudzbinaId: narudzbinaId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Greška prilikom otkazivanja narudžbine:", error);
+    throw error;
+  }
+};

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Modal, Text, TouchableOpacity, View, FlatList } from "react-native";
 import { Modalize } from "react-native-modalize";
-import CustomButton from "./Dugme";
 import { useNavigation } from "expo-router";
 import { statusi } from "../../utils/zajednickiPodaci";
 
@@ -97,7 +96,7 @@ const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
       </View>
 
       <View className="p-4 bg-white">
-        <CustomButton
+        <IzmenjenoDugme
           title="Potvrdi status"
           containerStyles="w-full"
           handlePress={obradiPromenuStatusa}
@@ -115,7 +114,7 @@ const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
             <Text className="text-lg font-bold mb-4 text-primary">
               Uspešno izmenjen status!
             </Text>
-            <CustomButton
+            <IzmenjenoDugme
               title="Zatvori"
               handlePress={() => {
                 setUspesnoIzmenjeno(false);

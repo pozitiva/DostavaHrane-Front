@@ -76,7 +76,6 @@ const NalogEkran = () => {
                 setIzmenjenUspesno(false);
                 navigation.navigate("Profil");
               }}
-              containerStyles="w-full h-[48px] rounded-full"
             />
           </View>
         </View>

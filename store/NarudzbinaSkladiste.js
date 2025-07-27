@@ -4,6 +4,7 @@ import NetInfo from "@react-native-community/netinfo";
 import {
   izmeniNarudzbinu as izmeniNarudzbinuOnline,
   vratiSveNarudzbine as vratiSveNarudzbineSaServera,
+  otkaziNarudzbinu as otkaziNarudzbinuOnline,
 } from "../api/narudzbinaApi";
 const OFFLINE_KEY = "offlineNarudzbine";
 
@@ -47,7 +48,39 @@ export const useNarudzbinaStore = create((set, get) => ({
       return "offline";
     }
   },
+  // otkaziNarudzbinuKaoKorisnik: async (narudzbina) => {
+  //   if (!get().isConnected) {
+  //     console.log("Offline, otkazivanje nije moguće.");
+  //     throw new Error(
+  //       "Otkazivanje je moguće samo kada ste povezani na internet."
+  //     );
+  //   }
+  //   const originalnaNarudzbina = get().narudzbine.find(
+  //     (n) => n.id === narudzbina.id
+  //   );
 
+  //   set((state) => ({
+  //     narudzbine: state.narudzbine.map((n) =>
+  //       n.id === narudzbina.id ? { ...n, status: "Otkazano" } : n
+  //     ),
+  //   }));
+
+  //   try {
+  //     await otkaziNarudzbinuOnline(narudzbina.id);
+  //     await get().ucitajNarudzbine();
+  //   } catch (error) {
+  //     console.error(
+  //       "Greška pri online otkazivanju, vraćam na prethodno stanje.",
+  //       error
+  //     );
+  //     set((state) => ({
+  //       narudzbine: state.narudzbine.map((n) =>
+  //         n.id === narudzbina.id ? originalnaNarudzbina : n
+  //       ),
+  //     }));
+  //     throw error;
+  //   }
+  // },
   sacuvajNarudzbinuOffline: async (novaNarudzbina) => {
     try {
       const offlineNarudzbineJSON = await AsyncStorage.getItem(OFFLINE_KEY);

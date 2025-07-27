@@ -4,7 +4,11 @@ import {
   kreirajAdresu,
   vratiSveAdreseMusterije,
 } from "../api/adresaApi";
-import { napraviNarudzbinu } from "../api/narudzbinaApi";
+import {
+  napraviNarudzbinu,
+  otkaziNarudzbinu as otkaziNarudzbinuOnline,
+  vratiSveNarudzbine as vratiSveNarudzbineSaServera,
+} from "../api/narudzbinaApi";
 import { izmeniKorisnika } from "../api/musterijaApi";
 
 const useKorisnikSkladiste = create((set) => ({
@@ -12,6 +16,40 @@ const useKorisnikSkladiste = create((set) => ({
   tipKorisnika: null,
   setKorisnik: (korisnik) => set({ korisnik }),
   setTipKorisnika: (tipKorisnika) => set({ tipKorisnika }),
+
+  otkaziNarudzbinuKaoKorisnik: async (narudzbinaZaOtkazivanje) => {
+    try {
+      await otkaziNarudzbinuOnline(narudzbinaZaOtkazivanje.id);
+
+      set((state) => {
+        if (!state.korisnik || !state.korisnik.narudzbine) {
+          return state;
+        }
+
+        const noveNarudzbine = state.korisnik.narudzbine.map((nar) =>
+          nar.id === narudzbinaZaOtkazivanje.id
+            ? { ...nar, status: "Otkazano" }
+            : nar
+        );
+
+        return {
+          korisnik: {
+            ...state.korisnik,
+            narudzbine: noveNarudzbine,
+          },
+        };
+      });
+    } catch (error) {
+      // console.error(
+      //   "Greška prilikom otkazivanja narudžbine u skladištu:",
+      //   error.response?.data || error.message
+      // );
+      // // Ako API poziv ne uspe, bacamo grešku da bi komponenta prikazala Alert
+      // throw error;
+    }
+    r;
+  },
+
   dodajNarudzbinu: async (novaNarudzbina) => {
     try {
       await napraviNarudzbinu(novaNarudzbina);

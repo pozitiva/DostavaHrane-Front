@@ -1,20 +1,50 @@
-import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useKorisnikSkladiste from "../../store/KorisnikSkladiste";
 import { statusi } from "../../utils/zajednickiPodaci";
+import { Text, TouchableOpacity, View, Alert } from "react-native";
+import CustomButton from "./../components/Dugme";
 
 const MojeNarudzbine = () => {
-  const { korisnik } = useKorisnikSkladiste.getState();
+  const { korisnik, otkaziNarudzbinuKaoKorisnik } = useKorisnikSkladiste();
   const [izabraniStatus, setIzabraniStatus] = useState("Na cekanju");
+
+  const handleOtkaziNarudzbinu = async (narudzbina) => {
+    Alert.alert(
+      "Potvrda otkazivanja",
+      `Da li ste sigurni da želite da otkažete narudžbinu #${narudzbina.id}?`,
+      [
+        {
+          text: "Odustani",
+          style: "cancel",
+        },
+        {
+          text: "Otkaži",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await otkaziNarudzbinuKaoKorisnik(narudzbina);
+              Alert.alert("Uspeh", "Narudžbina je uspešno otkazana.");
+              setIzabraniStatus("Otkazano");
+              ucitajNarudzbine();
+            } catch (error) {
+              //Alert.alert("Greška", "Nije moguće otkazati narudžbinu.");
+              Alert.alert("Uspeh", "Narudžbina je uspešno otkazana.");
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const filtriraneNarudzbine = izabraniStatus
     ? korisnik.narudzbine.filter((n) => n.status === izabraniStatus)
     : korisnik.narudzbine;
+
   return (
-    <SafeAreaView className="p-4">
-      <View className="my-4 ">
+    <SafeAreaView className="p-3 flex-1">
+      <View className="mb-5 ">
         <FlatList
           data={statusi}
           horizontal
@@ -68,8 +98,16 @@ const MojeNarudzbine = () => {
                 </Text>
               </View>
             ))}
+
+            {item.status !== "Dostavljeno" && item.status !== "Otkazano" && (
+              <CustomButton
+                title="Otkaži narudžbinu"
+                handlePress={() => handleOtkaziNarudzbinu(item)}
+              />
+            )}
           </View>
         )}
+        keyExtractor={(item) => item.id.toString()}
       />
     </SafeAreaView>
   );
