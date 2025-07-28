@@ -19,8 +19,11 @@ const useKorisnikSkladiste = create((set) => ({
 
   otkaziNarudzbinuKaoKorisnik: async (narudzbinaZaOtkazivanje) => {
     try {
-      await otkaziNarudzbinuOnline(narudzbinaZaOtkazivanje.id);
-
+      const otkazivanjeDto = {
+        NarudzbinaId: narudzbinaZaOtkazivanje.id,
+        VremeDogadjaja: new Date().toISOString(),
+      };
+      await otkaziNarudzbinuOnline(otkazivanjeDto);
       set((state) => {
         if (!state.korisnik || !state.korisnik.narudzbine) {
           return state;
@@ -44,10 +47,7 @@ const useKorisnikSkladiste = create((set) => ({
       //   "Greška prilikom otkazivanja narudžbine u skladištu:",
       //   error.response?.data || error.message
       // );
-      // // Ako API poziv ne uspe, bacamo grešku da bi komponenta prikazala Alert
-      // throw error;
     }
-    r;
   },
 
   dodajNarudzbinu: async (novaNarudzbina) => {

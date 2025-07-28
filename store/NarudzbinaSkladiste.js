@@ -39,6 +39,12 @@ export const useNarudzbinaStore = create((set, get) => ({
         get().ucitajNarudzbine();
         return "online";
       } catch (err) {
+        if (err.response && err.response.status === 409) {
+          console.log("Konflikt detektovan sa servera:", err.response.data);
+          await get().ucitajNarudzbine();
+          throw new Error(err.response.data);
+        }
+
         console.log("Greška pri online izmeni, čuvam za kasnije:", err);
         await get().sacuvajNarudzbinuOffline(novaNarudzbina);
         return "offline";
@@ -48,39 +54,7 @@ export const useNarudzbinaStore = create((set, get) => ({
       return "offline";
     }
   },
-  // otkaziNarudzbinuKaoKorisnik: async (narudzbina) => {
-  //   if (!get().isConnected) {
-  //     console.log("Offline, otkazivanje nije moguće.");
-  //     throw new Error(
-  //       "Otkazivanje je moguće samo kada ste povezani na internet."
-  //     );
-  //   }
-  //   const originalnaNarudzbina = get().narudzbine.find(
-  //     (n) => n.id === narudzbina.id
-  //   );
 
-  //   set((state) => ({
-  //     narudzbine: state.narudzbine.map((n) =>
-  //       n.id === narudzbina.id ? { ...n, status: "Otkazano" } : n
-  //     ),
-  //   }));
-
-  //   try {
-  //     await otkaziNarudzbinuOnline(narudzbina.id);
-  //     await get().ucitajNarudzbine();
-  //   } catch (error) {
-  //     console.error(
-  //       "Greška pri online otkazivanju, vraćam na prethodno stanje.",
-  //       error
-  //     );
-  //     set((state) => ({
-  //       narudzbine: state.narudzbine.map((n) =>
-  //         n.id === narudzbina.id ? originalnaNarudzbina : n
-  //       ),
-  //     }));
-  //     throw error;
-  //   }
-  // },
   sacuvajNarudzbinuOffline: async (novaNarudzbina) => {
     try {
       const offlineNarudzbineJSON = await AsyncStorage.getItem(OFFLINE_KEY);
@@ -152,11 +126,11 @@ NetInfo.addEventListener((state) => {
   }
 });
 
-async function initialLoad() {
-  console.log("Pokrećem inicijalno učitavanje podataka...");
-  const store = useNarudzbinaStore.getState();
-  await store.sinhronizujOfflinePromene();
-  await store.ucitajNarudzbine();
-}
+// async function initialLoad() {
+//   console.log("Pokrećem inicijalno učitavanje podataka...");
+//   const store = useNarudzbinaStore.getState();
+//   await store.sinhronizujOfflinePromene();
+//   await store.ucitajNarudzbine();
+// }
 
-initialLoad();
+// initialLoad();

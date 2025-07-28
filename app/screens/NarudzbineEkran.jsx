@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -12,6 +12,7 @@ import NarudzbinaCard from "../components/NarudzbinaKartica";
 import NarudzbinaModal from "./../components/NarudzbinaModal";
 import { statusi } from "../../utils/zajednickiPodaci";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NarudzbineEkran = () => {
   const [izabranaNarudzbina, setIzabranaNarudzbina] = useState(null);
@@ -24,7 +25,18 @@ const NarudzbineEkran = () => {
     syncedJustNow,
     clearJustSynced,
     izmeniNarudzbinu,
+    ucitajNarudzbine,
+    sinhronizujOfflinePromene,
   } = useNarudzbinaStore((state) => state);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Ekran je u fokusu, pokrećem sinhronizaciju i učitavanje...");
+      sinhronizujOfflinePromene().then(() => {
+        ucitajNarudzbine();
+      });
+    }, [])
+  );
 
   useEffect(() => {
     if (syncedJustNow.length > 0) {
@@ -35,7 +47,11 @@ const NarudzbineEkran = () => {
   }, [syncedJustNow]);
 
   const promeniStatusNarudzbine = async (narudzbina, noviStatus) => {
-    const izmenjenaNarudzbina = { ...narudzbina, status: noviStatus };
+    const izmenjenaNarudzbina = {
+      ...narudzbina,
+      status: noviStatus,
+      VremeDogadjaja: new Date().toISOString(),
+    };
     try {
       return izmeniNarudzbinu(izmenjenaNarudzbina);
     } catch (error) {

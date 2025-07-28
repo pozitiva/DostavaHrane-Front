@@ -47,17 +47,13 @@ export const izmeniNarudzbinu = async (narudzbinaData) => {
   }
 };
 
-export const otkaziNarudzbinu = async (narudzbinaId) => {
+export const otkaziNarudzbinu = async (otkazivanjeDto) => {
   try {
-    console.log(narudzbinaId);
+    console.log("uslo u slanje" + otkazivanjeDto);
+
     const response = await axiosInstance.put(
       `/narudzbina/otkazi`,
-      { narudzbinaId: narudzbinaId },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      otkazivanjeDto
     );
 
     console.log(response.data);

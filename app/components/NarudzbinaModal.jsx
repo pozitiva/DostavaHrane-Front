@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, Text, TouchableOpacity, View, FlatList } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useNavigation } from "expo-router";
 import { statusi } from "../../utils/zajednickiPodaci";
+import CustomButton from "./Dugme";
 
 const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
   const modalizeRef = useRef(null);
   const [uspesnoIzmenjeno, setUspesnoIzmenjeno] = useState(false);
   const [izabraniStatus, setIzabraniStatus] = useState(narudzbina.status);
-  const navigation = useNavigation();
 
   useEffect(() => {
     modalizeRef.current?.open();
@@ -23,7 +23,7 @@ const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
         onClose();
       }
     } catch (error) {
-      console.error("Greska prilikom izmene statusa narudzbine:", error);
+      console.error("Greska prilikom izmene statusa narudzbine.");
       alert(error.message || "Došlo je do greške.");
     }
   };
@@ -96,7 +96,7 @@ const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
       </View>
 
       <View className="p-4 bg-white">
-        <IzmenjenoDugme
+        <CustomButton
           title="Potvrdi status"
           containerStyles="w-full"
           handlePress={obradiPromenuStatusa}
@@ -114,7 +114,7 @@ const NarudzbinaModal = ({ narudzbina, onClose, promeniStatusNarudzbine }) => {
             <Text className="text-lg font-bold mb-4 text-primary">
               Uspešno izmenjen status!
             </Text>
-            <IzmenjenoDugme
+            <CustomButton
               title="Zatvori"
               handlePress={() => {
                 setUspesnoIzmenjeno(false);
